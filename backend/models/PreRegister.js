@@ -96,51 +96,7 @@ const preRegisterSchema = new mongoose.Schema(
   }
 );
 
-// Index for faster queries
-preRegisterSchema.index({ email: 1 });
-preRegisterSchema.index({ createdAt: -1 });
-preRegisterSchema.index({ status: 1 });
 
-// Pre-save middleware to generate confirmation token
-preRegisterSchema.pre("save", function (next) {
-  if (this.isNew && !this.confirmationToken) {
-    this.confirmationToken =
-      Math.random().toString(36).substring(2, 15) +
-      Math.random().toString(36).substring(2, 15);
-  }
-  next();
-});
-
-// Instance method to mark as confirmed
-preRegisterSchema.methods.confirm = function () {
-  this.status = "confirmed";
-  this.confirmationToken = null;
-  return this.save();
-};
-
-// Static method to get registration stats
-preRegisterSchema.statics.getStats = function () {
-  return this.aggregate([
-    {
-      $group: {
-        _id: "$status",
-        count: { $sum: 1 },
-      },
-    },
-    {
-      $group: {
-        _id: null,
-        total: { $sum: "$count" },
-        breakdown: {
-          $push: {
-            status: "$_id",
-            count: "$count",
-          },
-        },
-      },
-    },
-  ]);
-};
 
 const PreRegister = mongoose.model("PreRegister", preRegisterSchema);
 

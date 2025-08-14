@@ -105,7 +105,8 @@ const Landing = () => {
           }}
         >
           <Button />
-          <PreRegisterButton />
+          
+          {/* <PreRegisterButton /> */}
         </Box>
         <br /> <br /> <br /> <br /> <br /> <br /> <br />
         {/* Cards - Only show on desktop */}
