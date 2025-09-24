@@ -15,17 +15,21 @@
     "@mui/icons-material": "^7.2.0",
     "@mui/material": "^7.2.0",
     "@mui/styles": "^6.5.0",
+    "@react-three/drei": "^10.7.6",
+    "@react-three/fiber": "^9.3.0",
     "@reduxjs/toolkit": "^2.8.2",
     "@splinetool/react-spline": "^4.0.0",
     "@splinetool/runtime": "^1.10.27",
     "axios": "^1.6.2",
     "framer-motion": "^12.23.12",
+    "gsap": "^3.13.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.6.3",
     "redux-persist": "^6.0.0",
-    "styled-components": "^6.1.19"
+    "styled-components": "^6.1.19",
+    "three": "^0.180.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.30.1",

@@ -7,7 +7,7 @@ import ss2 from "./assets/ss2.jpg";
 import ss3 from "./assets/ss3.jpg";
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-
+import background from './assets/background_waitlist_new.png';
 const Landing = () => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
@@ -56,18 +56,23 @@ const Landing = () => {
     return (
         <Box sx={{ width: "100%", overflowX: "hidden", backgroundColor: "white" }}>
             {/* Hero Section */}
-            <Box sx={{
-                width: "100%",
-                minHeight: isMobile ? 100 : 700,
-                height:"100vh",
-                background: "black",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-                // py: 8,
-                gap: 4
-            }}>
+            <Box
+                sx={{
+                    width: "100%",
+                    minHeight: isMobile ? 100 : 700,
+                    height: "100vh",
+                    backgroundImage: `url(${background})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 4
+                }}
+            >
+
                 {/* Logo */}
                 <Box
                     component="img"
@@ -76,60 +81,58 @@ const Landing = () => {
                     sx={{
                         width: isMobile ? "130%" : isTablet ? "70%" : "60%",
                         maxWidth: 750,
-                        mt: isMobile ? -20 : 0,
-                        mb:-28
+                        mt: isMobile ? -40 : 10,
+                        mb: -28
                     }}
                 />
-
-                
-
-                {/* Carousel */}
+                {/* Screenshots Side by Side (3D Tilted Inwards) */}
                 <Box
                     sx={{
                         display: "flex",
                         justifyContent: "center",
-                        alignItems: "center",
-                        position: "relative",
-                        width: 300,
-                        height: 500,
-                        gap:10
-                        // mt: 6
+                        alignItems: "flex-end", // align at bottom
+                        gap: 6,
+                        mt: isMobile?10:-10,
                     }}
                 >
-                    {images.map((image, index) => {
-                        const position = getCardPosition(index);
-                        return (
-                            <Box
-                                key={index}
-                                component="img"
-                                src={image}
-                                sx={{
-                                    width: isMobile ? 200 : isTablet ? 240 : 250,
-                                    height: isMobile ? 400 : isTablet ? 450 : 500,
-                                    position: "absolute",
-                                    borderRadius: "14px",
-                                    boxShadow: position.zIndex === 3
-                                        ? "0 15px 50px rgba(0,0,0,0.5)"
-                                        : "0 10px 40px rgba(0,0,0,0.3)",
-                                    transform: position.transform,
-                                    zIndex: position.zIndex,
-                                    opacity: position.opacity,
-                                    transition: "all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                                    cursor: "pointer",
-                                    "&:hover": {
-                                        transform: `${position.transform} scale(${position.scale * 1.05})`,
-                                    }
-                                }}
-                                onClick={() => {
-                                    const relativeIndex = (index - currentIndex + images.length) % images.length;
-                                    if (relativeIndex === 2) setCurrentIndex((prev) => (prev + 2) % images.length);
-                                    else if (relativeIndex === 1) setCurrentIndex((prev) => (prev + 1) % images.length);
-                                }}
-                            />
-                        );
-                    })}
+                    {/* Left Image */}
+                    <Box
+                        component="img"
+                        src={ss1}
+                        alt="screenshot 1"
+                        sx={{
+                            width: isMobile ? 160 : isTablet ? 200 : 240,
+                            height: isMobile ? 320 : isTablet ? 380 : 450,
+                            borderRadius: "14px",
+                            boxShadow: "0 20px 50px rgba(0,0,0,0.5)",
+                            transform: "perspective(1200px) rotateY(30deg) rotateX(15deg)",
+                            transition: "transform 0.4s ease",
+                            "&:hover": {
+                                transform: "perspective(1200px) rotateY(40deg) rotateX(8deg) scale(1.05)",
+                            },
+                        }}
+                    />
+
+                    {/* Right Image */}
+                    <Box
+                        component="img"
+                        src={ss3}
+                        alt="screenshot 2"
+                        sx={{
+                            width: isMobile ? 160 : isTablet ? 200 : 240,
+                            height: isMobile ? 320 : isTablet ? 380 : 450,
+                            borderRadius: "14px",
+                            boxShadow: "0 20px 50px rgba(0,0,0,0.5)",
+                            transform: "perspective(1200px) rotateY(-30deg) rotateX(15deg)",
+                            transition: "transform 0.4s ease",
+                            "&:hover": {
+                                transform: "perspective(1200px) rotateY(-15deg) rotateX(8deg) scale(1.05)",
+                            },
+                        }}
+                    />
                 </Box>
-                 {/* Join Waitlist */}
+
+                {/* Join Waitlist */}
                 <Box
                     ref={containerRef}
                     sx={{
@@ -200,6 +203,8 @@ const Landing = () => {
                                     boxShadow: "0 0 8px white",
                                     transform: "scale(1.01)",
                                 },
+                                fontSize:20,
+                                  fontFamily: "Plus Jakarta Sans",
                             }}
                         >
                             Join Waitlist
@@ -211,7 +216,7 @@ const Landing = () => {
                     </Box>
                 </Box>
             </Box>
-           
+
         </Box>
     );
 };
