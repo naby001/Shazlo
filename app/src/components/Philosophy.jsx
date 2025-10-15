@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Typography, useTheme, useMediaQuery, keyframes } from '@mui/material';
-import closetImage from '../assets/closet.png'; // Replace with actual image
+import closetImage from '../assets/philosophy.png'; // Replace with actual image
 
 const pulse = keyframes`
   0% { transform: scale(1); }
@@ -14,7 +14,7 @@ const float = keyframes`
   100% { transform: translateY(0px); }
 `;
 
-const Closet = () => {
+const Philosophy = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
@@ -50,7 +50,7 @@ const Closet = () => {
       <Box
         sx={{
           flex: 1,
-          textAlign: isMobile ? 'center' : 'right',
+          textAlign: 'center',
           maxWidth: 600,
           mx: isMobile ? 'auto' : 0,
           position: 'relative',
@@ -60,8 +60,9 @@ const Closet = () => {
         <Typography
           variant="h2"
           sx={{
-            fontWeight: 800,
-            fontSize: isMobile ? '2rem' : '3.5rem',
+            fontWeight: 300,
+            fontSize: isMobile ? '17px' : '30px',
+              fontStyle: 'italic',
             mb: 3,
             lineHeight: 1.2,
             fontFamily: "'Poppins', sans-serif",
@@ -72,84 +73,14 @@ const Closet = () => {
             textShadow: '2px 2px 4px rgba(0,0,0,0.1)',
           }}
         >
-          Your Digital Closet Awaits
+          Shazlo is a dream born in the rooms of four undergraduate students from Ahmedabad and Kolkata who had a core mission- revolutionising how India shops.<br></br><br></br>
+
+Shazlo serves as a gamified fashion discovery platform, where you swipe to style, share and shine. Moving beyond traditional e-commerce, Shazlo aims to create shared experiences and add an element of joy while buying your favourite piece of clothing.
+<br></br><br></br>
+From local artisans to modern designers, Shazlo brings it all to a single platform, highlighting the beauty of Made in India!
         </Typography>
 
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 3,
-            textAlign: isMobile ? 'center' : 'right',
-          }}
-        >
-          {[
-            {
-              text: 'Build your dream closet',
-              gradient: 'linear-gradient(to right, #ff6ec4, #7873f5)',
-              icon: '👗'
-            },
-            {
-              text: 'Save your favorite fits',
-              gradient: 'linear-gradient(to right, #00c6ff, #0072ff)',
-              icon: '❤️'
-            },
-            {
-              text: 'Collaborate with friends',
-              gradient: 'linear-gradient(to right, #ff9a9e, #fad0c4)',
-              icon: '👯'
-            },
-            {
-              text: 'Share looks anytime, anywhere',
-              gradient: 'linear-gradient(to right, #f7971e, #ffd200)',
-              icon: '🌎'
-            }
-          ].map((item, index) => (
-            <Box
-              key={index}
-              sx={{
-                display: 'flex',
-                flexDirection: isMobile ? 'column' : 'row-reverse',
-                alignItems: 'center',
-                gap: 2,
-                transition: 'all 0.3s ease',
-                '&:hover': {
-                  transform: 'translateX(-5px)',
-                }
-              }}
-            >
-              <Box
-                sx={{
-                  width: '50px',
-                  height: '50px',
-                  borderRadius: '50%',
-                  background: '#fff',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '1.5rem',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-                  animation: `${float} 3s ease-in-out infinite ${index * 0.2}s`,
-                }}
-              >
-                {item.icon}
-              </Box>
-              <Typography
-                sx={{
-                  fontSize: '1.2rem',
-                  fontWeight: 600,
-                  background: item.gradient,
-                  WebkitBackgroundClip: 'text',
-                  backgroundClip: 'text',
-                  color: 'transparent',
-                  textShadow: '1px 1px 2px rgba(0,0,0,0.05)',
-                }}
-              >
-                {item.text}
-              </Typography>
-            </Box>
-          ))}
-        </Box>
+       
       </Box>
 
       {/* Image Section */}
@@ -180,4 +111,4 @@ const Closet = () => {
   );
 };
 
-export default Closet;
+export default Philosophy;

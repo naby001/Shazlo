@@ -11,6 +11,8 @@ import Style from "./components/Swipe";
 import Closet from "./components/Closet";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
+import Philosophy from "./components/Philosophy";
+import Team from "./components/Team";
 
 const Landing = () => {
   const theme = useTheme();
@@ -218,6 +220,30 @@ const Landing = () => {
       >
         <Closet />
       </Box>
+
+      <Box
+        sx={{
+          position: "relative",
+          zIndex: 4,
+          backgroundColor: "white",
+          pt: isMobile ? 0 : 0,
+          pb: isMobile ? 0 : 0,
+        }}
+      >
+        <Philosophy />
+      </Box>
+
+       <Box
+        sx={{
+          position: "relative",
+          zIndex: 4,
+          backgroundColor: "white",
+          pt: isMobile ? 0 : 0,
+          pb: isMobile ? 0 : 0,
+        }}
+      >
+        <Team />
+      </Box>
       <Box
         sx={{
           position: "absolute",
@@ -239,7 +265,7 @@ const Landing = () => {
           zIndex: 4,
           backgroundColor: "black",
           width: "100%",
-          pt: 8,
+          // pt: 8,
         }}
       >
         <Footer />

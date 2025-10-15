@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Typography, useTheme, useMediaQuery, keyframes } from '@mui/material';
-import swipeImage from '../assets/swipe.jpg'; // Replace with actual image
+import swipeImage from '../assets/swipe.png'; // Replace with actual image
 
 // Animation for swipe arrows
 const swipeAnimation = keyframes`
@@ -66,7 +66,7 @@ const Style = () => {
             color: 'transparent',
           }}
         >
-          Swipe Your Way to Style
+          Swipe to Style
         </Typography>
 
         <Typography
