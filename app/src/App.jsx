@@ -1,6 +1,6 @@
 import React from "react";
 import { ThemeProvider } from "@mui/material/styles";
-import { CssBaseline, useMediaQuery } from "@mui/material";
+import { CssBaseline, GlobalStyles, useMediaQuery } from "@mui/material";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import theme from "./theme";
@@ -21,11 +21,25 @@ function App() {
   const brand=useSelector((state)=>state.user);
   console.log(brand)
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  
+const globalStyles = (
+  <GlobalStyles
+    styles={`
+      @font-face {
+        font-family: 'Gerbata';
+        src: url('/src/assets/fonts/GarbataTrial-Bold.ttf') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+      }
+    `}
+  />
+);
   // dispatch(setLogout())
   return (
 
     <ThemeProvider theme={theme}>
       <CssBaseline />
+      {globalStyles}
       <Router>
         <Routes>
           {subdomain !== "seller" ? (

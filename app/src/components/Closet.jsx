@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Typography, useTheme, useMediaQuery, keyframes } from '@mui/material';
-import closetImage from '../assets/closet.png'; // Replace with actual image
+import closetImage from '../assets/closet.jpg'; // Replace with actual image
 
 const pulse = keyframes`
   0% { transform: scale(1); }
@@ -58,16 +58,15 @@ const Closet = () => {
         }}
       >
         <Typography
-          variant="h2"
+          // variant="h2"
           sx={{
-            fontWeight: 800,
+            // fontWeight: 800,
             fontSize: isMobile ? '2rem' : '3.5rem',
             mb: 3,
             lineHeight: 1.2,
-            fontFamily: "'Poppins', sans-serif",
+            // fontFamily: "'Poppins', sans-serif",
             // background: 'linear-gradient(to right, #2c3e50, #4ca1af)',
-            WebkitBackgroundClip: 'text',
-            backgroundClip: 'text',
+          
             color: 'black',
             textShadow: '2px 2px 4px rgba(0,0,0,0.1)',
           }}

@@ -65,7 +65,7 @@ const Philosophy = () => {
               fontStyle: 'italic',
             mb: 3,
             lineHeight: 1.2,
-            fontFamily: "'Poppins', sans-serif",
+            // fontFamily: "'Poppins', sans-serif",
             // background: 'linear-gradient(to right, #2c3e50, #4ca1af)',
             WebkitBackgroundClip: 'text',
             backgroundClip: 'text',

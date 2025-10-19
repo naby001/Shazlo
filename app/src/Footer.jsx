@@ -111,7 +111,7 @@ import {
   Box,
 } from '@mui/material';
 import { Instagram, Facebook } from '@mui/icons-material';
-import mainlogo from './assets/3.png';
+import mainlogo from './assets/w_2.png';
 
 function Footer() {
   return (
@@ -155,6 +155,7 @@ function Footer() {
               color: '#aaa',
               maxWidth: 300,
               mb: 2,
+              fontSize:17
             }}
           >
             The future of fashion discovery for women.

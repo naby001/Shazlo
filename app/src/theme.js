@@ -9,6 +9,9 @@ const theme = createTheme({
       main: '#FFD700',
     },
   },
+  typography: {
+    fontFamily: 'Arapey', // choose your font here
+  },
 });
 
 export default theme;

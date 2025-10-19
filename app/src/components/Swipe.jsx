@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box, Typography, useTheme, useMediaQuery, keyframes } from '@mui/material';
-import swipeImage from '../assets/swipe.png'; // Replace with actual image
+import swipeImage from '../assets/swipe.jpg'; // Replace with actual image
 
 // Animation for swipe arrows
 const swipeAnimation = keyframes`
@@ -52,14 +52,14 @@ const Style = () => {
         }}
       >
         <Typography
-          variant="h2"
+          // variant="h2"
           sx={{
             fontWeight: 800,
             fontSize: isMobile ? '2rem' : '3.5rem',
             mb: 3,
             color: '#1e1e1e',
             lineHeight: 1.2,
-            fontFamily: "'Poppins', sans-serif",
+            // fontFamily: "'Poppins', sans-serif",
             background: 'linear-gradient(to right, #333, #555)',
             WebkitBackgroundClip: 'text',
             backgroundClip: 'text',
@@ -76,7 +76,7 @@ const Style = () => {
             color: '#555',
             lineHeight: 1.7,
             mb: 4,
-            fontFamily: "'Inter', sans-serif",
+            // fontFamily: "'Inter', sans-serif",
           }}
         >
           Discover fashion effortlessly with our intuitive swipe interface.

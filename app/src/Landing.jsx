@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Box, useTheme, useMediaQuery } from "@mui/material";
-import mainlogo from "./assets/w.png";
-import mobilelogo from "./assets/w.png";
+import mainlogo from "./assets/w_2.png";
+import mobilelogo from "./assets/w_2.png";
 import ss1 from "./assets/ss1.jpg";
 import ss2 from "./assets/ss2.jpg";
 import ss3 from "./assets/ss3.jpg";
@@ -39,7 +39,7 @@ const Landing = () => {
         backgroundColor: "white",
       }}
     >
-      <Navbar></Navbar>
+      {/* <Navbar></Navbar> */}
       {/* Top Hero Section */}
       <Box
         sx={{
@@ -56,41 +56,24 @@ const Landing = () => {
         }}
       >
         {/* Sling Handles (Shopping Bag Style) - Only show on desktop */}
-        {!isMobile && (
-          <Box
-            sx={{
-              position: "absolute",
-              top: "10%",
-              left: "50%",
-              width: "80%",
-              maxWidth: 1200,
-              height: "100%",
-              maxHeight: 600,
-              border: "20px solid #e9cd7d",
-              borderTopLeftRadius: "100% 80%",
-              borderTopRightRadius: "100% 80%",
-              borderBottom: "none",
-              backgroundColor: "transparent",
-              zIndex: 0,
-              transform: "translateX(-50%)",
-            }}
-          />
-        )}
+     
         <br></br>
         {/* Logo */}
-        <Box
-          component="img"
-          src={isMobile ? mobilelogo : mainlogo}
-          alt="main logo"
-          sx={{
-            width: isMobile ? "80%" : isTablet ? "70%" : "60%",
-            maxWidth: isMobile ? 500 : 750,
-            zIndex: 1,
-            mt: isMobile ? -8 : -7.5,
-            mb: isMobile ? 4 : 0,
-            position: "relative",
-          }}
-        />{" "}
+       <Box
+  component="img"
+  src={isMobile ? mobilelogo : mainlogo}
+  alt="main logo"
+  sx={{
+    width: isMobile ? "60%" : isTablet ? "55%" : "10%", // smaller width
+    maxWidth: isMobile ? 350 : 550, // smaller max width
+    zIndex: 1,
+    mt: isMobile ? -20 : -7.5,
+    mb: isMobile ? 4 : 0,
+    position: "relative",
+  }}
+/>
+
+{" "}
         {/* Button */}
         <Box
           sx={{
@@ -102,7 +85,7 @@ const Landing = () => {
             gap: isMobile ? 2 : 3,
             justifyContent: "center",
             alignItems: "center",
-            mt: isMobile ? -8 : 6, // Added margin top for mobile
+            mt: isMobile ? -0: 6, // Added margin top for mobile
             mb: isMobile ? 2 : 0, // Added margin bottom for mobile
           }}
         >

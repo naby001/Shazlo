@@ -1,9 +1,9 @@
 import React from 'react';
 import { Box, Typography, useTheme, useMediaQuery, keyframes } from '@mui/material';
-import operationsImg from '../assets/pranav.png';
+import operationsImg from '../assets/pranav.jpg';
 import tech1Img from '../assets/maurya.png';
-import tech2Img from '../assets/nabyendu.png';
-import marketingImg from '../assets/darsh.png';
+import tech2Img from '../assets/nabyendu_1.jpg';
+import marketingImg from '../assets/darsh.jpg';
 
 const pulse = keyframes`
   0% { transform: scale(1); }
@@ -22,10 +22,10 @@ const Team = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const teamMembers = [
-    { img: operationsImg, role: 'The Operations Guy' },
-    { img: tech1Img, role: 'The Tech Guy' },
-    { img: tech2Img, role: 'The Tech Guy' },
-    { img: marketingImg, role: 'The Marketing Guy' },
+    { img: operationsImg, name: 'Pranav', role: 'The Operations Guy' },
+    { img: tech1Img, name: 'Maurya', role: 'The Tech Guy' },
+    { img: tech2Img, name: 'Nabyendu', role: 'The Tech Guy' },
+    { img: marketingImg, name: 'Darsh', role: 'The Marketing Guy' },
   ];
 
   return (
@@ -56,8 +56,6 @@ const Team = () => {
         },
       }}
     >
-      
-
       <Box
         sx={{
           display: 'grid',
@@ -76,11 +74,8 @@ const Team = () => {
               flexDirection: 'column',
               alignItems: 'center',
               textAlign: 'center',
-            //   background: 'white',
               borderRadius: '16px',
               p: 3,
-            //   boxShadow: '0 6px 20px rgba(0,0,0,0.05)',
-             
             }}
           >
             <Box
@@ -98,11 +93,21 @@ const Team = () => {
             />
             <Typography
               sx={{
-                fontSize: '1rem',
-                fontWeight: 300,
-                fontFamily: "'Poppins', sans-serif",
+                fontSize: '1.1rem',
+                fontWeight: 'bold',
+                color: '#111',
+                fontFamily:'Gerbata'
+              }}
+            >
+              {member.name}
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: '0.95rem',
+                fontStyle: 'italic',
                 color: '#333',
-                letterSpacing: 0.5,
+                mt: 0.5,
+                fontFamily:'Gerbata'
               }}
             >
               {member.role}
