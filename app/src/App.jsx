@@ -15,6 +15,8 @@ import { setLogout } from "./state";
 import LandingDesk from "./HomeDesktop";
 import HomeAlt from "./Home_alt";
 
+import AnotherHome from "./AnotherHome";
+
 function App() {
   const subdomain = window.location.hostname.split(".")[0];
   const dispatch=useDispatch();
@@ -26,8 +28,8 @@ const globalStyles = (
   <GlobalStyles
     styles={`
       @font-face {
-        font-family: 'Gerbata';
-        src: url('/src/assets/fonts/GarbataTrial-Bold.ttf') format('truetype');
+        font-family: 'Aloja';
+        src: url('/src/assets/fonts/AlojaLight.otf') format('opentype');
         font-weight: normal;
         font-style: normal;
       }
@@ -44,7 +46,7 @@ const globalStyles = (
         <Routes>
           {subdomain !== "seller" ? (
             <>
-              <Route path="/" element={<Landing/>} />
+              <Route path="/" element={<AnotherHome/>} />
               <Route path="/contact" element={<ContactPage />} />
               {/* No access to seller-specific pages here */}
             </>
