@@ -16,6 +16,7 @@ import LandingDesk from "./HomeDesktop";
 import HomeAlt from "./Home_alt";
 
 import AnotherHome from "./AnotherHome";
+import AnotherHomeOptimized from "./AnotherHomeOptimized";
 
 function App() {
   const subdomain = window.location.hostname.split(".")[0];
@@ -46,7 +47,7 @@ const globalStyles = (
         <Routes>
           {subdomain !== "seller" ? (
             <>
-              <Route path="/" element={<AnotherHome/>} />
+              <Route path="/" element={<AnotherHomeOptimized/>} />
               <Route path="/contact" element={<ContactPage />} />
               {/* No access to seller-specific pages here */}
             </>

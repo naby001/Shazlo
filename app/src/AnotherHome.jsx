@@ -14,7 +14,7 @@ import SceneBetaLaunch from "./components/SceneBetaLaunch";
 
 const AnotherHome = () => {
   const ref = useRef(null);
-  const { scrollYProgress } = useScroll(); // ✅ use global scroll
+  const { scrollYProgress } = useScroll({ target: ref }); // ✅ use global scroll
 
   // --- Hero fades out quickly ---
   // --- Hero fades out quickly ---
