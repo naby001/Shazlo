@@ -56,9 +56,11 @@ const SceneWhatsNew = ({ whatsnewXLeft, imageTop }) => {
   // Trigger main phone motion sequence
   useEffect(() => {
     const unsubscribe = scrollYProgress.on("change", async (latest) => {
-      if (latest >= 0.23 && !hasPlayed.current) {
+       
+    
+      if (latest >= 0.24 && !hasPlayed.current) {
         hasPlayed.current = true;
-        //  document.body.style.overflow = "hidden";
+         document.body.style.overflow = "hidden";
         // 1️⃣ Swipe right — like
         setInstruction("Swipe right if you like");
         await controls.start({
@@ -122,7 +124,7 @@ await controls.start({
   transition: { duration: 2, ease: "easeInOut" },
 });
 //  hasPlayed.current = false;
-  // document.body.style.overflow = "auto";
+  document.body.style.overflow = "auto";
       }
     });
     return () => unsubscribe();
@@ -153,7 +155,7 @@ await controls.start({
       <motion.div
         style={{
           x: whatsnewXLeft,
-          rotate: -2, // a bit off-axis for realism
+          // rotate: -2, // a bit off-axis for realism
         }}
         transition={{ type: "spring", stiffness: 50, damping: 15 }}
       >
@@ -163,63 +165,43 @@ await controls.start({
             display: "inline-block",
             px: { xs: 2.5, md: 4 },
             py: { xs: 1, md: 1.5 },
-            background:
-              "linear-gradient(145deg, #f9f5ec 0%, #efe8d9 100%)", // paper tone
-            borderRadius: "8px",
-            position: "relative",
-            boxShadow:
-              "3px 3px 0px #00000040, 0 0 12px rgba(0,0,0,0.35)", // rough drop shadow
-            transform: "rotate(-1.5deg)",
-            WebkitMaskImage:
-              "radial-gradient(circle at 10% 10%, rgba(0,0,0,1) 95%, rgba(0,0,0,0) 100%), radial-gradient(circle at 90% 90%, rgba(0,0,0,1) 95%, rgba(0,0,0,0) 100%)",
-            WebkitMaskComposite: "destination-in",
-            overflow: "hidden",
-            border: "1px solid rgba(0,0,0,0.1)",
+           
           }}
         >
-          {/* Rough texture overlay */}
-          <Box
-            sx={{
-              position: "absolute",
-              inset: 0,
-              backgroundImage:
-                "url('https://www.transparenttextures.com/patterns/paper-fibers.png')",
-              opacity: 0.3,
-              mixBlendMode: "multiply",
-              pointerEvents: "none",
-            }}
-          />
+        
 
           <Typography
             sx={{
               position: "relative",
-              fontFamily: "Aloja",
+              fontFamily: "Arapey",
               fontSize: { xs: "2.4rem", md: "3.4rem" },
-              color: "black",
+              color: "white",
               letterSpacing: "1px",
               fontWeight: 600,
-              textShadow:
-                "2px 3px 0 #fff, 4px 5px 12px rgba(0,0,0,0.25)",
+              // textShadow:
+              //   "2px 3px 0 #fff, 4px 5px 12px rgba(0,0,0,0.25)",
               userSelect: "none",
               textAlign: "center",
               lineHeight: 1.1,
-              transform: "rotate(-1deg)",
+              // transform: "rotate(-1deg)",
             }}
           >
-            What’s new in this app?
+           Swipe on products
           </Typography>
         </Box>
       </motion.div>
 
       {/* Animated phone demo */}
-    <motion.div
+   <motion.div
   style={{
     position: "absolute",
-    top: imageTop, // 👈 motion value
-    left: "20%",
+    top: imageTop, // motion value for scroll-driven vertical position
+    left: "50%",   // center horizontally
+    transform: "translateX(-50%)", // perfectly center regardless of width
     width: "250px",
     height: "400px",
     perspective: "1200px", // gives real 3D depth
+    willChange: "transform, top", // optimization hint
   }}
 >
   {/* --- ROTATING INNER WRAPPER --- */}
@@ -348,7 +330,7 @@ await controls.start({
     <Typography
       sx={{
         position: "relative",
-        fontFamily: "Aloja",
+        fontFamily: "Arapey",
         fontSize: "20px",
         color: "black",
         letterSpacing: "1px",

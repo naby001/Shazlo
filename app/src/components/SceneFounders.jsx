@@ -7,10 +7,10 @@ import founder3 from "../assets/nabya.png";
 import founder4 from "../assets/darsh.png";
 
 const founders = [
-  { img: founder1, label: "The Operations Guy", side: "left" },
-  { img: founder2, label: "The Tech Guy", side: "right" },
-  { img: founder3, label: "The Tech Guy", side: "left" },
-  { img: founder4, label: "The Marketing Guy", side: "right" },
+  { img: founder1, name: "Pranav", label: "The Operations Guy", side: "left" },
+  { img: founder2, name: "Maurya", label: "The Tech Guy", side: "right" },
+  { img: founder3, name: "Nabyendu", label: "The Tech Guy", side: "left" },
+  { img: founder4, name: "Darsh", label: "The Marketing Guy", side: "right" },
 ];
 
 const SceneFounders = ({
@@ -48,34 +48,36 @@ const SceneFounders = ({
             gap: "20px",
           }}
         >
-          {/* Founder Image */}
-          <motion.img
-            src={f.img}
-            alt={f.label}
-            style={{
+          {/* Founder Image with fade-bottom effect */}
+          <Box sx={{ position: "relative", width: "fit-content" }}>
+            <motion.img
+              src={f.img}
+              alt={f.label}
+              style={{
                 width:
-      i === 0
-        ? "130px" // Founder 1 — smaller
-        : i === 1
-        ? "140px" // Founder 2 — bigger
-        : i === 2
-        ? "150px" // Founder 3 — medium
-        : "260px", // Founder 4 — largest
-              height: "auto",
-            //   borderRadius: "12px",
-              boxShadow: "6px 8px 15px rgba(0,0,0,0.35)",
-              transform: f.side === "left" ? "rotate(-4deg)" : "rotate(4deg)",
-              x: positions[i], // motion control from parent
-            }}
-            transition={{ type: "spring", stiffness: 45, damping: 15 }}
-          />
+                  i === 0
+                    ? "130px" // Founder 1 — smaller
+                    : i === 1
+                    ? "140px" // Founder 2 — bigger
+                    : i === 2
+                    ? "150px" // Founder 3 — medium
+                    : "260px", // Founder 4 — largest
+                height: "auto",
+                // boxShadow: "6px 8px 15px rgba(0,0,0,0.35)",
+                transform: f.side === "left" ? "rotate(-4deg)" : "rotate(4deg)",
+                x: positions[i], // motion control from parent
+              }}
+              transition={{ type: "spring", stiffness: 45, damping: 15 }}
+            />
+           
+          </Box>
 
-          {/* Paper Cutout Label */}
+          {/* Paper Cutout Label with name + title */}
           <motion.div
             style={{
               opacity: textOpacity,
               transform: `rotate(${f.side === "left" ? "-2" : "2"}deg)`,
-              marginRight:i===3 && -100
+              marginRight: i === 3 && -100,
             }}
           >
             <Box
@@ -104,21 +106,40 @@ const SceneFounders = ({
                   pointerEvents: "none",
                 }}
               />
-             <Typography
-  sx={{
-    position: "relative",
-    fontFamily: "Arapey",
-    fontSize: "20px",
-    fontWeight: 600,
-    color: "#111",
-    textShadow: "1px 1px 0 #fff, 2px 2px 8px rgba(0,0,0,0.15)",
-    whiteSpace: "nowrap", // 👈 keeps all text in one line
-    letterSpacing: "1px",  // 👈 optional — improves spacing
-  }}
->
-  {f.label}
-</Typography>
 
+              {/* Name (on top of title) */}
+              <Typography
+                sx={{
+                  position: "relative",
+                  fontFamily: "Arapey",
+                  fontSize: "22px",
+                  fontWeight: 700,
+                  color: "#eeba2b",
+                  textShadow: "1px 1px 0 #000000ff, 2px 2px 8px rgba(0,0,0,0.15)",
+                  letterSpacing: "0.5px",
+                  textAlign: "center",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {f.name}
+              </Typography>
+
+              {/* Title */}
+              <Typography
+                sx={{
+                  position: "relative",
+                  fontFamily: "Arapey",
+                  fontSize: "20px",
+                  fontWeight: 600,
+                  color: "#111",
+                  textShadow: "1px 1px 0 #fff, 2px 2px 8px rgba(0,0,0,0.15)",
+                  whiteSpace: "nowrap",
+                  letterSpacing: "1px",
+                  marginTop: "-2px",
+                }}
+              >
+                {f.label}
+              </Typography>
             </Box>
           </motion.div>
         </Box>

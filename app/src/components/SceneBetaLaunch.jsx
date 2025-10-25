@@ -1,10 +1,11 @@
 import React from "react";
-import { Box, Typography, Button, IconButton } from "@mui/material";
+import { Box, Typography, IconButton } from "@mui/material";
 import { motion } from "framer-motion";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import logo from "../assets/3a.png";
+import ventureLogo from "../assets/venturestudio.png"; // 👈 your Venture Studio logo
 
 const SceneBetaLaunch = ({ logoY, textOpacity }) => {
   return (
@@ -30,7 +31,7 @@ const SceneBetaLaunch = ({ logoY, textOpacity }) => {
         style={{
           width: "280px",
           height: "auto",
-          y: logoY, // 👈 animated motion value
+          y: logoY,
           opacity: textOpacity,
           transform: "rotate(-3deg)",
           filter: "drop-shadow(6px 6px 15px rgba(0,0,0,0.4))",
@@ -42,7 +43,68 @@ const SceneBetaLaunch = ({ logoY, textOpacity }) => {
         }}
       />
 
-      {/* --- Paper Cutout Text Box --- */}
+      {/* --- “Backed by Venture Studio” Box --- */}
+    <motion.div
+  style={{
+    opacity: textOpacity,
+    transform: "rotate(1deg)",
+    marginTop: "12px",
+  }}
+>
+  <Box
+  component="a"
+    href="https://ahduni.edu.in/academics/schools-centres/venturestudio/"
+    target="_blank"
+    rel="noopener noreferrer"
+    sx={{
+      background: "linear-gradient(145deg, #f9f5ec 0%, #efe8d9 100%)",
+      textDecoration:'none',
+      borderRadius: "8px",
+      px: 2.5, // tighter padding
+      py: 0.2,
+      boxShadow: "2px 2px 0px #00000040, 0 0 10px rgba(0,0,0,0.2)",
+      border: "1px solid rgba(0,0,0,0.12)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      gap: 1,
+      pointerEvents: "auto",
+      backdropFilter: "blur(2px)",
+    }}
+  >
+    <Typography
+      sx={{
+        fontFamily: "Arapey",
+        fontSize: "1rem",
+        fontWeight: 700,
+        color: "#111",
+        letterSpacing: "0.5px",
+        textShadow: "1px 1px 0 #fff",
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
+      Backed by Venture Studio
+    </Typography>
+
+    <Box
+      component="img"
+      src={ventureLogo} // 👈 put your Venture Studio logo here (ventureLogo)
+      alt="Venture Studio Logo"
+      sx={{
+        width: "20px",
+        height: "auto",
+        opacity: 0.95,
+        ml: 1,
+        transform: "translateY(1px)",
+        filter: "grayscale(25%) contrast(1.1)",
+      }}
+    />
+  </Box>
+</motion.div>
+
+
+      {/* --- Beta Launch Tagline --- */}
       <motion.div
         style={{
           opacity: textOpacity,
@@ -62,7 +124,6 @@ const SceneBetaLaunch = ({ logoY, textOpacity }) => {
             overflow: "hidden",
           }}
         >
-          {/* paper texture overlay */}
           <Box
             sx={{
               position: "absolute",
@@ -81,8 +142,7 @@ const SceneBetaLaunch = ({ logoY, textOpacity }) => {
               fontSize: "25px",
               fontWeight: 700,
               color: "#111",
-              textShadow:
-                "2px 2px 0 #fff, 4px 4px 10px rgba(0,0,0,0.25)",
+              textShadow: "2px 2px 0 #fff, 4px 4px 10px rgba(0,0,0,0.25)",
               textAlign: "center",
               whiteSpace: "nowrap",
             }}
@@ -92,88 +152,56 @@ const SceneBetaLaunch = ({ logoY, textOpacity }) => {
         </Box>
       </motion.div>
 
-      {/* --- Download Button --- */}
-      {/* <motion.div
+      {/* --- Social Icons --- */}
+      <motion.div
         style={{
           opacity: textOpacity,
-          transform: "rotate(-2deg)",
-          marginTop: "40px",
+          transform: "rotate(1deg)",
+          marginTop: "35px",
+          display: "flex",
+          gap: "25px",
+          pointerEvents: "auto",
         }}
       >
-        <Button
-          variant="contained"
-          sx={{
-            background: "linear-gradient(145deg, #ffb8a5 0%, #ff7f70 40%, #ff4b5a 100%)",
-            borderRadius: "10px",
-            px: 4,
-            py: 1.5,
-            fontFamily: "Poppins, sans-serif",
-            fontWeight: 600,
-            fontSize: "1rem",
-            textTransform: "none",
-            boxShadow: "4px 4px 0px #3b1a1a80, 0 0 18px rgba(255,100,100,0.4)",
-            pointerEvents: "auto", // ✅ clickable
-            "&:hover": {
-              background: "linear-gradient(145deg, #ff9780 0%, #ff6f60 40%, #ff3445 100%)",
-            },
-          }}
-        >
-          Get Notified 
-        </Button>
-      </motion.div> */}
-
-      {/* --- Social Icons --- */}
-     {/* --- Social Icons --- */}
-<motion.div
-  style={{
-    opacity: textOpacity,
-    transform: "rotate(1deg)",
-    marginTop: "35px",
-    display: "flex",
-    gap: "25px",
-    pointerEvents: "auto", // ✅ clickable
-  }}
->
-  {[
-    {
-      Icon: InstagramIcon,
-      url: "https://www.instagram.com/shazlo.store?igsh=bTZ0bXM3NTdjOTN6",
-    },
-    {
-      Icon: LinkedInIcon,
-      url: "https://linkedin.com/company/shazlo",
-    },
-    {
-      Icon: FacebookIcon,
-      url: "https://www.facebook.com/shazlo.store",
-    },
-  ].map(({ Icon, url }, i) => (
-    <Box
-      key={i}
-      sx={{
-        background: "linear-gradient(145deg, #f9f5ec 0%, #efe8d9 100%)",
-        borderRadius: "50%",
-        boxShadow: "2px 2px 0px #00000040, 0 0 8px rgba(0,0,0,0.25)",
-        p: 1,
-        transform: `rotate(${i % 2 === 0 ? "-3deg" : "3deg"})`,
-      }}
-    >
-      <IconButton
-        component="a"
-        href={url}
-        target="_blank"
-        rel="noopener noreferrer"
-        sx={{
-          color: "#111",
-          "&:hover": { color: "#ff4d7a" },
-        }}
-      >
-        <Icon />
-      </IconButton>
-    </Box>
-  ))}
-</motion.div>
-
+        {[
+          {
+            Icon: InstagramIcon,
+            url: "https://www.instagram.com/shazlo.store?igsh=bTZ0bXM3NTdjOTN6",
+          },
+          {
+            Icon: LinkedInIcon,
+            url: "https://linkedin.com/company/shazlo",
+          },
+          {
+            Icon: FacebookIcon,
+            url: "https://www.facebook.com/shazlo.store",
+          },
+        ].map(({ Icon, url }, i) => (
+          <Box
+            key={i}
+            sx={{
+              background: "linear-gradient(145deg, #f9f5ec 0%, #efe8d9 100%)",
+              borderRadius: "50%",
+              boxShadow: "2px 2px 0px #00000040, 0 0 8px rgba(0,0,0,0.25)",
+              p: 1,
+              transform: `rotate(${i % 2 === 0 ? "-3deg" : "3deg"})`,
+            }}
+          >
+            <IconButton
+              component="a"
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                color: "#111",
+                "&:hover": { color: "#ff4d7a" },
+              }}
+            >
+              <Icon />
+            </IconButton>
+          </Box>
+        ))}
+      </motion.div>
     </Box>
   );
 };

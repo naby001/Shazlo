@@ -5,12 +5,13 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import SceneHero from "./components/SceneHero";
 import SceneLogo from "./components/SceneLogo";
 import SceneBanners from "./components/SceneBanner";
-import background from "./assets/logo-background.jpg";
+import background from "./assets/background.png";
 import SceneWhatsNew from "./components/SceneWhatsNew";
 import SceneClosets from "./components/SceneClosets";
 import SceneFounderNote from "./components/SceneFounderNote";
 import SceneFounders from "./components/SceneFounders";
 import SceneBetaLaunch from "./components/SceneBetaLaunch";
+import SceneCardShowcase from "./components/SceneCardShowcase";
 
 /**
  * Optimizations applied:
@@ -72,14 +73,14 @@ const AnotherHomeOptimized = () => {
   // --- What's New Section ---
   const whatsnewXLeft = useTransform(
     scrollYProgress,
-    [0.22, 0.25, 0.34, 0.42],
-    ["-120vw", "0vw", "0vw", "120vw"]
+    [0.22, 0.23, 0.34, 0.46, 0.48],
+    ["-120vw", "0vw", "0vw", "0vw","120vw"]
   );
-  const imageTop = useTransform(scrollYProgress, [0.225, 0.275, 0.325], [800, -900, -400]);
-
+  const imageTop = useTransform(scrollYProgress, [0.225, 0.275], [-800, 800]);
+  const imageOp = useTransform(scrollYProgress, [0.225, 0.275, 0.28], [1, 1,0]);
   // --- Closets Section (extended stay) ---
-  const imgTopX = useTransform(scrollYProgress, [0.36, 0.42, 0.48], ["-120vw", "0vw", "120vw"]);
-  const imgBottomX = useTransform(scrollYProgress, [0.36, 0.42, 0.48], ["120vw", "0vw", "-120vw"]);
+  const imgTopX = useTransform(scrollYProgress, [0.3, 0.42, 0.48], ["-120vw", "0vw", "120vw"]);
+  const imgBottomX = useTransform(scrollYProgress, [0.3, 0.42, 0.48], ["120vw", "0vw", "-120vw"]);
   const textOpacity = useTransform(scrollYProgress, [0.36, 0.42, 0.5], [0, 1, 0]);
   const textY = useTransform(scrollYProgress, [0.35, 0.44], [40, 0]);
 
@@ -89,7 +90,7 @@ const AnotherHomeOptimized = () => {
 
   // --- Founders Section (shifted down) ---
   const f1X = useTransform(scrollYProgress, [0.64, 0.68, 0.75, 0.82], ["-120vw", "0vw", "0vw", "120vw"]);
-  const f2X = useTransform(scrollYProgress, [0.68, 0.72, 0.76, 0.82], ["120vw", "0vw", "0vw", "120vw"]);
+  const f2X = useTransform(scrollYProgress, [0.68, 0.72, 0.76, 0.82], ["120vw", "0vw", "0vw", "-120vw"]);
   const f3X = useTransform(scrollYProgress, [0.7, 0.74, 0.78, 0.82], ["-120vw", "0vw", "0vw", "120vw"]);
   const f4X = useTransform(scrollYProgress, [0.72, 0.76, 0.82], ["120vw", "0vw", "-120vw"]);
   const textOpacityfounder = useTransform(scrollYProgress, [0.68, 0.74, 0.82], [0, 1, 0]);
@@ -126,21 +127,23 @@ const AnotherHomeOptimized = () => {
           }}
         >
           {/* Background image (no CSS filter) — hardware hint provided */}
-          <motion.div
-            style={{
-              opacity: 1,
-              position: "absolute",
-              inset: 0,
-              backgroundImage: `url(${background})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-              // removed filter for mobile perf
-              zIndex: 0,
-              willChange: "opacity, transform",
-              transform: "translateZ(0)",
-            }}
-          />
+         <motion.div
+  style={{
+    opacity: 1,
+    position: "absolute",
+    inset: 0,
+    backgroundImage: `url(${background})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    filter: "blur(6px) brightness(0.6)", // 👈 blur + subtle dim for contrast
+    transform: "scale(1.05)", // 👈 slight scale to avoid edge clipping from blur
+    zIndex: 0,
+    willChange: "opacity, transform, filter",
+    transform: "translateZ(0)",
+  }}
+/>
+
 
           {/* --- Hero (wrapped so we hint the browser about what changes) --- */}
           <motion.div
@@ -206,10 +209,11 @@ const AnotherHomeOptimized = () => {
               pointerEvents: "none",
             }}
           >
-            <SceneWhatsNew
+            <SceneCardShowcase
               whatsnewXLeft={whatsnewXLeft}
               imageTop={imageTop}
               scrollYProgress={scrollYProgress}
+              imageOp={imageOp}
             />
           </motion.div>
 
