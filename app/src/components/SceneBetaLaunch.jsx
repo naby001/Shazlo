@@ -1,13 +1,40 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { Box, Typography, IconButton } from "@mui/material";
-import { motion } from "framer-motion";
+import { motion, useMotionValueEvent } from "framer-motion";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import logo from "../assets/3a.png";
-import ventureLogo from "../assets/venturestudio.png"; // 👈 your Venture Studio logo
+import ventureLogo from "../assets/venturestudio1.png";
 
 const SceneBetaLaunch = ({ logoY, textOpacity }) => {
+  const linkRef = useRef(null);
+
+  // 👇 This tracks the actual motion value and toggles link interactivity
+  useMotionValueEvent(textOpacity, "change", (latest) => {
+    const linkEl = linkRef.current;
+    if (!linkEl) return;
+
+    if (latest === 1) {
+      // activate link
+      linkEl.setAttribute(
+        "href",
+        "https://ahduni.edu.in/academics/schools-centres/venturestudio/"
+      );
+      linkEl.setAttribute("target", "_blank");
+      linkEl.setAttribute("rel", "noopener noreferrer");
+      linkEl.style.pointerEvents = "auto";
+      linkEl.style.cursor = "pointer";
+    } else {
+      // deactivate link
+      linkEl.removeAttribute("href");
+      linkEl.removeAttribute("target");
+      linkEl.removeAttribute("rel");
+      linkEl.style.pointerEvents = "none";
+      linkEl.style.cursor = "default";
+    }
+  });
+
   return (
     <Box
       sx={{
@@ -43,66 +70,67 @@ const SceneBetaLaunch = ({ logoY, textOpacity }) => {
         }}
       />
 
-      {/* --- “Backed by Venture Studio” Box --- */}
-    <motion.div
-  style={{
-    opacity: textOpacity,
-    transform: "rotate(1deg)",
-    marginTop: "12px",
-  }}
->
-  <Box
-  component="a"
-    href="https://ahduni.edu.in/academics/schools-centres/venturestudio/"
-    target="_blank"
-    rel="noopener noreferrer"
-    sx={{
-      background: "linear-gradient(145deg, #f9f5ec 0%, #efe8d9 100%)",
-      textDecoration:'none',
-      borderRadius: "8px",
-      px: 2.5, // tighter padding
-      py: 0.2,
-      boxShadow: "2px 2px 0px #00000040, 0 0 10px rgba(0,0,0,0.2)",
-      border: "1px solid rgba(0,0,0,0.12)",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      gap: 1,
-      pointerEvents: "auto",
-      backdropFilter: "blur(2px)",
-    }}
-  >
-    <Typography
-      sx={{
-        fontFamily: "Arapey",
-        fontSize: "1rem",
-        fontWeight: 700,
-        color: "#111",
-        letterSpacing: "0.5px",
-        textShadow: "1px 1px 0 #fff",
-        display: "flex",
-        alignItems: "center",
-      }}
-    >
-      Backed by Venture Studio
-    </Typography>
+      {/* --- Venture Studio Link --- */}
+      <motion.div
+        style={{
+          opacity: textOpacity,
+          transform: "rotate(1deg)",
+          marginTop: "12px",
+        }}
+      >
+        <Box
+          ref={linkRef}
+          component="a"
+          sx={{
+            background: "linear-gradient(145deg, #f9f5ec 0%, #efe8d9 100%)",
+            textDecoration: "none",
+            borderRadius: "8px",
+            px: 2.5,
+            py: 0.2,
+            boxShadow: "2px 2px 0px #00000040, 0 0 10px rgba(0,0,0,0.2)",
+            border: "1px solid rgba(0,0,0,0.12)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 1,
+            pointerEvents: "none", // start disabled
+            backdropFilter: "blur(2px)",
+            transition: "transform 0.2s ease",
+            "&:hover": {
+              transform: "scale(1.02)",
+            },
+          }}
+        >
+          <Typography
+            sx={{
+              fontFamily: "Arapey",
+              fontSize: "1rem",
+              fontWeight: 700,
+              color: "#111",
+              letterSpacing: "0.5px",
+              textShadow: "1px 1px 0 #fff",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            Backed by 
+          </Typography>
 
-    <Box
-      component="img"
-      src={ventureLogo} // 👈 put your Venture Studio logo here (ventureLogo)
-      alt="Venture Studio Logo"
-      sx={{
-        width: "20px",
-        height: "auto",
-        opacity: 0.95,
-        ml: 1,
-        transform: "translateY(1px)",
-        filter: "grayscale(25%) contrast(1.1)",
-      }}
-    />
-  </Box>
-</motion.div>
-
+          <Box
+            component="img"
+            src={ventureLogo}
+            alt="Venture Studio Logo"
+            sx={{
+              width: "200px",
+              height: "auto",
+              opacity: 0.95,
+              ml: 1,
+              transform: "translateY(1px)",
+              filter: "grayscale(25%) contrast(1.1)",
+            }}
+          />
+        </Box>
+      </motion.div>
 
       {/* --- Beta Launch Tagline --- */}
       <motion.div
@@ -124,17 +152,6 @@ const SceneBetaLaunch = ({ logoY, textOpacity }) => {
             overflow: "hidden",
           }}
         >
-          <Box
-            sx={{
-              position: "absolute",
-              inset: 0,
-              backgroundImage:
-                "url('https://www.transparenttextures.com/patterns/paper-fibers.png')",
-              opacity: 0.3,
-              mixBlendMode: "multiply",
-              pointerEvents: "none",
-            }}
-          />
           <Typography
             sx={{
               position: "relative",

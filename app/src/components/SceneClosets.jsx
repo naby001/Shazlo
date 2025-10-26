@@ -25,7 +25,7 @@ const SceneClosets = ({ imgTopX, imgBottomX, textOpacity, textY }) => {
           position: "absolute",
           top: "20%",
           left: "2%",
-          width: "360px",
+          width: "420px",
           height: "auto",
           borderRadius: "16px",
           zIndex: 2,
@@ -41,7 +41,7 @@ const SceneClosets = ({ imgTopX, imgBottomX, textOpacity, textY }) => {
           position: "absolute",
           bottom: "10%",
           right: "10%",
-          width: "360px",
+          width: "420px",
           height: "auto",
           borderRadius: "16px",
           transform: "rotate(5deg)",
@@ -71,14 +71,15 @@ const SceneClosets = ({ imgTopX, imgBottomX, textOpacity, textY }) => {
             sx={{
               position: "relative",
               fontFamily: "Arapey",
-              fontSize: { xs: "2.2rem", md: "3.2rem" },
+              fontSize: { xs: "1.8rem", md: "2.6rem" },
               color: "white",
               fontWeight: 600,
               textAlign: "center",
-              lineHeight: 1.25,
-              transform: "rotate(-1deg)",
+              lineHeight: 1.1,
+              
+              // transform: "rotate(-1deg)",
               letterSpacing: "1px",
-              wordBreak: "keep-all",
+              // wordBreak: "keep-all",
             }}
           >
             Make Closets — Share and Collab with others
