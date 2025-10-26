@@ -73,11 +73,11 @@ const AnotherHomeOptimized = () => {
   // --- What's New Section ---
   const whatsnewXLeft = useTransform(
     scrollYProgress,
-    [0.22, 0.23, 0.34, 0.46, 0.48],
-    ["-120vw", "0vw", "0vw", "0vw","120vw"]
+    [ 0.27, 0.28, 0.46, 0.48],
+    [ "-120vw", "0vw", "0vw","120vw"]
   );
-  const imageTop = useTransform(scrollYProgress, [0.225, 0.285], [-800, 800]);
-  const imageOp = useTransform(scrollYProgress, [0.225, 0.275, 0.28], [1, 1,0]);
+  const imageTop = useTransform(scrollYProgress, [0.22, 0.32], [-800, 800]);
+  const imageOp = useTransform(scrollYProgress, [0.225, 0.275, 0.32], [1, 1,0]);
   // --- Closets Section (extended stay) ---
   const imgTopX = useTransform(scrollYProgress, [0.3, 0.42, 0.48], ["-120vw", "0vw", "120vw"]);
   const imgBottomX = useTransform(scrollYProgress, [0.3, 0.42, 0.48], ["120vw", "0vw", "-120vw"]);
