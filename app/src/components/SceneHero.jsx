@@ -1,6 +1,8 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import { motion, useTransform, useScroll } from "framer-motion";
+import background from "../assets/background12.jpg";
+import down from "../assets/down.png"; // 👈 your scroll indicator image
 
 const SceneHero = ({ opacity }) => {
   const { scrollYProgress } = useScroll();
@@ -17,12 +19,27 @@ const SceneHero = ({ opacity }) => {
   return (
     <motion.div
       style={{
-        opacity:1,
+        opacity: 1,
         position: "absolute",
         width: "100%",
         height: "100%",
       }}
     >
+      <motion.div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          backgroundImage: `url(${background})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          opacity: useTransform(progress, [0, 1], [1, 0]), // fade out with scroll
+          zIndex: -1,
+        }}
+      />
       <Box
         sx={{
           height: "100%",
@@ -30,15 +47,15 @@ const SceneHero = ({ opacity }) => {
           alignItems: "center",
           justifyContent: "center",
           flexDirection: "column",
-          background: "#eeba2b",
+          background: "#eeba2ba7",
           overflow: "hidden",
-          zIndex:0
+          zIndex: 0,
+          position: "relative",
         }}
       >
         <Typography
-        //   variant="h2"
           sx={{
-            fontSize:'50px',
+            fontSize: "60px",
             color: "black",
             fontWeight: 200,
             letterSpacing: 1,
@@ -48,7 +65,7 @@ const SceneHero = ({ opacity }) => {
             justifyContent: "center",
             gap: "0.6rem",
             lineHeight: 1.4,
-            fontFamily:'Arapey'
+            fontFamily: "Arapey",
           }}
         >
           {words.map((word, i) => {
@@ -75,6 +92,53 @@ const SceneHero = ({ opacity }) => {
             );
           })}
         </Typography>
+
+        {/* 👇 Scroll to reveal indicator (added only this part) */}
+        <motion.div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "10px",
+            // marginTop: "60px",
+            opacity: useTransform(progress, [0, 0.4], [1, 0]),
+            animation: "floatDown 2s ease-in-out infinite",
+          }}
+        >
+          <motion.img
+            src={down}
+            alt="Scroll to reveal"
+            style={{
+              width: "34px",
+              height: "34px",
+              filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.3))",
+            }}
+          />
+          <Typography
+            sx={{
+              fontFamily: "Arapey",
+              fontSize: "1.1rem",
+              color: "black",
+              fontWeight: 400,
+              letterSpacing: "0.5px",
+              opacity: 1,
+            }}
+          >
+            scroll to reveal
+          </Typography>
+        </motion.div>
+
+        <style>
+          {`
+            @keyframes floatDown {
+              0%, 100% {
+                transform: translateY(0);
+              }
+              50% {
+                transform: translateY(12px);
+              }
+            }
+          `}
+        </style>
       </Box>
     </motion.div>
   );
