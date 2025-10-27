@@ -73,7 +73,7 @@ const AnotherHomeOptimized = () => {
   // --- What's New Section ---
   const whatsnewXLeft = useTransform(
     scrollYProgress,
-    [ 0.27, 0.28, 0.46, 0.48],
+    [ 0.24, 0.26, 0.46, 0.48],
     [ "-120vw", "0vw", "0vw","120vw"]
   );
   const imageTop = useTransform(scrollYProgress, [0.22, 0.32], [-800, 800]);

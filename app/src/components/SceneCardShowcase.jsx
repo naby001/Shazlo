@@ -102,13 +102,11 @@ const SceneCardShowcase = ({ whatsnewXLeft, imageTop, imageOp }) => {
         fontSize: { xs: "1.8rem", md: "2.6rem" },
         color: "white",
         fontWeight: 600,
-        // letterSpacing: "1px",
         textShadow: "0 4px 18px rgba(0,0,0,0.4)",
         whiteSpace: "nowrap",
       }}
     >
-      As you swipe, the app learns,  
-
+      As you swipe, the app learns,
     </Typography>
 
     <Typography
@@ -117,14 +115,49 @@ const SceneCardShowcase = ({ whatsnewXLeft, imageTop, imageOp }) => {
         fontSize: { xs: "1.8rem", md: "3.8rem" },
         color: "white",
         fontWeight: 600,
-        // sletterSpacing: "0.5px",
-        // mt: 1, // slight spacing between lines
+        whiteSpace: "nowrap",
+        position: "relative",
+        display: "inline-block",
       }}
     >
-    curating a feed just for you
+      curating a feed just{" "}
+      <span
+        style={{
+          position: "relative",
+          display: "inline-block",
+        }}
+      >
+        {/* tilted highlight */}
+        <span
+          style={{
+            position: "absolute",
+            left: "-4px",
+            right: "-4px",
+            top: "25%",
+            height: "60%",
+            background:
+              "linear-gradient(120deg, #ffe082 0%, #fff59d 100%)",
+            transform: "rotate(-2.5deg)",
+            borderRadius: "4px",
+            zIndex: 0,
+          }}
+        ></span>
+
+        {/* text stays on top */}
+        <span
+          style={{
+            position: "relative",
+            color: "#ff4d7a",
+            zIndex: 0,
+          }}
+        >
+          for you
+        </span>
+      </span>
     </Typography>
   </Box>
 </motion.div>
+
 
 
       {/* --- Card Stack --- */}
