@@ -65,7 +65,7 @@ const SceneHero = ({ opacity }) => {
             justifyContent: "center",
             gap: "0.6rem",
             lineHeight: 1.4,
-            fontFamily: "Arapey",
+            fontFamily: "Voyage",
           }}
         >
           {words.map((word, i) => {

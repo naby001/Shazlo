@@ -84,9 +84,12 @@ const SceneCardShowcase = ({ whatsnewXLeft, imageTop, imageOp }) => {
       sx={{
         position: "absolute",
         top: "8%",
-        left: "5%",
+        left: { xs: "5%", md: "25%" },
         zIndex: 5,
         pointerEvents: "none",
+         display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
       }}
     >
       {/* --- Heading Text --- */}

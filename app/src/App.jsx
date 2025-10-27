@@ -17,7 +17,7 @@ import HomeAlt from "./Home_alt";
 
 import AnotherHome from "./AnotherHome";
 import AnotherHomeOptimized from "./AnotherHomeOptimized";
-
+import { Analytics } from "@vercel/analytics/react"
 function App() {
   const subdomain = window.location.hostname.split(".")[0];
   const dispatch=useDispatch();
@@ -29,8 +29,8 @@ const globalStyles = (
   <GlobalStyles
     styles={`
       @font-face {
-        font-family: 'Aloja';
-        src: url('/src/assets/fonts/AlojaLight.otf') format('opentype');
+        font-family: 'Voyage';
+        src: url('/voyage-regular.otf') format('opentype');
         font-weight: normal;
         font-style: normal;
       }
@@ -59,6 +59,7 @@ const globalStyles = (
           )}
         </Routes>
       </Router>
+      <Analytics />
     </ThemeProvider>
 
   );
