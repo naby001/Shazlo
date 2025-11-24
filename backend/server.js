@@ -4,51 +4,31 @@ import cors from "cors";
 import dotenv from "dotenv";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
-import preRegisterRoutes from "./routes/preRegister.js";
+import waitlistRoutes from "./routes/waitlist.js";  // ✅ your waitlist route
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Security middleware
-app.use(helmet());
 
-// Rate limiting
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
-  message: "Too many requests from this IP, please try again later.",
-});
-app.use(limiter);
 
-// CORS configuration
-app.use(
-  cors
-);
+// CORS (fixed)
+app.use(cors());
 
-// Body parser middleware
+// Body parser
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.use("/api/preregister", preRegisterRoutes);
+app.use("/api/waitlist", waitlistRoutes);   // ✅ now correctly mapped
 
-// Health check endpoint
+// Health check
 app.get("/api/health", (req, res) => {
   res.status(200).json({
     status: "OK",
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
-  });
-});
-
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).json({
-    message: "Something went wrong!",
-    error: process.env.NODE_ENV === "development" ? err.message : {},
   });
 });
 
@@ -63,8 +43,7 @@ mongoose
   .then(() => {
     console.log("Connected to MongoDB");
     app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-      console.log(`Environment: ${process.env.NODE_ENV}`);
+      console.log(`Server running on port ${PORT}`);
     });
   })
   .catch((error) => {

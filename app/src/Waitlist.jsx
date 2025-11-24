@@ -1,5 +1,5 @@
 // AnotherHome.optimized.jsx
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Box } from "@mui/material";
 import { motion, useScroll, useTransform } from "framer-motion";
 import SceneHero from "./components/SceneHero";
@@ -13,6 +13,7 @@ import SceneFounders from "./components/SceneFounders";
 import SceneBetaLaunch from "./components/SceneBetaLaunch";
 import SceneCardShowcase from "./components/SceneCardShowcase";
 import SceneWaitlistForm from "./components/SceneWaitlistForm";
+import { useLocation } from "react-router-dom";
 
 /**
  * Optimizations applied:
@@ -29,16 +30,21 @@ import SceneWaitlistForm from "./components/SceneWaitlistForm";
  * - if scenes still jitter, throttle scroll updates via useMotionValueEvent or reduce transform count inside scenes
  */
 
-const AnotherHomeOptimized = () => {
+const Waitlist = () => {
   const containerRef = useRef(null);
+    const [open, setOpen] = useState(true);
+  const location = useLocation();
 
+  // close automatically when route changes
+  useEffect(() => {
+    setOpen(location.pathname === "/waitlist");
+  }, [location.pathname]);
   // local scroll tracking bound to containerRef (much cheaper than global)
   const { scrollYProgress } = useScroll({ target: containerRef });
 
   // NOTE: scroll ranges kept similar but compressed since container total height is shorter (800vh)
   // --- Hero fades out quickly ---
   const heroOpacity = useTransform(scrollYProgress, [0, 0.04, 0.06], [1, 1, 0]);
-  const waitlistOpacity = useTransform(scrollYProgress, [0, 0.04, 0.08,0.15], [0, 0, 0,1]);
 
   // --- Logo fades in & holds ---
   const logoOpacity = useTransform(
@@ -146,174 +152,14 @@ const AnotherHomeOptimized = () => {
     transform: "translateZ(0)",
   }}
 />
+<SceneWaitlistForm />
 
 
-          {/* --- Hero (wrapped so we hint the browser about what changes) --- */}
-          <motion.div
-            style={{
-              opacity: heroOpacity,
-              willChange: "opacity, transform",
-              transform: "translateZ(0)",
-              zIndex: 2,
-              position: "absolute",
-              inset: 0,
-            }}
-          >
-            <SceneHero />
-          </motion.div>
-
-          {/* --- Logo --- */}
-          <motion.div
-            style={{
-              opacity: logoOpacity,
-              // pass width as a motion value prop (SceneLogo can accept it)
-              willChange: "opacity, transform",
-              transform: "translateZ(0)",
-              zIndex: 3,
-              position: "absolute",
-              inset: 0,
-              pointerEvents: "none",
-            }}
-          >
-            <SceneLogo opacity={logoOpacity} logoWidth={logoWidth} />
-          </motion.div>
-
-          {/* --- Banners (left + right) - single wrapper each to reduce subscriptions --- */}
-          <motion.div
-            style={{
-              opacity: bannerOpacity,
-              willChange: "transform, opacity",
-              transform: "translateZ(0)",
-              zIndex: 4,
-              position: "absolute",
-              inset: 0,
-              pointerEvents: "none",
-            }}
-          >
-            <SceneBanners
-              opacity={bannerOpacity}
-              xLeft={bannerXLeft}
-              xRight={bannerXRight}
-              rotateLeft={bannerRotateLeft}
-              rotateRight={bannerRotateRight}
-              yLeft={bannerYLeft}
-              yRight={bannerYRight}
-            />
-          </motion.div>
-
-          {/* --- Whats New --- */}
-          <motion.div
-            style={{
-              willChange: "transform, opacity",
-              transform: "translateZ(0)",
-              zIndex: 5,
-              position: "absolute",
-              inset: 0,
-              pointerEvents: "none",
-            }}
-          >
-            <SceneCardShowcase
-              whatsnewXLeft={whatsnewXLeft}
-              imageTop={imageTop}
-              scrollYProgress={scrollYProgress}
-              imageOp={imageOp}
-            />
-          </motion.div>
-
-          {/* --- Closets --- */}
-          <motion.div
-            style={{
-              willChange: "transform, opacity",
-              transform: "translateZ(0)",
-              zIndex: 6,
-              position: "absolute",
-              inset: 0,
-              pointerEvents: "none",
-            }}
-          >
-            <SceneClosets imgTopX={imgTopX} imgBottomX={imgBottomX} textOpacity={textOpacity} textY={textY} />
-          </motion.div>
-
-          {/* --- Founder Note --- */}
-          <motion.div
-            style={{
-              willChange: "transform, opacity",
-              transform: "translateZ(0)",
-              zIndex: 7,
-              position: "absolute",
-              inset: 0,
-              pointerEvents: "none",
-            }}
-          >
-            <SceneFounderNote noteY={noteY} noteOpacity={noteOpacity} />
-          </motion.div>
-
-          {/* --- Founders --- */}
-          <motion.div
-            style={{
-              willChange: "transform, opacity",
-              transform: "translateZ(0)",
-              zIndex: 8,
-              position: "absolute",
-              inset: 0,
-              pointerEvents: "none",
-            }}
-          >
-            <SceneFounders
-              f1X={f1X}
-              f2X={f2X}
-              f3X={f3X}
-              f4X={f4X}
-              textOpacity={textOpacityfounder}
-            />
-          </motion.div>
-
-          {/* --- Beta Launch --- */}
-          <motion.div
-            style={{
-              willChange: "transform, opacity",
-              transform: "translateZ(0)",
-              zIndex: 9,
-              position: "absolute",
-              inset: 0,
-              pointerEvents: "none",
-            }}
-          >
-            <SceneBetaLaunch logoY={betaLogoY} textOpacity={betaTextOpacity} />
-          </motion.div>
+        
         </Box>
       </Box>
-      {/* Floating Waitlist Button */}
-<Box
-  component={motion.div}
-  whileHover={{ scale: 1.05 }}
-  whileTap={{ scale: 0.95 }}
-    style={{
-    opacity: waitlistOpacity,   
-  }}
-  sx={{
-    position: "fixed",
-    top: 20,
-    // opacity: heroOpacity,
-    right: 20,
-    zIndex: 99999,
-    background: "#ff4d7a",
-    color: "white",
-    px: 2.5,
-    py: 1,
-    borderRadius: "8px",
-    fontWeight: 900,
-    fontFamily: "Doto",
-    cursor: "pointer",
-    boxShadow: "0 8px 20px rgba(0,0,0,0.3)",
-  }}
-  onClick={() => (window.location.href = "/waitlist")}
->
-  Join Waitlist
-</Box>
-
     </Box>
   );
 };
 
-export default AnotherHomeOptimized;
+export default Waitlist;

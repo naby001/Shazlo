@@ -219,6 +219,7 @@ const SceneBetaLaunch = ({ logoY, textOpacity }) => {
           </Box>
         ))}
       </motion.div>
+      
     </Box>
   );
 };

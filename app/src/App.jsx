@@ -18,6 +18,10 @@ import HomeAlt from "./Home_alt";
 import AnotherHome from "./AnotherHome";
 import AnotherHomeOptimized from "./AnotherHomeOptimized";
 import { Analytics } from "@vercel/analytics/react"
+import CRMPanel from "./CRMPanel";
+import Waitlist from "./Waitlist";
+import Privacy from "./Privacy";
+import Terms from "./Terms";
 function App() {
   const subdomain = window.location.hostname.split(".")[0];
   const dispatch=useDispatch();
@@ -43,18 +47,28 @@ const globalStyles = (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       {globalStyles}
-      <Router>
+       <Router>
         <Routes>
-          {subdomain !== "seller" ? (
+          {subdomain === "seller" ? (
             <>
-              <Route path="/" element={<AnotherHomeOptimized/>} />
-              <Route path="/contact" element={<ContactPage />} />
-              {/* No access to seller-specific pages here */}
+              <Route path="/" element={!brand ? <BrandOnboarding /> : <NovanestDashboard />} />
+              <Route path="/seller" element={<NovanestDashboard />} />
+            </>
+          ) : subdomain === "crm" ? (
+            <>
+              {/* ✅ CRM subdomain routes */}
+              <Route path="/" element={<CRMPanel />} />
+              <Route path="/dashboard" element={<CRMPanel />} />
+              {/* You can add CRM-specific pages here later */}
             </>
           ) : (
             <>
-              <Route path="/" element={!brand?<BrandOnboarding />:<NovanestDashboard/>} />
-              <Route path="/seller" element={<NovanestDashboard />} />
+              {/* Default public routes */}
+              <Route path="/" element={<AnotherHomeOptimized />} />
+              <Route path="/waitlist" element={<Waitlist />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/terms-of-service" element={<Terms />} />
+              <Route path="/contact" element={<ContactPage />} />
             </>
           )}
         </Routes>

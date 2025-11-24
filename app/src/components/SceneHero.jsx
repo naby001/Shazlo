@@ -4,6 +4,7 @@ import { motion, useTransform, useScroll } from "framer-motion";
 import background from "../assets/background12.jpg";
 import down from "../assets/down.png"; // 👈 your scroll indicator image
 
+
 const SceneHero = ({ opacity }) => {
   const { scrollYProgress } = useScroll();
 
@@ -53,6 +54,7 @@ const SceneHero = ({ opacity }) => {
           position: "relative",
         }}
       >
+         
         <Typography
           sx={{
             fontSize: "60px",
