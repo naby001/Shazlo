@@ -114,6 +114,18 @@ const AnotherHomeOptimized = () => {
         background: "#000",
       }}
     >
+      <style>
+        {`
+          @keyframes rotateGlow {
+            0% {
+              transform: rotate(0deg);
+            }
+            100% {
+              transform: rotate(360deg);
+            }
+          }
+        `}
+      </style>
    
       {/* inner long content (reduced height for better mobile perf) */}
       <Box sx={{ height: "800vh", position: "relative" }}>
@@ -284,32 +296,73 @@ const AnotherHomeOptimized = () => {
         </Box>
       </Box>
       {/* Floating Waitlist Button */}
+{/* Floating Waitlist Button */}
 <Box
   component={motion.div}
   whileHover={{ scale: 1.05 }}
   whileTap={{ scale: 0.95 }}
-    style={{
+  style={{
     opacity: waitlistOpacity,   
   }}
+  
   sx={{
     position: "fixed",
     top: 20,
-    // opacity: heroOpacity,
     right: 20,
     zIndex: 99999,
-    background: "#ff4d7a",
-    color: "white",
-    px: 2.5,
-    py: 1,
-    borderRadius: "8px",
-    fontWeight: 900,
-    fontFamily: "Doto",
     cursor: "pointer",
-    boxShadow: "0 8px 20px rgba(0,0,0,0.3)",
+   outline: "none",
+    WebkitTapHighlightColor: "transparent",
+    WebkitTouchCallout: "none",
+    userSelect: "none",
+
+    "&:focus": { outline: "none" },
+    "&:focus-visible": { outline: "none" },
+
+    "&:active": {
+      backgroundColor: "transparent !important",
+      outline: "none",
+    },
   }}
-  onClick={() => (window.location.href = "/waitlist")}
+    onClick={()=>(window.location.href = "/waitlist")
+  
+  }
 >
-  Join Waitlist
+  {/* Animated border glow container */}
+  <Box
+    sx={{
+      position: "relative",
+      padding: "5px",
+      borderRadius: "10px",
+      background: "linear-gradient(45deg, #ff4d7a, #ff8a00, #00d4ff, #ff4d7a)",
+      backgroundSize: "300% 300%",
+      animation: "borderGlow 3s linear infinite",
+      "@keyframes borderGlow": {
+        "0%": {
+          backgroundPosition: "0% 50%",
+        },
+        "100%": {
+          backgroundPosition: "300% 50%",
+        },
+      },
+    }}
+  >
+    {/* Inner button content */}
+    <Box
+      sx={{
+        background: "#ff4d7a",
+        color: "white",
+        px: 2.5,
+        py: 1,
+        borderRadius: "8px",
+        fontWeight: 900,
+        fontFamily: "Doto",
+        boxShadow: "0 8px 20px rgba(0,0,0,0.3)",
+      }}
+    >
+      Join Waitlist
+    </Box>
+  </Box>
 </Box>
 
     </Box>

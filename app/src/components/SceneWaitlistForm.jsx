@@ -177,6 +177,7 @@ const SceneWaitlistForm = () => {
                     "& input::placeholder": {
         color: "#222",     // ✅ darker placeholder
         opacity: 1,
+        fontSize:15,
       },
               },
             }}
@@ -187,7 +188,7 @@ const SceneWaitlistForm = () => {
           <TextField
             value={university}
             onChange={(e) => setUniversity(e.target.value)}
-            placeholder="your university(if student)"
+            placeholder="your university (if student)"
             variant="standard"
             fullWidth
             InputProps={{
@@ -203,6 +204,7 @@ const SceneWaitlistForm = () => {
                     "& input::placeholder": {
         color: "#222",     // ✅ darker placeholder
         opacity: 1,
+        fontSize:15
       },
               },
             }}
