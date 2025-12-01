@@ -1,28 +1,30 @@
 import React, { useState } from "react";
-import { Box, Typography, TextField, Button } from "@mui/material";
+import { Box, Typography, TextField, Button, MenuItem } from "@mui/material";
 import { motion } from "framer-motion";
 import logo from "../assets/3a.png";
 
 const SceneWaitlistForm = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [university, setUniversity] = useState(""); // ✅ added
+  const [gender, setGender] = useState("");
+  const [city, setCity] = useState("");
   const [loading, setLoading] = useState(false);
-  const [submitted,setsubmitted]=useState(false)
- 
+  const [submitted, setsubmitted] = useState(false);
 
-  const handleJoin = async() => {
-    if (!email) return;
+  const handleJoin = async () => {
+    if (!name || !email || !gender || !city) return;
 
     setLoading(true);
-    const response=await fetch('https://shazlo-waitlist.onrender.com/api/waitlist/add',{
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, university }), // ✅ added
-    })
-    // simulate API call
+
+    await fetch("https://shazlo-waitlist.onrender.com/api/waitlist/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, gender, city }),
+    });
+
     setTimeout(() => {
       setLoading(false);
-      setsubmitted(true)
+      setsubmitted(true);
     }, 1500);
   };
 
@@ -64,7 +66,6 @@ const SceneWaitlistForm = () => {
             fontFamily: "'Courier New', monospace",
             position: "relative",
             overflow: "hidden",
-
             clipPath: `polygon(
               0 10px, 8px 0, 16px 10px, 24px 0, 32px 10px, 40px 0, 48px 10px,
               56px 0, 64px 10px, 72px 0, 80px 10px, 88px 0, 96px 10px,
@@ -91,121 +92,130 @@ const SceneWaitlistForm = () => {
           }}
         >
           {/* header */}
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              mb: 2,
-            }}
-          >
-            <img
-              src={logo}
-              alt="Brand"
-              style={{
-                width: "200px",
-                marginBottom: "-15px",
-                opacity: 1,
-              }}
-            />
-            <Box
-              sx={{
-                width: "80%",
-                height: "1px",
-                backgroundColor: "#22222265",
-              }}
-            />
+          <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", mb: 2 }}>
+            <img src={logo} style={{ width: "200px", marginBottom: "-15px", opacity: 1 }} />
+            <Box sx={{ width: "80%", height: "1px", backgroundColor: "#22222265" }} />
           </Box>
 
-          <Box sx={{ position: "relative", display: "inline-block", mb: 2 }}>
-            <Typography
-              sx={{
-                fontSize: "1.1rem",
-                fontWeight: 900,
-                textAlign: "center",
-                fontFamily: "Doto",
-                zIndex: 2,
-                position: "relative",
-              }}
-            >
-              JOIN <span style={{ position: "relative" }}>WAITLIST</span>
-            </Typography>
-
-            <img
-              src="/crayon-underline.png"
-              style={{
-                position: "absolute",
-                left: "60%",
-                bottom: "-18px",
-                width: "115px",
-                transform: "translateX(-50%) rotate(-1deg)",
-                opacity: 0.95,
-              }}
-            />
-
-            <img
-              src="/crayon-underline.png"
-              style={{
-                position: "absolute",
-                left: "60%",
-                bottom: "-15px",
-                width: "118px",
-                transform: "translateX(-50%) rotate(2deg)",
-                opacity: 0.6,
-              }}
-            />
-          </Box>
-
-          {/* email input */}
+          {/* name */}
           <TextField
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="your email"
-            
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            placeholder="your name"
             variant="standard"
             fullWidth
             InputProps={{
               disableUnderline: true,
               sx: {
-                px: 1,
-                py: 1.2,
+                px: 1, py: 1.2,
                 border: "1px solid #00000040",
                 fontFamily: "Doto",
                 fontWeight: 700,
                 borderRadius: "6px",
                 background: "#fff",
-                    "& input::placeholder": {
-        color: "#222",     // ✅ darker placeholder
-        opacity: 1,
-        fontSize:15,
-      },
+                "& input::placeholder": { color: "#222", opacity: 1, fontSize: 15 },
               },
             }}
             sx={{ mb: 3 }}
           />
 
-          {/* university input — ONLY ADDITION */}
+          {/* email */}
           <TextField
-            value={university}
-            onChange={(e) => setUniversity(e.target.value)}
-            placeholder="your university (if student)"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="your email"
             variant="standard"
             fullWidth
             InputProps={{
               disableUnderline: true,
               sx: {
-                px: 1,
-                py: 1.2,
+                px: 1, py: 1.2,
                 border: "1px solid #00000040",
                 fontFamily: "Doto",
                 fontWeight: 700,
                 borderRadius: "6px",
                 background: "#fff",
-                    "& input::placeholder": {
-        color: "#222",     // ✅ darker placeholder
-        opacity: 1,
-        fontSize:15
-      },
+                "& input::placeholder": { color: "#222", opacity: 1, fontSize: 15 },
+              },
+            }}
+            sx={{ mb: 3 }}
+          />
+
+          {/* gender dropdown */}
+         <TextField
+  select
+  value={gender}
+  onChange={(e) => setGender(e.target.value)}
+  variant="standard"
+  fullWidth
+  SelectProps={{
+    displayEmpty: true,
+    renderValue: (selected) => {
+      if (selected === "") {
+        return (
+          <span
+            style={{
+              color: "#222",
+              opacity: 0.6,
+              fontFamily: "Doto",
+              fontWeight: 700,
+              fontSize: "15px",
+            }}
+          >
+            gender
+          </span>
+        );
+      }
+      return selected;
+    },
+  }}
+  InputProps={{
+    disableUnderline: true,
+    sx: {
+      px: 1,
+      py: 1.2,
+      border: "1px solid #00000040",
+      fontFamily: "Doto",
+      fontWeight: 700,
+      borderRadius: "6px",
+      background: "#fff",
+    },
+  }}
+  sx={{ mb: 3 }}
+>
+  <MenuItem value="Male" sx={{ fontFamily: "Doto", fontWeight: 700 }}>
+    Male
+  </MenuItem>
+
+  <MenuItem value="Female" sx={{ fontFamily: "Doto", fontWeight: 700 }}>
+    Female
+  </MenuItem>
+
+  <MenuItem
+    value="Prefer not to say"
+    sx={{ fontFamily: "Doto", fontWeight: 700 }}
+  >
+    Prefer not to say
+  </MenuItem>
+</TextField>
+
+          {/* city */}
+          <TextField
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            placeholder="your city"
+            variant="standard"
+            fullWidth
+            InputProps={{
+              disableUnderline: true,
+              sx: {
+                px: 1, py: 1.2,
+                border: "1px solid #00000040",
+                fontFamily: "Doto",
+                fontWeight: 700,
+                borderRadius: "6px",
+                background: "#fff",
+                "& input::placeholder": { color: "#222", opacity: 1, fontSize: 15 },
               },
             }}
             sx={{ mb: 3 }}
@@ -224,26 +234,17 @@ const SceneWaitlistForm = () => {
               py: 1.4,
               borderRadius: "6px",
               "&:hover": { background: "#ff3a69" },
-              "& .MuiButton-label": { color: "white !important" },
             }}
           >
             {submitted ? "Welcome" : loading ? "Joining..." : "Join Waitlist"}
           </Button>
 
-          <Typography
-            sx={{
-              fontSize: "0.8rem",
-              textAlign: "center",
-              mt: 3,
-              fontWeight: 900,
-              color: "#444",
-              fontFamily: "Doto",
-            }}
-          >
+          <Typography sx={{ fontSize: "0.8rem", textAlign: "center", mt: 3, fontWeight: 900, color: "#444", fontFamily: "Doto" }}>
             Be the first to access Shazlo
           </Typography>
         </Box>
       </motion.div>
+      
     </Box>
   );
 };

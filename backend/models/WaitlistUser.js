@@ -2,6 +2,11 @@ import mongoose from "mongoose";
 
 const waitlistUserSchema = new mongoose.Schema(
   {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     email: {
       type: String,
       required: true,
@@ -9,16 +14,21 @@ const waitlistUserSchema = new mongoose.Schema(
       lowercase: true,
       trim: true,
     },
-    university: {
+    gender: {
       type: String,
-      required: false,
+      required: true,
+      trim: true,
+    },
+    city: {
+      type: String,
+      required: true,
       trim: true,
     },
   },
   { timestamps: true }
 );
 
-// Ensure unique index exists in DB
+// Ensure unique email index exists
 waitlistUserSchema.index({ email: 1 }, { unique: true });
 
 const WaitlistUser = mongoose.model("WaitlistUser", waitlistUserSchema);

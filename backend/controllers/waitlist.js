@@ -2,21 +2,30 @@ import WaitlistUser from "../models/WaitlistUser.js";
 
 export const addToWaitlist = async (req, res) => {
   try {
-    const { email, university } = req.body;
+    const { name, email, gender, city } = req.body;
 
-    if (!email) {
-      return res.status(400).json({ error: "Email is required" });
+    // Validate required fields
+    if (!name || !email || !gender || !city) {
+      return res.status(400).json({ error: "All fields are required" });
     }
 
-    // prevent duplicate
+    // Check duplicate email
     const existing = await WaitlistUser.findOne({ email });
     if (existing) {
-      return res.status(200).json({ message: "Email already added" });
+      return res.status(200).json({
+        message: "Email already added",
+        alreadyAdded: true,
+      });
     }
 
-    await WaitlistUser.create({ email, university });
+    // Create user
+    await WaitlistUser.create({ name, email, gender, city });
 
-    return res.status(201).json({ message: "Successfully added to waitlist" });
+    return res.status(201).json({
+      message: "Successfully added to waitlist",
+      alreadyAdded: false,
+    });
+
   } catch (err) {
     return res.status(500).json({ error: "Server error" });
   }
