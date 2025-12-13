@@ -22,6 +22,7 @@ import CRMPanel from "./CRMPanel";
 import Waitlist from "./Waitlist";
 import Privacy from "./Privacy";
 import Terms from "./Terms";
+import DeleteAccountFAQ from "./FAQ";
 function App() {
   const subdomain = window.location.hostname.split(".")[0];
   const dispatch=useDispatch();
@@ -69,6 +70,7 @@ const globalStyles = (
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/terms-of-service" element={<Terms />} />
               <Route path="/contact" element={<ContactPage />} />
+              <Route path="/faq" element={<DeleteAccountFAQ />} />
             </>
           )}
         </Routes>
