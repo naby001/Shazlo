@@ -14,7 +14,7 @@ import { Provider, useDispatch, useSelector } from "react-redux";
 import { setLogout } from "./state";
 import LandingDesk from "./HomeDesktop";
 import HomeAlt from "./Home_alt";
-
+import RegisterBrand from "./components/partner";
 import AnotherHome from "./AnotherHome";
 import AnotherHomeOptimized from "./AnotherHomeOptimized";
 import { Analytics } from "@vercel/analytics/react"
@@ -23,6 +23,7 @@ import Waitlist from "./Waitlist";
 import Privacy from "./Privacy";
 import Terms from "./Terms";
 import DeleteAccountFAQ from "./FAQ";
+
 function App() {
   const subdomain = window.location.hostname.split(".")[0];
   const dispatch=useDispatch();
@@ -71,6 +72,8 @@ const globalStyles = (
               <Route path="/terms-of-service" element={<Terms />} />
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/faq" element={<DeleteAccountFAQ />} />
+              <Route path="/partner" element={<RegisterBrand/>}></Route>
+              
             </>
           )}
         </Routes>
