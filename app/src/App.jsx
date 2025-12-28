@@ -17,12 +17,14 @@ import HomeAlt from "./Home_alt";
 import RegisterBrand from "./components/partner";
 import AnotherHome from "./AnotherHome";
 import AnotherHomeOptimized from "./AnotherHomeOptimized";
+import afterAlpha_Home from "./Home_afteralphalaunch";
 import { Analytics } from "@vercel/analytics/react"
 import CRMPanel from "./CRMPanel";
 import Waitlist from "./Waitlist";
 import Privacy from "./Privacy";
 import Terms from "./Terms";
 import DeleteAccountFAQ from "./FAQ";
+import Alpha_Home from "./Home_afteralphalaunch";
 
 function App() {
   const subdomain = window.location.hostname.split(".")[0];
