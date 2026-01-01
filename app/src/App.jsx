@@ -69,6 +69,7 @@ const globalStyles = (
             <>
               {/* Default public routes */}
               <Route path="/" element={<AnotherHomeOptimized />} />
+              <Route path="/alternate_home" element={<Alpha_Home/>}/>
               <Route path="/waitlist" element={<Waitlist />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/terms-of-service" element={<Terms />} />

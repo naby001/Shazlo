@@ -36,13 +36,22 @@ const FoundersSection = () => {
 >
   {/* WHITE OVERLAY */}
   <Box
-    sx={{
-      position: "absolute",
-      inset: 0,
-      backgroundColor: "rgba(255, 255, 255, 0.32)", // adjust 0.7–0.85 if needed
-      zIndex: 0,
-    }}
-  />
+  sx={{
+    position: "absolute",
+    inset: 0,
+    background: `
+      linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.75) 0%,
+        rgba(0,0,0,0.55) 35%,
+        rgba(0,0,0,0.35) 65%,
+        rgba(0,0,0,0.15) 100%
+      )
+    `,
+    zIndex: 0,
+  }}
+/>
+
 
   {/* CONTENT */}
   <Container
@@ -55,100 +64,76 @@ const FoundersSection = () => {
     
       {/* <Container maxWidth="lg"> */}
         {/* Section Heading */}
-        <Typography
-          sx={{
-            fontSize: { xs: 40, md: 50 },
-            fontWeight: 600,
-            fontFamily: "Arapey",
-            textAlign: "center",
-            // mb: { xs: 6, md: 10 },
-            color: "#121212",
-          }}
-        >
-          What are we building?
-        </Typography>
-
-        {/* Features */}
-       {features.map((feature, index) => (
-  <Box
-    key={index}
-    sx={{
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      mb: { xs: 10, md: 14 },
-      px:2
-    }}
-  >
-    {/* TEXT (LEFT SHIFTED) */}
-    <Box
+     <Typography
   sx={{
-    width: "100%",
-    maxWidth: 600,
-    alignSelf: "flex-start",
-    transform: {
-      xs: "translateX(-8px)",
-      md: "translateX(-60px)",
-    },
-    mb: 4,
+    fontSize: { xs: 38, md: 50 },
+    fontWeight: 600,
+    fontFamily: "Arapey",
+    textAlign: "center",
+    color: "#FFFFFF",
+    mb: 2,
+    textShadow: "0 2px 10px rgba(0,0,0,0.35)",
   }}
 >
-  {/* FEATURE NUMBER */}
-  <Typography
-    sx={{
-      fontSize: { xs: 64, md: 80 },
-      fontFamily: "Arapey",
-      fontWeight: 500,
-      lineHeight: 1,
-      color: "rgba(0,0,0,0.25)",
-      mb: 1,
-    }}
-  >
-    {String(index + 1).padStart(2, "0")}
-  </Typography>
+  What are we building?
+</Typography>
 
-  <Typography
-    sx={{
-      fontSize: { xs: 28, md: 80 },
-      fontWeight: 600,
-      fontFamily: "Arapey",
-      color: "#12121242",
-    }}
-  >
-    {feature.title}
-  </Typography>
-  <Typography
-    sx={{
-      fontSize: { xs: 34, md: 80 },
-      fontWeight: 600,
-      fontFamily: "Arapey",
-      color: "#121212",
-    }}
-  >
-    {feature.description}
-  </Typography>
-</Box>
+<Box
+  sx={{
+    height: 1,
+    width: "80%",
+    mx: "auto",
+    backgroundColor: "rgba(255,255,255,0.6)",
+    mb: 4,
+  }}
+/>
 
-    {/* IMAGE (RIGHT SHIFTED) */}
-    <Box
-      component="img"
-      src={feature.image}
-      alt={feature.title}
-      sx={{
-        width: { xs: "65%", md: "60%" },
-        maxWidth: 460,
-        borderRadius: "20px",
-        objectFit: "cover",
-        alignSelf: "flex-end",
-        transform: {
-          xs: "translateX(8px)",
-          md: "translateX(60px)",
-        },
-        boxShadow: "0px 20px 40px rgba(0,0,0,0.25)",
-      }}
-    />
-  </Box>
-))}
+<Typography
+  sx={{
+    fontSize: { xs: 22, md: 22 },
+    lineHeight: 1.9,
+    mb: 3,
+    color: "#F5F3EF",
+    fontWeight: 500,
+    textShadow: "0 2px 8px rgba(0,0,0,0.35)",
+  }}
+>
+  Shazlo is a dream born in the rooms of four undergraduate students from
+  Ahmedabad and Kolkata who had a core mission – revolutionising how India
+  shops.
+</Typography>
+
+<Typography
+  sx={{
+    fontSize: { xs: 22, md: 22 },
+    lineHeight: 1.9,
+    mb: 3,
+    color: "#F5F3EF",
+    fontWeight: 500,
+    textShadow: "0 2px 8px rgba(0,0,0,0.35)",
+  }}
+>
+  Shazlo serves as a gamified fashion discovery platform, where you swipe to
+  style, share and shine. Moving beyond traditional e-commerce, Shazlo aims to
+  create shared experiences and add an element of joy while buying your
+  favourite piece of clothing.
+</Typography>
+
+<Typography
+  sx={{
+    fontSize: { xs: 22, md: 22 },
+    lineHeight: 1.9,
+    mb: 4,
+    color: "#F5F3EF",
+    fontWeight: 500,
+    textShadow: "0 2px 8px rgba(0,0,0,0.35)",
+  }}
+>
+  From local artisans to modern designers, Shazlo brings it all to a single
+  platform, highlighting the beauty of Made in India!
+</Typography>
+
+<Box sx={{ height: 1, backgroundColor: "#999", mb: 2 }} />
 
 
       </Container>

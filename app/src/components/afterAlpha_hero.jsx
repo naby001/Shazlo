@@ -87,6 +87,8 @@ const HeroSection = () => {
             color: "#5f5a54",
             lineHeight: 1.6,
             mb: 4,
+            paddingLeft:2,
+            paddingRight:2
           }}
         >
           You swipe right and left on products and as you swipe the app learns your style

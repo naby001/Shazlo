@@ -4,6 +4,7 @@ import { Box, Typography } from "@mui/material";
 import HeroSection from "./components/afterAlpha_hero";
 import FeaturesSection from "./components/Features";
 import FoundersSection from "./components/FoundersNoteSection";
+import FAQWithFooter from "./components/FAQFooter";
 
 const Alpha_Home = () => {
   return (
@@ -14,6 +15,7 @@ const Alpha_Home = () => {
       {/* NEXT SECTION (placeholder) */}
       <FeaturesSection />
        <FoundersSection />
+       <FAQWithFooter/>
     </>
   );
 };
