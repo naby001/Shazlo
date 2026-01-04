@@ -333,7 +333,7 @@ export default function RegisterBrand() {
                     Need help?{" "}
                     <Box 
                       component="a" 
-                      href="mailto:support@yourbrand.com"
+                      href="mailto:connect@shazlo.store"
                       sx={{
                         color: "#FFD700",
                         textDecoration: "none",
@@ -343,7 +343,7 @@ export default function RegisterBrand() {
                         },
                       }}
                     >
-                      Contact us at support@yourbrand.com
+                      Contact us at connect@shazlo.store
                     </Box>
                   </Typography>
                 </Box>
