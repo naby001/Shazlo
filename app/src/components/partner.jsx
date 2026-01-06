@@ -226,6 +226,32 @@ export default function RegisterBrand() {
                 >
                   {loading ? <CircularProgress size={24} sx={{ color: "#000" }} /> : "Submit"}
                 </Button>
+
+                <Box textAlign="center" mt={2}>
+                  <Typography 
+                    variant="body2" 
+                    color="#999999"
+                    sx={{
+                      fontSize: { xs: "0.75rem", sm: "0.875rem" }
+                    }}
+                  >
+                    Need help?{" "}
+                    <Box 
+                      component="a" 
+                      href="mailto:connect@shazlo.store"
+                      sx={{
+                        color: "#FFD700",
+                        textDecoration: "none",
+                        fontWeight: 600,
+                        "&:hover": {
+                          textDecoration: "underline",
+                        },
+                      }}
+                    >
+                      Contact us at connect@shazlo.store
+                    </Box>
+                  </Typography>
+                </Box>
               </Box>
             </Box>
 
