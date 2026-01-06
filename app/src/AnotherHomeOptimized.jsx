@@ -1,6 +1,6 @@
 // AnotherHome.optimized.jsx
 import React, { useRef } from "react";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { motion, useScroll, useTransform } from "framer-motion";
 import SceneHero from "./components/SceneHero";
 import SceneLogo from "./components/SceneLogo";
@@ -296,74 +296,106 @@ const AnotherHomeOptimized = () => {
         </Box>
       </Box>
       {/* Floating Waitlist Button */}
-{/* Floating Waitlist Button */}
+{/* Floating App-Bar */}
 <Box
-  component={motion.div}
-  whileHover={{ scale: 1.05 }}
-  whileTap={{ scale: 0.95 }}
-  style={{
-    opacity: waitlistOpacity,   
-  }}
-  
+  // component={motion.div}
+  // whileHover={{ y: -2 }}
+  style={{ opacity: waitlistOpacity }}
   sx={{
     position: "fixed",
     top: 20,
     right: 20,
     zIndex: 99999,
-    cursor: "pointer",
-   outline: "none",
-    WebkitTapHighlightColor: "transparent",
-    WebkitTouchCallout: "none",
-    userSelect: "none",
-
-    "&:focus": { outline: "none" },
-    "&:focus-visible": { outline: "none" },
-
-    "&:active": {
-      backgroundColor: "transparent !important",
-      outline: "none",
-    },
+    pointerEvents: "none", // 👈 wrapper NOT clickable
+     WebkitTapHighlightColor:"whitesmoke"
   }}
-    onClick={()=>(window.location.href = "/waitlist")
-  
-  }
 >
-  {/* Animated border glow container */}
   <Box
     sx={{
-      position: "relative",
-      padding: "5px",
-      borderRadius: "10px",
-      background: "linear-gradient(45deg, #ff4d7a, #ff8a00, #00d4ff, #ff4d7a)",
-      backgroundSize: "300% 300%",
-      animation: "borderGlow 3s linear infinite",
-      "@keyframes borderGlow": {
-        "0%": {
-          backgroundPosition: "0% 50%",
-        },
-        "100%": {
-          backgroundPosition: "300% 50%",
-        },
-      },
+      display: "flex",
+      alignItems: "center",
+      gap: 1,
+      px: 1,
+      py: 0.8,
+      borderRadius: "999px",
+      background: "rgba(20,20,20,0.65)",
+      backdropFilter: "blur(10px)",
+      border: "1px solid rgba(245,230,200,0.35)",
+      boxShadow: "0 8px 30px rgba(0,0,0,0.4)",
+      pointerEvents: "auto", // 👈 buttons receive events
     }}
   >
-    {/* Inner button content */}
-    <Box
+    {/* Partner with us */}
+    <Button
+      disableRipple
+      onClick={() => (window.location.href = "/partner")}
       sx={{
-        background: "#ff4d7a",
-        color: "white",
-        px: 2.5,
-        py: 1,
-        borderRadius: "8px",
-        fontWeight: 900,
-        fontFamily: "Doto",
-        boxShadow: "0 8px 20px rgba(0,0,0,0.3)",
+        px: 2.2,
+        py: 0.9,
+        minWidth: "unset",
+        borderRadius: "999px",
+        fontFamily: `"Playfair Display"`,
+        fontSize: "0.72rem",
+        letterSpacing: "0.16em",
+        textTransform: "uppercase",
+        color: "#eeba2b",
+        opacity: 0.75,
+        transition: "all 0.25s ease",
+         WebkitTapHighlightColor: "transparent",
+        "&:hover": {
+          opacity: 1,
+          background: "rgba(255,255,255,0.05)",
+        },
+
+        "&:active": {
+          background: "rgba(255,255,255,0.08)",
+        },
+        
       }}
     >
-      Join Waitlist
-    </Box>
+      Partner with us
+    </Button>
+
+    {/* Divider */}
+    <Box
+      sx={{
+        width: "1px",
+        height: "20px",
+        background: "rgba(245,230,200,0.25)",
+      }}
+    />
+
+    {/* Join waitlist */}
+    <Button
+      disableRipple
+      onClick={() => (window.location.href = "/waitlist")}
+      sx={{
+        px: 2.4,
+        py: 0.9,
+        minWidth: "unset",
+        borderRadius: "999px",
+        fontFamily: `"Playfair Display"`,
+        fontSize: "0.72rem",
+        letterSpacing: "0.18em",
+        textTransform: "uppercase",
+        background: "#eeba2b",
+        color: "#111",
+        transition: "all 0.25s ease",
+
+        "&:hover": {
+          background: "#fff1cf",
+        },
+ WebkitTapHighlightColor: "transparent",
+        "&:active": {
+          background: "#efe0bf",
+        },
+      }}
+    >
+      Join waitlist
+    </Button>
   </Box>
 </Box>
+
 
     </Box>
   );

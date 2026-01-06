@@ -16,7 +16,7 @@ const SceneWaitlistForm = () => {
 
     setLoading(true);
 
-    await fetch("https://shazlo-waitlist.onrender.com/api/waitlist/add", {
+    await fetch("https://shazlo-waitlist.onrender.com//api/waitlist/add", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email, gender, city }),

@@ -12,15 +12,19 @@ import {
   MenuItem,
   Container,
   useMediaQuery,
+  CircularProgress,
+  InputLabel,
+  FormControl,
+  Select,
 } from "@mui/material";
-import fashionBg from '../assets/background.png';
-import right from '../assets/background_waitlist_new.png';
+import fashionBg from "../assets/background.png";
+import right from "../assets/background_waitlist_new.png";
 
 /* ---------------- THEME ---------------- */
 const theme = createTheme({
   palette: {
-    primary: { main: "#FFD700" }, // Gold/Yellow
-    secondary: { main: "#000000" }, // Black
+    primary: { main: "#FFD700" },
+    secondary: { main: "#000000" },
     background: { default: "#000000" },
     text: {
       primary: "#FFFFFF",
@@ -36,15 +40,61 @@ const theme = createTheme({
 
 /* ---------------- COMPONENT ---------------- */
 export default function RegisterBrand() {
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+
   const [priceRange, setPriceRange] = useState([2500, 5000]);
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const [formData, setFormData] = useState({
+    brandName: "",
+    founder: "",
+    website: "",
+    productType: "clothing",
+    phone: "",
+    email: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handlePriceChange = (event, newValue) => {
     setPriceRange(newValue);
   };
 
-  const formatCurrency = (value) => {
-    return `₹${value.toLocaleString()}`;
+  const formatCurrency = (value) => `₹${value.toLocaleString()}`;
+
+  const handleSubmit = async () => {
+    setLoading(true);
+
+    const payload = {
+      brand_name: formData.brandName,
+      founder_contact: formData.founder,
+      website_or_instagram: formData.website,
+      product_type: formData.productType,
+      phone: formData.phone,
+      email: formData.email,
+      price_range: {
+        min: priceRange[0],
+        max: priceRange[1],
+      },
+    };
+
+    try {
+      await fetch("https://shazlo-waitlist.onrender.com/api/register-brand", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      setSubmitted(true);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -61,10 +111,7 @@ export default function RegisterBrand() {
           "&::before": {
             content: '""',
             position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
+            inset: 0,
             backgroundImage: `url(${fashionBg})`,
             backgroundSize: "cover",
             backgroundPosition: "center",
@@ -74,20 +121,17 @@ export default function RegisterBrand() {
           "&::after": {
             content: '""',
             position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
+            inset: 0,
             backgroundColor: "rgba(0, 0, 0, 0.7)",
             zIndex: 1,
           },
         }}
       >
-        <Container 
-          maxWidth="lg" 
-          sx={{ 
-            position: "relative", 
-            zIndex: 2, 
+        <Container
+          maxWidth="lg"
+          sx={{
+            position: "relative",
+            zIndex: 2,
             py: { xs: 4, md: 6 },
             display: "flex",
             justifyContent: "center",
@@ -109,20 +153,13 @@ export default function RegisterBrand() {
               alignItems: "center",
             }}
           >
-            {/* FORM SECTION - Always takes space */}
-            <Box
-              sx={{
-                flex: 1,
-                width: "100%",
-              }}
-            >
-              <Typography 
-                variant="h3" 
-                mb={1} 
+            {/* FORM SECTION */}
+            <Box sx={{ flex: 1, width: "100%" }}>
+              <Typography
+                variant="h3"
+                mb={1}
                 color="#FFFFFF"
-                sx={{
-                  fontSize: { xs: "1.75rem", sm: "2.5rem", md: "3rem" }
-                }}
+                sx={{ fontSize: { xs: "1.75rem", sm: "2.5rem", md: "3rem" } }}
               >
                 Register your{" "}
                 <Box component="span" color="#FFD700">
@@ -130,260 +167,79 @@ export default function RegisterBrand() {
                 </Box>
               </Typography>
 
-              <Typography 
-                color="#FFD700" 
-                mb={4}
-                sx={{
-                  fontSize: { xs: "0.875rem", sm: "1rem" }
-                }}
-              >
+              <Typography color="#FFD700" mb={4}>
                 Be part of the next wave of fashion brands making an impact.
               </Typography>
 
+              {submitted && (
+                <Box
+                  mb={3}
+                  p={2}
+                  borderRadius="12px"
+                  sx={{
+                    background: "rgba(255,215,0,0.1)",
+                    border: "1px solid rgba(255,215,0,0.4)",
+                  }}
+                >
+                  <Typography color="#FFD700" fontWeight={600}>
+                    Your brand has been registered successfully.
+                  </Typography>
+                  <Typography color="#ccc" fontSize="0.9rem">
+                    Our team will review it and get back to you shortly.
+                  </Typography>
+                </Box>
+              )}
+
               <Box display="flex" flexDirection="column" gap={3}>
-                <TextField 
-                  label="Brand name" 
-                  variant="standard" 
-                  fullWidth 
-                  sx={{
-                    '& .MuiInputLabel-root': { color: '#FFD700' },
-                    '& .MuiInput-root': { color: '#FFFFFF' },
-                    '& .MuiInput-root:before': { borderBottomColor: '#FFD700' },
-                    '& .MuiInput-root:hover:not(.Mui-disabled):before': { borderBottomColor: '#FFD700' },
-                    '& .MuiInputLabel-root.Mui-focused': { color: '#FFD700' },
-                    '& .MuiInput-root:after': { borderBottomColor: '#FFD700' },
-                  }}
-                />
-                <TextField
-                  label="Founder's name or email ID"
-                  variant="standard"
-                  fullWidth
-                  sx={{
-                    '& .MuiInputLabel-root': { color: '#FFD700' },
-                    '& .MuiInput-root': { color: '#FFFFFF' },
-                    '& .MuiInput-root:before': { borderBottomColor: '#FFD700' },
-                    '& .MuiInput-root:hover:not(.Mui-disabled):before': { borderBottomColor: '#FFD700' },
-                    '& .MuiInputLabel-root.Mui-focused': { color: '#FFD700' },
-                    '& .MuiInput-root:after': { borderBottomColor: '#FFD700' },
-                  }}
-                />
+                <TextField name="brandName" value={formData.brandName} onChange={handleInputChange} label="Brand name" variant="standard" fullWidth />
+                <TextField name="founder" value={formData.founder} onChange={handleInputChange} label="Founder's name or email ID" variant="standard" fullWidth />
 
                 <Grid container spacing={2}>
                   <Grid item xs={12} sm={6}>
-                    <TextField
-                      label="Website / Instagram link"
-                      variant="standard"
-                      fullWidth
-                      sx={{
-                        '& .MuiInputLabel-root': { color: '#FFD700' },
-                        '& .MuiInput-root': { color: '#FFFFFF' },
-                        '& .MuiInput-root:before': { borderBottomColor: '#FFD700' },
-                        '& .MuiInput-root:hover:not(.Mui-disabled):before': { borderBottomColor: '#FFD700' },
-                        '& .MuiInputLabel-root.Mui-focused': { color: '#FFD700' },
-                        '& .MuiInput-root:after': { borderBottomColor: '#FFD700' },
-                      }}
-                    />
+                    <TextField name="website" value={formData.website} onChange={handleInputChange} label="Website / Instagram link" variant="standard" fullWidth />
                   </Grid>
-                  <Grid item xs={1} sm={6}>
-                    <TextField
-                      select
-                      label="Product type"
-                      variant="standard"
-                      fullWidth
-                      defaultValue=""
-                      sx={{
-                        '& .MuiInputLabel-root': { color: '#FFD700' },
-                        '& .MuiInput-root': { color: '#FFFFFF' },
-                        '& .MuiInput-root:before': { borderBottomColor: '#FFD700' },
-                        '& .MuiInput-root:hover:not(.Mui-disabled):before': { borderBottomColor: '#FFD700' },
-                        '& .MuiInputLabel-root.Mui-focused': { color: '#FFD700' },
-                        '& .MuiInput-root:after': { borderBottomColor: '#FFD700' },
-                        '& .MuiSvgIcon-root': { color: '#FFD700' },
-                      }}
-                      SelectProps={{
-                        MenuProps: {
-                          PaperProps: {
-                            sx: {
-                              bgcolor: '#1a1a1a',
-                              '& .MuiMenuItem-root': {
-                                color: '#FFFFFF',
-                                '&:hover': {
-                                  bgcolor: '#333333',
-                                },
-                                '&.Mui-selected': {
-                                  bgcolor: '#FFD700',
-                                  color: '#000000',
-                                  '&:hover': {
-                                    bgcolor: '#FFC700',
-                                  },
-                                },
-                              },
-                            },
-                          },
-                        },
-                      }}
-                    >
-                      {["Dresses", "Tops", "Bags", "Shoes", "Accessories"].map(
-                        (item) => (
-                          <MenuItem key={item} value={item}>
-                            {item}
-                          </MenuItem>
-                        )
-                      )}
-                    </TextField>
-                  </Grid>
+                 
                 </Grid>
 
-                <TextField 
-                  label="Contact phone" 
-                  variant="standard" 
-                  fullWidth 
-                  sx={{
-                    '& .MuiInputLabel-root': { color: '#FFD700' },
-                    '& .MuiInput-root': { color: '#FFFFFF' },
-                    '& .MuiInput-root:before': { borderBottomColor: '#FFD700' },
-                    '& .MuiInput-root:hover:not(.Mui-disabled):before': { borderBottomColor: '#FFD700' },
-                    '& .MuiInputLabel-root.Mui-focused': { color: '#FFD700' },
-                    '& .MuiInput-root:after': { borderBottomColor: '#FFD700' },
-                  }}
-                />
-                <TextField 
-                  label="Contact email" 
-                  variant="standard" 
-                  fullWidth 
-                  type="email"
-                  sx={{
-                    '& .MuiInputLabel-root': { color: '#FFD700' },
-                    '& .MuiInput-root': { color: '#FFFFFF' },
-                    '& .MuiInput-root:before': { borderBottomColor: '#FFD700' },
-                    '& .MuiInput-root:hover:not(.Mui-disabled):before': { borderBottomColor: '#FFD700' },
-                    '& .MuiInputLabel-root.Mui-focused': { color: '#FFD700' },
-                    '& .MuiInput-root:after': { borderBottomColor: '#FFD700' },
-                  }}
-                />
+                <TextField name="phone" value={formData.phone} onChange={handleInputChange} label="Contact phone" variant="standard" fullWidth />
+                <TextField name="email" value={formData.email} onChange={handleInputChange} label="Contact email" type="email" variant="standard" fullWidth />
 
                 <Box>
-                  <Typography 
-                    fontWeight={600} 
-                    mb={1} 
-                    color="#FFD700"
-                    sx={{
-                      fontSize: { xs: "0.875rem", sm: "1rem" }
-                    }}
-                  >
+                  <Typography fontWeight={600} mb={1} color="#FFD700">
                     Select price range: {formatCurrency(priceRange[0])} - {formatCurrency(priceRange[1])}
                   </Typography>
-                  <Slider
-                    value={priceRange}
-                    onChange={handlePriceChange}
-                    min={1000}
-                    max={10000}
-                    step={500}
-                    valueLabelDisplay="auto"
-                    valueLabelFormat={formatCurrency}
-                    sx={{
-                      color: '#FFD700',
-                      '& .MuiSlider-thumb': {
-                        backgroundColor: '#FFD700',
-                        '&:hover, &.Mui-focusVisible': {
-                          boxShadow: '0 0 0 8px rgba(255, 215, 0, 0.16)',
-                        },
-                      },
-                      '& .MuiSlider-track': {
-                        backgroundColor: '#FFD700',
-                        border: 'none',
-                      },
-                      '& .MuiSlider-rail': {
-                        backgroundColor: '#555555',
-                        opacity: 1,
-                      },
-                      '& .MuiSlider-valueLabel': {
-                        backgroundColor: '#FFD700',
-                        color: '#000000',
-                        fontWeight: 600,
-                      },
-                    }}
-                  />
+                  <Slider value={priceRange} onChange={handlePriceChange} min={1000} max={10000} step={500} />
                 </Box>
 
                 <Button
                   variant="contained"
                   size="large"
+                  disabled={loading || submitted}
+                  onClick={handleSubmit}
                   sx={{
                     bgcolor: "#FFD700",
                     color: "#000000",
                     borderRadius: "30px",
-                    py: { xs: 1.2, sm: 1.4 },
                     fontWeight: 700,
-                    fontSize: { xs: "0.875rem", sm: "1rem" },
                     "&:hover": { bgcolor: "#FFC700" },
                   }}
                 >
-                  Submit
+                  {loading ? <CircularProgress size={24} sx={{ color: "#000" }} /> : "Submit"}
                 </Button>
-
-                <Box textAlign="center" mt={2}>
-                  <Typography 
-                    variant="body2" 
-                    color="#999999"
-                    sx={{
-                      fontSize: { xs: "0.75rem", sm: "0.875rem" }
-                    }}
-                  >
-                    Need help?{" "}
-                    <Box 
-                      component="a" 
-                      href="mailto:support@yourbrand.com"
-                      sx={{
-                        color: "#FFD700",
-                        textDecoration: "none",
-                        fontWeight: 600,
-                        "&:hover": {
-                          textDecoration: "underline",
-                        },
-                      }}
-                    >
-                      Contact us at support@yourbrand.com
-                    </Box>
-                  </Typography>
-                </Box>
               </Box>
             </Box>
 
-            {/* IMAGE SECTION - Hidden on mobile, fixed size on desktop */}
             {!isMobile && (
-              <Box
-                sx={{
-                  flex: 1,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  maxWidth: { md: "400px", lg: "450px" },
-                  width: "100%",
-                }}
-              >
+              <Box sx={{ flex: 1, maxWidth: "450px" }}>
                 <Box
                   sx={{
-                    width: "100%",
-                    height: "auto",
                     backgroundColor: "#FFD700",
                     borderRadius: "16px",
                     padding: 2,
                     boxShadow: "0 20px 40px rgba(0,0,0,0.5)",
                   }}
                 >
-                  <Box
-                    component="img"
-                    src={right}
-                    alt="Fashion Brand"
-                    sx={{
-                      width: "100%",
-                      height: "auto",
-                      borderRadius: "12px",
-                      display: "block",
-                      objectFit: "cover",
-                    }}
-                  />
+                  <Box component="img" src={right} alt="Fashion Brand" sx={{ width: "100%", borderRadius: "12px" }} />
                 </Box>
               </Box>
             )}

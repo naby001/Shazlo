@@ -6,19 +6,19 @@ const features = [
     title: "Swipe on products",
     description:
       "To get an ultra-curated feed",
-    image: "/product1.jpg",
+    image: "/alternate-img1.jpeg",
   },
   {
     title: "Swipe, Don’t Search",
     description:
       "Effortlessly explore outfits by swiping. The more you swipe, the better it gets.",
-    image: "/assets/feature-2.jpg",
+      image: "/alternate-img1.jpeg",
   },
   {
     title: "Partnered with Real Brands",
     description:
       "We connect you directly with trusted fashion brands—no fakes, no noise.",
-    image: "/assets/feature-3.jpg",
+     image: "/alternate-img1.jpeg",
   },
 ];
 
@@ -114,7 +114,7 @@ const FeaturesSection = () => {
       sx={{
         width: { xs: "65%", md: "60%" },
         maxWidth: 460,
-        borderRadius: "20px",
+        borderRadius: "10px",
         objectFit: "cover",
         alignSelf: "flex-end",
         transform: {
