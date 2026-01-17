@@ -9,13 +9,13 @@ const features = [
     image: "/alternate-img1.jpeg",
   },
   {
-    title: "Swipe, Don’t Search",
+    title: "Create closets",
     description:
-      "Effortlessly explore outfits by swiping. The more you swipe, the better it gets.",
-      image: "/alternate-img1.jpeg",
+      "create, share and collab on closets",
+      image: "/alternate_img2.png",
   },
   {
-    title: "Partnered with Real Brands",
+    title: "",
     description:
       "We connect you directly with trusted fashion brands—no fakes, no noise.",
      image: "/alternate-img1.jpeg",
@@ -96,7 +96,7 @@ const FeaturesSection = () => {
   </Typography>
   <Typography
     sx={{
-      fontSize: { xs: 34, md: 80 },
+      fontSize: { xs: 30, md: 80 },
       fontWeight: 600,
       fontFamily: "Arapey",
       color: "#121212",
@@ -112,7 +112,7 @@ const FeaturesSection = () => {
       src={feature.image}
       alt={feature.title}
       sx={{
-        width: { xs: "65%", md: "60%" },
+        width: { xs: index!==1?"65%":"80%", md: "60%" },
         maxWidth: 460,
         borderRadius: "10px",
         objectFit: "cover",
@@ -121,7 +121,7 @@ const FeaturesSection = () => {
           xs: "translateX(8px)",
           md: "translateX(60px)",
         },
-        boxShadow: "0px 20px 40px rgba(0,0,0,0.25)",
+        // boxShadow: "0px 20px 40px rgba(0,0,0,0.25)",
       }}
     />
   </Box>

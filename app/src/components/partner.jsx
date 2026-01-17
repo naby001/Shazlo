@@ -83,7 +83,7 @@ export default function RegisterBrand() {
     };
 
     try {
-      await fetch("https://shazlo-waitlist.onrender.com/api/register-brand", {
+      await fetch("https://shazlo-waitlist-gtge.onrender.com/api/register-brand", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
