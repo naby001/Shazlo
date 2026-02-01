@@ -33,9 +33,12 @@ import ProductForm from './components/Add_Product_admin';
 import { useDispatch, useSelector } from 'react-redux';
 import LogoutIcon from '@mui/icons-material/Logout';
 import { setLogout } from './state';
+import CatalogUpload from './components/CatalogUpload';
 // Static sidebar items (no 'active' field needed)
 const sidebarItems = [
   { icon: <Dashboard />, text: 'Analytics' },
+   { icon: <Inventory />, text: 'Catalog Upload' },
+   { icon: <Inventory />, text: 'Images Upload' },
   { icon: <Inventory />, text: 'Products' },
   // { icon: <People />, text: 'Customer' },
   { icon: <ShoppingCart />, text: 'Orders' },
@@ -193,6 +196,7 @@ export default function NovanestDashboard() {
 
         {/* Conditional Rendering */}
         {activeSection === 'Products' && <ProductForm />}
+         {activeSection === 'Catalog Upload' && <CatalogUpload />}
       </Box>
     </Box>
   );
