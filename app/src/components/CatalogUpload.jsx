@@ -10,8 +10,9 @@ import {
   Select,
   InputLabel,
   FormControl,
-  LinearProgress
+  LinearProgress,
 } from "@mui/material";
+import * as XLSX from "xlsx";
 
 // ---- CATEGORY TREE (frontend only) ----
 
@@ -21,16 +22,37 @@ const CATEGORY_TREE = {
     "Shirts",
     "Trousers / Jeans",
     "Jackets / Hoodies",
-    "Ethnic Wear"
+    "Ethnic Wear",
   ],
   Women: [
     "Tops / T-Shirts",
     "Dresses",
     "Kurtis / Ethnic",
     "Jeans / Pants",
-    "Outerwear"
-  ]
+    "Outerwear",
+  ],
 };
+
+const HEADERS = [
+  "Product ID",
+  "Product Name",
+  "Category",
+  "Subcategory",
+  "Brand",
+  "Description",
+  "Price (₹)",
+  "Discount (%)",
+  "Stock Qty",
+  "Color",
+  "Size",
+  "Material",
+  "Gender",
+  "Image URL 1",
+  "Image URL 2",
+  "Image URL 3",
+  "Weight (g)",
+  "Returnable (Yes/No)",
+];
 
 export default function CatalogUpload() {
   const [gender, setGender] = useState("");
@@ -51,14 +73,61 @@ export default function CatalogUpload() {
   const fetchTemplate = async () => {
     setLoadingTemplate(true);
 
-    // simulate backend delay
-    setTimeout(() => {
-      console.log("Fetching template for:", gender, category);
+    // Sample data
+    const sampleData = [
+      [
+        "SHZ001",
+        "Floral Summer Dress",
+        "Dress",
+        "Casual Dress",
+        "Zara",
+        "Light summer floral dress",
+        1299,
+        10,
+        25,
+        "Red",
+        "M",
+        "Cotton",
+        "Women",
+        "link",
+        "link",
+        "link",
+        350,
+        "Yes",
+      ],
+      [
+        "SHZ002",
+        "Leather Handbag",
+        "Bags",
+        "Tote Bag",
+        "H&M",
+        "Stylish brown leather tote",
+        1999,
+        5,
+        15,
+        "Brown",
+        "Free Size",
+        "Leather",
+        "Women",
+        "link",
+        "link",
+        "link",
+        600,
+        "Yes",
+      ],
+    ];
 
-      alert(`Dummy: Downloading template for ${gender} > ${category}`);
+    // Create worksheet
+    const ws = XLSX.utils.aoa_to_sheet([HEADERS, ...sampleData]);
 
-      setLoadingTemplate(false);
-    }, 1200);
+    // Create workbook
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Template");
+
+    // Download
+    XLSX.writeFile(wb, `Catalog_Template_${gender}_${category}.xlsx`);
+
+    setLoadingTemplate(false);
   };
 
   const submitBulkUpload = async () => {
@@ -69,27 +138,67 @@ export default function CatalogUpload() {
 
     setUploading(true);
 
-    const formData = new FormData();
-    formData.append("template_file", excelFile);
+    try {
+      const data = await excelFile.arrayBuffer();
+      const workbook = XLSX.read(data, { type: "array" });
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+      const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
-    imageFiles.forEach((img) => {
-      formData.append("images", img);
-    });
+      // Check headers
+      const fileHeaders = jsonData[0];
+      if (!HEADERS.every((h, i) => h === fileHeaders[i])) {
+        alert(
+          "Invalid file format. Headers do not match the expected template."
+        );
+        setUploading(false);
+        return;
+      }
 
-    console.log("Submitting bulk upload:", {
-      gender,
-      category,
-      excelFile,
-      imageFiles
-    });
+      // Process data, skip header
+      const products = jsonData.slice(1).map((row) => ({
+        productId: row[0],
+        name: row[1],
+        category: row[2],
+        subcategory: row[3],
+        brand: row[4],
+        description: row[5],
+        price: row[6],
+        discount: row[7],
+        stock: row[8],
+        color: row[9],
+        size: row[10],
+        material: row[11],
+        gender: row[12],
+        imageUrl1: row[13],
+        imageUrl2: row[14],
+        imageUrl3: row[15],
+        weight: row[16],
+        returnable: row[17],
+      }));
 
-    // simulate backend
-    setTimeout(() => {
-      const fakeJobId = "JOB-" + Math.floor(Math.random() * 100000);
+      console.log("Parsed products:", products);
 
-      setJobId(fakeJobId);
+      // Simulate upload with images
+      const formData = new FormData();
+      formData.append("products", JSON.stringify(products));
+      imageFiles.forEach((img) => {
+        formData.append("images", img);
+      });
+
+      // simulate backend
+      setTimeout(() => {
+        const fakeJobId = "JOB-" + Math.floor(Math.random() * 100000);
+        setJobId(fakeJobId);
+        setUploading(false);
+        alert(
+          `Uploaded ${products.length} products successfully. Job ID: ${fakeJobId}`
+        );
+      }, 2000);
+    } catch (error) {
+      alert("Error parsing file: " + error.message);
       setUploading(false);
-    }, 2000);
+    }
   };
 
   // ----------------------------
@@ -109,25 +218,25 @@ export default function CatalogUpload() {
           </Typography>
 
           <Grid container spacing={2}>
-           <Grid item width={150}>
-  <FormControl fullWidth variant="outlined">
-    <InputLabel id="gender-label">Men / Women</InputLabel>
+            <Grid item width={150}>
+              <FormControl fullWidth variant="outlined">
+                <InputLabel id="gender-label">Men / Women</InputLabel>
 
-    <Select
-      labelId="gender-label"
-      id="gender-select"
-      value={gender}
-      label="Men / Women"
-      onChange={(e) => {
-        setGender(e.target.value);
-        setCategory("");
-      }}
-    >
-      <MenuItem value="Men">Men</MenuItem>
-      <MenuItem value="Women">Women</MenuItem>
-    </Select>
-  </FormControl>
-</Grid>
+                <Select
+                  labelId="gender-label"
+                  id="gender-select"
+                  value={gender}
+                  label="Men / Women"
+                  onChange={(e) => {
+                    setGender(e.target.value);
+                    setCategory("");
+                  }}
+                >
+                  <MenuItem value="Men">Men</MenuItem>
+                  <MenuItem value="Women">Women</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
 
             <Grid item width={150}>
               <FormControl fullWidth disabled={!gender}>

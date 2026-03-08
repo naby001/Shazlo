@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Box,
   Typography,
@@ -13,8 +13,8 @@ import {
   IconButton,
   Drawer,
   InputBase,
-  Badge
-} from '@mui/material';
+  Badge,
+} from "@mui/material";
 import {
   Dashboard,
   Inventory,
@@ -25,50 +25,55 @@ import {
   Feedback,
   HelpOutline,
   Search,
-  Notifications
-} from '@mui/icons-material';
+  Notifications,
+} from "@mui/icons-material";
 
 import mainlogo from "./assets/1.png";
-import ProductForm from './components/Add_Product_admin';
-import { useDispatch, useSelector } from 'react-redux';
-import LogoutIcon from '@mui/icons-material/Logout';
-import { setLogout } from './state';
-import CatalogUpload from './components/CatalogUpload';
+import ProductForm from "./components/Add_Product_admin";
+import { useDispatch, useSelector } from "react-redux";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { setLogout } from "./state";
+import CatalogUpload from "./components/CatalogUpload";
+import Analytics from "./components/Analytics";
+import ImagesUpload from "./components/ImagesUpload";
+import Orders from "./components/Orders";
+import StoreSetting from "./components/StoreSetting";
+import HelpSupport from "./components/HelpSupport";
 // Static sidebar items (no 'active' field needed)
 const sidebarItems = [
-  { icon: <Dashboard />, text: 'Analytics' },
-   { icon: <Inventory />, text: 'Catalog Upload' },
-   { icon: <Inventory />, text: 'Images Upload' },
-  { icon: <Inventory />, text: 'Products' },
+  { icon: <Dashboard />, text: "Analytics" },
+  { icon: <Inventory />, text: "Catalog Upload" },
+  { icon: <Inventory />, text: "Images Upload" },
+  { icon: <Inventory />, text: "Products" },
   // { icon: <People />, text: 'Customer' },
-  { icon: <ShoppingCart />, text: 'Orders' },
+  { icon: <ShoppingCart />, text: "Orders" },
   // { icon: <Store />, text: 'Store' },
-  { icon: <Settings />, text: 'Store Setting' },
+  { icon: <Settings />, text: "Store Setting" },
   // { icon: <Feedback />, text: 'Feedback' },
-  { icon: <HelpOutline />, text: 'Help & Support' }
+  { icon: <HelpOutline />, text: "Help & Support" },
 ];
 
 export default function NovanestDashboard() {
-  const [activeSection, setActiveSection] = useState('Overview');
-  const brand=useSelector((state)=>state.user);
-  const dispatch=useDispatch();
-  const handlelogout=async()=>{
+  const [activeSection, setActiveSection] = useState("Analytics");
+  const brand = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const handlelogout = async () => {
     dispatch(setLogout());
-  }
+  };
 
   return (
-    <Box sx={{ display: 'flex', bgcolor: '#f8f9fa', minHeight: '100vh' }}>
+    <Box sx={{ display: "flex", bgcolor: "#f8f9fa", minHeight: "100vh" }}>
       {/* Sidebar */}
       <Drawer
         variant="permanent"
         sx={{
           width: 240,
-          '& .MuiDrawer-paper': {
+          "& .MuiDrawer-paper": {
             width: 240,
-            bgcolor: 'white',
-            color: 'black',
-            border: 'none'
-          }
+            bgcolor: "white",
+            color: "black",
+            border: "none",
+          },
         }}
       >
         <Box sx={{ p: 2 }}>
@@ -89,49 +94,53 @@ export default function NovanestDashboard() {
               sx={{
                 borderRadius: 1,
                 mb: 0.5,
-                bgcolor: activeSection === item.text ? 'black' : 'transparent',
-                color: activeSection === item.text && 'white',
-                '&:hover': { bgcolor: 'grey', color: 'white' },
-                cursor:'pointer'
+                bgcolor: activeSection === item.text ? "black" : "transparent",
+                color: activeSection === item.text && "white",
+                "&:hover": { bgcolor: "grey", color: "white" },
+                cursor: "pointer",
               }}
             >
-              <ListItemIcon sx={{ color: activeSection === item.text ? 'white' : 'black', minWidth: 35 }}>
+              <ListItemIcon
+                sx={{
+                  color: activeSection === item.text ? "white" : "black",
+                  minWidth: 35,
+                }}
+              >
                 {item.icon}
               </ListItemIcon>
               <ListItemText
                 primary={item.text}
-                sx={{ '& .MuiTypography-root': { fontSize: '0.9rem' } }}
+                sx={{ "& .MuiTypography-root": { fontSize: "0.9rem" } }}
               />
             </ListItem>
           ))}
-           {/* Logout Button */}
- <ListItem
-  button
-  onClick={handlelogout}
-  sx={{
-    borderRadius: 1,
-    mt: 2,
-    bgcolor: 'transparent',
-    color: 'red',
-    cursor:'pointer',
-    '&:hover': {
-      bgcolor: 'red',
-      color: 'white',
-      '& .MuiListItemIcon-root': {
-        color: 'white'
-      }
-    }
-  }}
->
-  <ListItemIcon sx={{ color: 'red', minWidth: 35 }}>
-    <LogoutIcon />
-  </ListItemIcon>
-  <ListItemText
-    primary="Logout"
-    sx={{ '& .MuiTypography-root': { fontSize: '0.9rem' } }}
-  />
-</ListItem>
-
+          {/* Logout Button */}
+          <ListItem
+            button
+            onClick={handlelogout}
+            sx={{
+              borderRadius: 1,
+              mt: 2,
+              bgcolor: "transparent",
+              color: "red",
+              cursor: "pointer",
+              "&:hover": {
+                bgcolor: "red",
+                color: "white",
+                "& .MuiListItemIcon-root": {
+                  color: "white",
+                },
+              },
+            }}
+          >
+            <ListItemIcon sx={{ color: "red", minWidth: 35 }}>
+              <LogoutIcon />
+            </ListItemIcon>
+            <ListItemText
+              primary="Logout"
+              sx={{ "& .MuiTypography-root": { fontSize: "0.9rem" } }}
+            />
+          </ListItem>
         </List>
 
         {/* Upgrade Pro Card */}
@@ -162,27 +171,36 @@ export default function NovanestDashboard() {
       {/* Main Content */}
       <Box sx={{ flexGrow: 1, p: 3 }}>
         {/* Header */}
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mb: 3,
+          }}
+        >
           <Box>
-            <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 0.5 }}>
-              {`Welcome back, ${brand.poc_name}`}
+            <Typography variant="h4" sx={{ fontWeight: "bold", mb: 0.5 }}>
+              {`Welcome back, acv`}
             </Typography>
             {/* <Typography variant="body2" color="text.secondary">
               Here's Your Control Sales Overview
             </Typography> */}
           </Box>
 
-          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Box sx={{
-              display: 'flex',
-              alignItems: 'center',
-              bgcolor: 'white',
-              borderRadius: 1,
-              px: 2,
-              py: 1,
-              border: '1px solid #e0e0e0'
-            }}>
-              <Search sx={{ color: 'text.secondary', mr: 1 }} />
+          <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                bgcolor: "white",
+                borderRadius: 1,
+                px: 2,
+                py: 1,
+                border: "1px solid #e0e0e0",
+              }}
+            >
+              <Search sx={{ color: "text.secondary", mr: 1 }} />
               <InputBase placeholder="Search" sx={{ width: 200 }} />
             </Box>
             <IconButton>
@@ -190,13 +208,21 @@ export default function NovanestDashboard() {
                 <Notifications />
               </Badge>
             </IconButton>
-            <Avatar src="/api/placeholder/32/32" sx={{ width: 32, height: 32 }} />
+            <Avatar
+              src="/api/placeholder/32/32"
+              sx={{ width: 32, height: 32 }}
+            />
           </Box>
         </Box>
 
         {/* Conditional Rendering */}
-        {activeSection === 'Products' && <ProductForm />}
-         {activeSection === 'Catalog Upload' && <CatalogUpload />}
+        {activeSection === "Analytics" && <Analytics />}
+        {activeSection === "Products" && <ProductForm />}
+        {activeSection === "Catalog Upload" && <CatalogUpload />}
+        {activeSection === "Images Upload" && <ImagesUpload />}
+        {activeSection === "Orders" && <Orders />}
+        {activeSection === "Store Setting" && <StoreSetting />}
+        {activeSection === "Help & Support" && <HelpSupport />}
       </Box>
     </Box>
   );
