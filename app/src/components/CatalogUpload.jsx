@@ -13,6 +13,8 @@ import {
   LinearProgress,
 } from "@mui/material";
 import * as XLSX from "xlsx";
+import { useDispatch } from "react-redux";
+import { addProducts } from "../state";
 
 // ---- CATEGORY TREE (frontend only) ----
 
@@ -65,6 +67,8 @@ export default function CatalogUpload() {
   const [imageFiles, setImageFiles] = useState([]);
 
   const [jobId, setJobId] = useState(null);
+
+  const dispatch = useDispatch();
 
   // ----------------------------
   // Dummy API Calls
@@ -178,6 +182,9 @@ export default function CatalogUpload() {
       }));
 
       console.log("Parsed products:", products);
+
+      // Add to global state
+      dispatch(addProducts({ products }));
 
       // Simulate upload with images
       const formData = new FormData();

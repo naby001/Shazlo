@@ -5,6 +5,7 @@ const initialState = {
   user: null,
   token: null,
   posts: [],
+  products: [],
 };
 
 export const authSlice = createSlice({
@@ -21,19 +22,17 @@ export const authSlice = createSlice({
     setGithubLogin: (state, action) => {
       state.user = action.payload.user;
       state.token = action.payload.token;
-      state.githubtoken=action.payload.githubtoken;
-      state.preferences=action.payload.preferences;
-      
+      state.githubtoken = action.payload.githubtoken;
+      state.preferences = action.payload.preferences;
     },
-    setVercelStatus:(state,action)=>{
-      state.verceltoken=action.payload.verceltoken;
+    setVercelStatus: (state, action) => {
+      state.verceltoken = action.payload.verceltoken;
     },
     setLogout: (state) => {
       state.user = null;
       state.token = null;
-      state.githubtoken=null;
-      state.preferences=null;
-    
+      state.githubtoken = null;
+      state.preferences = null;
     },
     setFriends: (state, action) => {
       if (state.user) {
@@ -52,9 +51,29 @@ export const authSlice = createSlice({
       });
       state.posts = updatedPosts;
     },
+    setProducts: (state, action) => {
+      state.products = action.payload.products;
+    },
+    addProduct: (state, action) => {
+      state.products.push(action.payload.product);
+    },
+    addProducts: (state, action) => {
+      state.products.push(...action.payload.products);
+    },
   },
 });
 
-export const { setMode, setLogin,setGithubLogin, setLogout, setFriends, setPosts, setPost, setVercelStatus } =
-  authSlice.actions;
+export const {
+  setMode,
+  setLogin,
+  setGithubLogin,
+  setLogout,
+  setFriends,
+  setPosts,
+  setPost,
+  setVercelStatus,
+  setProducts,
+  addProduct,
+  addProducts,
+} = authSlice.actions;
 export default authSlice.reducer;

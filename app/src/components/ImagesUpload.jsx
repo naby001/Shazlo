@@ -8,10 +8,13 @@ import {
   Grid,
   LinearProgress,
 } from "@mui/material";
-
+import { useDispatch } from "react-redux";
+import { addProducts } from "../state";
 export default function ImagesUpload() {
   const [uploading, setUploading] = useState(false);
   const [imageFiles, setImageFiles] = useState([]);
+
+  const dispatch = useDispatch();
 
   const handleUpload = () => {
     if (imageFiles.length === 0) {
@@ -19,10 +22,37 @@ export default function ImagesUpload() {
       return;
     }
     setUploading(true);
+
+    // Create product entries for uploaded images
+    const products = imageFiles.map((file, index) => ({
+      productId: `IMG${Date.now()}-${index}`,
+      name: file.name.replace(/\.[^/.]+$/, ""), // Remove extension
+      category: "Images",
+      subcategory: "",
+      brand: "",
+      description: "Uploaded image",
+      price: 0,
+      discount: 0,
+      stock: 1,
+      color: "",
+      size: "",
+      material: "",
+      gender: "",
+      imageUrl1: URL.createObjectURL(file), // Temporary URL
+      imageUrl2: "",
+      imageUrl3: "",
+      weight: "",
+      returnable: "",
+    }));
+
+    dispatch(addProducts({ products }));
+
     // Simulate upload
     setTimeout(() => {
       setUploading(false);
-      alert(`Uploaded ${imageFiles.length} images successfully`);
+      alert(
+        `Uploaded ${imageFiles.length} images and created ${products.length} products successfully`
+      );
       setImageFiles([]);
     }, 2000);
   };

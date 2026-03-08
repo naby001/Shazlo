@@ -39,7 +39,7 @@ import ImagesUpload from "./components/ImagesUpload";
 import Orders from "./components/Orders";
 import StoreSetting from "./components/StoreSetting";
 import HelpSupport from "./components/HelpSupport";
-// Static sidebar items (no 'active' field needed)
+import Products from "./components/Products"; // Static sidebar items (no 'active' field needed)
 const sidebarItems = [
   { icon: <Dashboard />, text: "Analytics" },
   { icon: <Inventory />, text: "Catalog Upload" },
@@ -217,7 +217,7 @@ export default function NovanestDashboard() {
 
         {/* Conditional Rendering */}
         {activeSection === "Analytics" && <Analytics />}
-        {activeSection === "Products" && <ProductForm />}
+        {activeSection === "Products" && <Products />}
         {activeSection === "Catalog Upload" && <CatalogUpload />}
         {activeSection === "Images Upload" && <ImagesUpload />}
         {activeSection === "Orders" && <Orders />}
