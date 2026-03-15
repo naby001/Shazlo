@@ -48,7 +48,9 @@ export default function ProductForm({ onClose }) {
   });
 
   const [productImage, setProductImage] = useState(null);
-  const [imagePreview, setImagePreview] = useState("https://via.placeholder.com/200x200?text=No+Image");
+  const [imagePreview, setImagePreview] = useState(
+    "https://via.placeholder.com/200x200?text=No+Image"
+  );
   const generalFields = ["title", "product_category", "price", "discount"];
   const stockFields = ["sku", "stock"];
   const brand = useSelector((state) => state.user);
@@ -109,7 +111,9 @@ export default function ProductForm({ onClose }) {
 
     // Check if brand information is available
     if (!brand || !brand.brand_name || !brand.id) {
-      alert("Error: Brand information not found. Please complete your profile.");
+      alert(
+        "Error: Brand information not found. Please complete your profile."
+      );
       return;
     }
 
@@ -124,7 +128,9 @@ export default function ProductForm({ onClose }) {
     console.log(payload.get("image"));
     try {
       // For now, just simulate success since the backend endpoint doesn't exist
-      alert("✅ Product added successfully! (Note: This is a simulation - backend integration needed)");
+      alert(
+        "✅ Product added successfully! (Note: This is a simulation - backend integration needed)"
+      );
       console.log("Product data:", {
         name: formData.title,
         category: formData.product_category,
