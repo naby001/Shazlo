@@ -15,6 +15,7 @@ import {
 import * as XLSX from "xlsx";
 import { useDispatch } from "react-redux";
 import { addProducts } from "../state";
+import axios from "axios";
 
 // ---- CATEGORY TREE (frontend only) ----
 
@@ -35,26 +36,53 @@ const CATEGORY_TREE = {
   ],
 };
 
-const HEADERS = [
-  "Product ID",
-  "Product Name",
-  "Category",
-  "Subcategory",
-  "Brand",
-  "Description",
-  "Price (₹)",
-  "Discount (%)",
-  "Stock Qty",
-  "Color",
-  "Size",
-  "Material",
-  "Gender",
-  "Image URL 1",
-  "Image URL 2",
-  "Image URL 3",
-  "Weight (g)",
-  "Returnable (Yes/No)",
-];
+const getHeaders = (category) => {
+  const baseHeaders = [
+    "Product ID",
+    "Product Name",
+    "Category",
+    "Subcategory",
+    "Brand",
+    "Description",
+    "Price (₹)",
+    "Discount (%)",
+    "Stock Qty",
+    "Color",
+    "Material",
+    "Gender",
+    "Image URL 1",
+    "Image URL 2",
+    "Image URL 3",
+    "Weight (g)",
+    "Returnable (Yes/No)",
+  ];
+
+  // Exclude "Size" for categories like Dresses
+  if (category && (category.includes("Dress") || category.includes("Kurtis"))) {
+    return baseHeaders;
+  } else {
+    return [
+      "Product ID",
+      "Product Name",
+      "Category",
+      "Subcategory",
+      "Brand",
+      "Description",
+      "Price (₹)",
+      "Discount (%)",
+      "Stock Qty",
+      "Color",
+      "Size",
+      "Material",
+      "Gender",
+      "Image URL 1",
+      "Image URL 2",
+      "Image URL 3",
+      "Weight (g)",
+      "Returnable (Yes/No)",
+    ];
+  }
+};
 
 export default function CatalogUpload() {
   const [gender, setGender] = useState("");
@@ -77,59 +105,72 @@ export default function CatalogUpload() {
   const fetchTemplate = async () => {
     setLoadingTemplate(true);
 
-    // Sample data
-    const sampleData = [
-      [
+    const headers = getHeaders(category);
+
+    // Generate sample data based on selected gender and category
+    let sampleData = [];
+
+    if (gender && category) {
+      // Create sample product based on category
+      const sampleProduct = [
         "SHZ001",
-        "Floral Summer Dress",
-        "Dress",
-        "Casual Dress",
-        "Zara",
-        "Light summer floral dress",
+        `Sample ${category}`,
+        category,
+        `${category} Subcategory`,
+        "Sample Brand",
+        `Description for ${category}`,
         1299,
         10,
         25,
         "Red",
-        "M",
-        "Cotton",
-        "Women",
-        "link",
-        "link",
-        "link",
-        350,
-        "Yes",
-      ],
-      [
-        "SHZ002",
-        "Leather Handbag",
-        "Bags",
-        "Tote Bag",
-        "H&M",
-        "Stylish brown leather tote",
-        1999,
-        5,
-        15,
-        "Brown",
-        "Free Size",
-        "Leather",
-        "Women",
-        "link",
-        "link",
-        "link",
-        600,
-        "Yes",
-      ],
-    ];
+      ];
+
+      // Add Size if not excluded
+      if (headers.includes("Size")) {
+        sampleProduct.push("M");
+      }
+
+      sampleProduct.push("Cotton", gender, "link", "link", "link", 350, "Yes");
+
+      sampleData = [sampleProduct];
+    } else {
+      // Default sample if no selection
+      sampleData = [
+        [
+          "SHZ001",
+          "Sample Product",
+          "Category",
+          "Subcategory",
+          "Brand",
+          "Description",
+          1299,
+          10,
+          25,
+          "Red",
+          ...(headers.includes("Size") ? ["M"] : []),
+          "Cotton",
+          "Gender",
+          "link",
+          "link",
+          "link",
+          350,
+          "Yes",
+        ],
+      ];
+    }
 
     // Create worksheet
-    const ws = XLSX.utils.aoa_to_sheet([HEADERS, ...sampleData]);
+    const ws = XLSX.utils.aoa_to_sheet([headers, ...sampleData]);
 
     // Create workbook
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, "Template");
 
     // Download
-    XLSX.writeFile(wb, `Catalog_Template_${gender}_${category}.xlsx`);
+    XLSX.writeFile(
+      wb,
+      `Catalog_Template_${gender || "General"}_${category || "General"}.xlsx`
+    );
 
     setLoadingTemplate(false);
   };
@@ -149,9 +190,12 @@ export default function CatalogUpload() {
       const worksheet = workbook.Sheets[sheetName];
       const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
 
+      // Expected headers based on selected category
+      const expectedHeaders = getHeaders(category);
+
       // Check headers
       const fileHeaders = jsonData[0];
-      if (!HEADERS.every((h, i) => h === fileHeaders[i])) {
+      if (!expectedHeaders.every((h, i) => h === fileHeaders[i])) {
         alert(
           "Invalid file format. Headers do not match the expected template."
         );
@@ -160,50 +204,122 @@ export default function CatalogUpload() {
       }
 
       // Process data, skip header
-      const products = jsonData.slice(1).map((row) => ({
-        productId: row[0],
-        name: row[1],
-        category: row[2],
-        subcategory: row[3],
-        brand: row[4],
-        description: row[5],
-        price: row[6],
-        discount: row[7],
-        stock: row[8],
-        color: row[9],
-        size: row[10],
-        material: row[11],
-        gender: row[12],
-        imageUrl1: row[13],
-        imageUrl2: row[14],
-        imageUrl3: row[15],
-        weight: row[16],
-        returnable: row[17],
-      }));
+      const products = jsonData.slice(1).map((row) => {
+        const product = {};
+        expectedHeaders.forEach((header, index) => {
+          const value = row[index];
+          switch (header) {
+            case "Product ID":
+              product.productId = value;
+              break;
+            case "Product Name":
+              product.name = value;
+              break;
+            case "Category":
+              product.category = value;
+              break;
+            case "Subcategory":
+              product.subcategory = value;
+              break;
+            case "Brand":
+              product.brand = value;
+              break;
+            case "Description":
+              product.description = value;
+              break;
+            case "Price (₹)":
+              product.price = value;
+              break;
+            case "Discount (%)":
+              product.discount = value;
+              break;
+            case "Stock Qty":
+              product.stock = value;
+              break;
+            case "Color":
+              product.color = value;
+              break;
+            case "Size":
+              product.size = value;
+              break;
+            case "Material":
+              product.material = value;
+              break;
+            case "Gender":
+              product.gender = value;
+              break;
+            case "Image URL 1":
+              product.imageUrl1 = value;
+              break;
+            case "Image URL 2":
+              product.imageUrl2 = value;
+              break;
+            case "Image URL 3":
+              product.imageUrl3 = value;
+              break;
+            case "Weight (g)":
+              product.weight = value;
+              break;
+            case "Returnable (Yes/No)":
+              product.returnable = value;
+              break;
+          }
+        });
+        return product;
+      });
 
       console.log("Parsed products:", products);
 
-      // Add to global state
-      dispatch(addProducts({ products }));
+      // Upload images to Cloudinary if any
+      let imageUrls = [];
+      if (imageFiles.length > 0) {
+        const formData = new FormData();
+        imageFiles.forEach((img) => {
+          formData.append("images", img);
+        });
 
-      // Simulate upload with images
-      const formData = new FormData();
-      formData.append("products", JSON.stringify(products));
-      imageFiles.forEach((img) => {
-        formData.append("images", img);
+        const uploadResponse = await axios.post(
+          "http://localhost:5000/api/upload/images",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        imageUrls = uploadResponse.data.urls;
+        console.log("Uploaded image URLs:", imageUrls);
+      }
+
+      // Assign uploaded URLs to products (simple assignment: first 3 to first product, etc.)
+      let urlIndex = 0;
+      products = products.map((product) => {
+        const updatedProduct = { ...product };
+        if (urlIndex < imageUrls.length) {
+          updatedProduct.imageUrl1 = imageUrls[urlIndex++] || product.imageUrl1;
+        }
+        if (urlIndex < imageUrls.length) {
+          updatedProduct.imageUrl2 = imageUrls[urlIndex++] || product.imageUrl2;
+        }
+        if (urlIndex < imageUrls.length) {
+          updatedProduct.imageUrl3 = imageUrls[urlIndex++] || product.imageUrl3;
+        }
+        return updatedProduct;
       });
 
-      // simulate backend
-      setTimeout(() => {
-        const fakeJobId = "JOB-" + Math.floor(Math.random() * 100000);
-        setJobId(fakeJobId);
-        setUploading(false);
-        alert(
-          `Uploaded ${products.length} products successfully. Job ID: ${fakeJobId}`
-        );
-      }, 2000);
+      // Send products to backend
+      await axios.post("http://localhost:5000/api/upload/products", {
+        products,
+      });
+
+      const fakeJobId = "JOB-" + Math.floor(Math.random() * 100000);
+      setJobId(fakeJobId);
+      alert(
+        `Uploaded ${products.length} products successfully. Job ID: ${fakeJobId}`
+      );
     } catch (error) {
-      alert("Error parsing file: " + error.message);
+      alert("Error uploading: " + error.message);
+    } finally {
       setUploading(false);
     }
   };
