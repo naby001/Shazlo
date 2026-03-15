@@ -204,7 +204,7 @@ export default function CatalogUpload() {
       }
 
       // Process data, skip header
-      const products = jsonData.slice(1).map((row) => {
+      let products = jsonData.slice(1).map((row) => {
         const product = {};
         expectedHeaders.forEach((header, index) => {
           const value = row[index];

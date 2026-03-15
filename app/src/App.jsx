@@ -18,24 +18,25 @@ import RegisterBrand from "./components/partner";
 import AnotherHome from "./AnotherHome";
 import AnotherHomeOptimized from "./AnotherHomeOptimized";
 import afterAlpha_Home from "./Home_afteralphalaunch";
-import { Analytics } from "@vercel/analytics/react"
+import { Analytics } from "@vercel/analytics/react";
 import CRMPanel from "./CRMPanel";
 import Waitlist from "./Waitlist";
 import Privacy from "./Privacy";
 import Terms from "./Terms";
 import DeleteAccountFAQ from "./FAQ";
 import Alpha_Home from "./Home_afteralphalaunch";
+import AdminPortal from "./AdminPortal";
 
 function App() {
   const subdomain = window.location.hostname.split(".")[0];
-  const dispatch=useDispatch();
-  const brand=useSelector((state)=>state.user);
-  console.log(brand)
+  const dispatch = useDispatch();
+  const brand = useSelector((state) => state.user);
+  console.log(brand);
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
-  
-const globalStyles = (
-  <GlobalStyles
-    styles={`
+
+  const globalStyles = (
+    <GlobalStyles
+      styles={`
       @font-face {
         font-family: 'Voyage';
         src: url('/voyage-regular.otf') format('opentype');
@@ -43,19 +44,21 @@ const globalStyles = (
         font-style: normal;
       }
     `}
-  />
-);
+    />
+  );
   // dispatch(setLogout())
   return (
-
     <ThemeProvider theme={theme}>
       <CssBaseline />
       {globalStyles}
-       <Router>
+      <Router>
         <Routes>
           {subdomain === "seller" ? (
             <>
-              <Route path="/" element={!brand ? <BrandOnboarding /> : <NovanestDashboard />} />
+              <Route
+                path="/"
+                element={!brand ? <BrandOnboarding /> : <NovanestDashboard />}
+              />
               <Route path="/seller" element={<NovanestDashboard />} />
             </>
           ) : subdomain === "crm" ? (
@@ -63,27 +66,26 @@ const globalStyles = (
               {/* ✅ CRM subdomain routes */}
               <Route path="/" element={<CRMPanel />} />
               <Route path="/dashboard" element={<CRMPanel />} />
+              <Route path="/admin" element={<AdminPortal />} />
               {/* You can add CRM-specific pages here later */}
             </>
           ) : (
             <>
               {/* Default public routes */}
               <Route path="/" element={<AnotherHomeOptimized />} />
-              <Route path="/alternate_home" element={<Alpha_Home/>}/>
+              <Route path="/alternate_home" element={<Alpha_Home />} />
               <Route path="/waitlist" element={<Waitlist />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/terms-of-service" element={<Terms />} />
               <Route path="/contact" element={<ContactPage />} />
               <Route path="/faq" element={<DeleteAccountFAQ />} />
-              <Route path="/partner" element={<RegisterBrand/>}></Route>
-              
+              <Route path="/partner" element={<RegisterBrand />}></Route>
             </>
           )}
         </Routes>
       </Router>
       <Analytics />
     </ThemeProvider>
-
   );
 }
 

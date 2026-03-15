@@ -7,6 +7,7 @@ import rateLimit from "express-rate-limit";
 import waitlistRoutes from "./routes/waitlist.js"; // ✅ your waitlist route
 import brandRoutes from "./routes/brand.js";
 import uploadRoutes from "./routes/upload.js";
+import adminRoutes from "./routes/admin.js";
 dotenv.config();
 
 const app = express();
@@ -23,6 +24,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/waitlist", waitlistRoutes); // ✅ now correctly mapped
 app.use("/api", brandRoutes);
 app.use("/api/upload", uploadRoutes);
+app.use("/api/admin", adminRoutes);
 // Health check
 app.get("/api/health", (req, res) => {
   res.status(200).json({

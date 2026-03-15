@@ -2,6 +2,7 @@ import express from "express";
 import multer from "multer";
 import { v2 as cloudinary } from "cloudinary";
 import dotenv from "dotenv";
+import Product from "../models/Product.js";
 
 dotenv.config();
 
@@ -48,10 +49,30 @@ router.post("/images", upload.array("images"), async (req, res) => {
 });
 
 // Upload products (placeholder, can be expanded)
-router.post("/products", express.json(), (req, res) => {
-  // Here you can save products to database
-  console.log("Products received:", req.body.products);
-  res.status(200).json({ message: "Products uploaded successfully" });
+router.post("/products", express.json(), async (req, res) => {
+  try {
+    const { products, sellerId } = req.body;
+    if (!products || !sellerId) {
+      return res
+        .status(400)
+        .json({ message: "Products and sellerId required" });
+    }
+
+    const savedProducts = await Product.insertMany(
+      products.map((p) => ({ ...p, sellerId }))
+    );
+    res
+      .status(200)
+      .json({
+        message: "Products uploaded successfully",
+        products: savedProducts,
+      });
+  } catch (error) {
+    console.error("Save products error:", error);
+    res
+      .status(500)
+      .json({ message: "Failed to save products", error: error.message });
+  }
 });
 
 export default router;
