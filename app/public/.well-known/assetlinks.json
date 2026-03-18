@@ -4,9 +4,8 @@
     "target": {
       "namespace": "android_app",
       "package_name": "com.shazlo.mobile",
-      "sha256_cert_fingerprints": [
-        "AD:A6:D7:9F:13:29:4E:89:19:66:0E:2F:E1:7C:36:56:8C:A7:B2:C1:21:53:C4:E9:8D:69:42:7B:C7:A1:EE:98"
-      ]
+      "sha256_cert_fingerprints":
+        ["AD:A6:D7:9F:13:29:4E:89:19:66:0E:2F:E1:7C:36:56:8C:A7:B2:C1:21:53:C4:E9:8D:69:42:7B:C7:A1:EE:98", "2D:9B:C5:7C:93:E6:09:06:B4:6E:78:3A:7E:3C:00:79:B6:C2:87:1F:8E:61:9B:B5:C2:E1:05:B4:29:99:D0:35"]
     }
   }
 ]
