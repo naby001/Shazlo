@@ -1,7 +1,9 @@
 import React from "react";
 import { Box, Typography, Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
+  const navigate=useNavigate()
   return (
     <Box
       sx={{
@@ -21,7 +23,7 @@ const HeroSection = () => {
         sx={{
           width: "100%",
           maxWidth: 420,
-          backgroundColor: "#f4efe7",
+          backgroundColor: "#122a41",
           borderRadius: "28px",
           px: { xs: 1, sm: 2 },
           py: { xs: 4, sm: 5 },
@@ -41,7 +43,7 @@ const HeroSection = () => {
     src="/main-logo.png"   // your logo path
     alt="Wavelength"
     sx={{
-      height: 100,            // adjust to match design
+      height: 80,            // adjust to match design
       width: "auto",
       objectFit: "contain",
     }}
@@ -52,7 +54,7 @@ const HeroSection = () => {
         <Typography
           sx={{
             fontSize: 16,
-            color: "#000",
+            color: "white",
             mb: 0.5,
           }}
         >
@@ -65,6 +67,7 @@ const HeroSection = () => {
             fontWeight: 500,
             fontFamily: "serif",
             lineHeight: 1.1,
+            color:'White'
           }}
         >
           clothes from your <em>swipes</em>
@@ -75,6 +78,7 @@ const HeroSection = () => {
             fontSize: 16,
             mt: 0.5,
             mb: 2,
+            color:'white'
           }}
         >
           so you don’t get bored browsing large catalogues
@@ -84,7 +88,7 @@ const HeroSection = () => {
         <Typography
           sx={{
             fontSize: 14,
-            color: "#5f5a54",
+            color: "white",
             lineHeight: 1.6,
             mb: 4,
             paddingLeft:2,
@@ -104,35 +108,42 @@ const HeroSection = () => {
   }}
 >
   <Button
-    variant="contained"
-    sx={{
-      backgroundColor: "#0f1712",
-      color: "#eeba2b",
-      borderRadius: "14px",
-      px: 3.5,
-      py: 1.6,
-      fontSize: 15,
-      textTransform: "none",
-      "&:hover": {
-        backgroundColor: "#0b120e",
-      },
-    }}
-  >
-    Join Waitlist
-  </Button>
+  variant="contained"
+  onClick={() =>
+    window.open(
+      "https://play.google.com/store/apps/details?id=com.shazlo.mobile&pcampaignid=web_share",
+      "_blank"
+    )
+  }
+  sx={{
+    backgroundColor: "#0f1712",
+    color: "#eeba2b",
+    borderRadius: "14px",
+    px: 3.5,
+    py: 1.6,
+    fontSize: 15,
+    textTransform: "none",
+    "&:hover": {
+      backgroundColor: "#0b120e",
+    },
+  }}
+>
+  Download app
+</Button>
 
   <Button
     variant="outlined"
+    onClick={() => navigate("/partner")}
     sx={{
-      borderColor: "#0f1712",
-      color: "#0f1712",
+      borderColor: "white",
+      color: "white",
       borderRadius: "14px",
       px: 3.5,
       py: 1.6,
       fontSize: 15,
       textTransform: "none",
       "&:hover": {
-        borderColor: "#0b120e",
+        borderColor: "white",
         backgroundColor: "rgba(0,0,0,0.03)",
       },
     }}

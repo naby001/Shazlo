@@ -297,10 +297,10 @@ export default function FAQWithFooter() {
          <Box sx={{display:'flex', alignItems:'center', justifyContent:'center'}}>
   <Box
     component="img"
-    src={logo}
+    src="/main-logo.png"
     alt="Shazlo"
     sx={{
-      height: 60,
+      height: 40,
       objectFit: "contain",
       opacity: 0.95,
     }}

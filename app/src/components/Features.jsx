@@ -6,7 +6,7 @@ const features = [
     title: "Swipe on products",
     description:
       "To get an ultra-curated feed",
-    image: "/alternate-img1.jpeg",
+    image: "/alternate-img1.jpg",
   },
   {
     title: "Create closets",
@@ -18,7 +18,7 @@ const features = [
     title: "",
     description:
       "We connect you directly with trusted fashion brands—no fakes, no noise.",
-     image: "/alternate-img1.jpeg",
+     image: "/alternate-img1.jpg",
   },
 ];
 
