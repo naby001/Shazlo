@@ -1,0 +1,218 @@
+import { useEffect, useState } from "react";
+import {
+  Dialog,
+  DialogContent,
+  Typography,
+  TextField,
+  Checkbox,
+  FormControlLabel,
+  Button,
+  Box,
+  Fade,
+} from "@mui/material";
+
+export default function ProductFilterDialog({
+  open,
+  onClose,
+  onApply,
+  onClear,
+  productList = [],
+}) {
+  const [search, setSearch] = useState("");
+  const [selectedProducts, setSelectedProducts] = useState([]);
+
+  useEffect(() => {
+    if (!open) return;
+
+    setSearch("");
+  }, [open]);
+
+  const filteredProducts = productList.filter((product) =>
+    product.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const toggleProduct = (product) => {
+    setSelectedProducts((prev) =>
+      prev.includes(product)
+        ? prev.filter((p) => p !== product)
+        : [...prev, product]
+    );
+  };
+
+  const handleClear = () => {
+    setSelectedProducts([]);
+    setSearch("");
+    onClear?.();
+  };
+
+  const handleApply = () => {
+    onApply?.(selectedProducts);
+    onClose?.();
+  };
+
+  return (
+    <Dialog
+      open={open}
+      onClose={onClose}
+      TransitionComponent={Fade}
+      transitionDuration={300}
+      PaperProps={{
+        sx: {
+          width: 420,
+          maxWidth: "92vw",
+          borderRadius: "22px",
+          background: "#fff",
+          overflow: "hidden",
+          boxShadow: "0 30px 80px rgba(0,0,0,.28)",
+        },
+      }}
+    >
+      <DialogContent sx={{ p: 4 }}>
+        <Typography
+          variant="h5"
+          sx={{
+            fontWeight: 700,
+            color: "#000",
+            mb: 3,
+          }}
+        >
+          Select Products
+        </Typography>
+
+        <TextField
+          fullWidth
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Search products..."
+          sx={{
+            mb: 3,
+            "& .MuiOutlinedInput-root": {
+              borderRadius: "14px",
+
+              "& fieldset": {
+                borderColor: "#ddd",
+              },
+
+              "&:hover fieldset": {
+                borderColor: "#000",
+              },
+
+              "&.Mui-focused fieldset": {
+                borderColor: "#000",
+              },
+            },
+          }}
+        />
+
+        <Box
+          sx={{
+            maxHeight: 280,
+            overflowY: "auto",
+            pr: 1,
+
+            "&::-webkit-scrollbar": {
+              width: 6,
+            },
+
+            "&::-webkit-scrollbar-thumb": {
+              background: "#bbb",
+              borderRadius: 20,
+            },
+          }}
+        >
+          {filteredProducts.map((product) => (
+            <Box
+              key={product}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                py: 0.7,
+                borderRadius: 2,
+
+                "&:hover": {
+                  bgcolor: "#f6f6f6",
+                },
+              }}
+            >
+              <FormControlLabel
+                sx={{
+                  width: "100%",
+                  m: 0,
+                }}
+                control={
+                  <Checkbox
+                    checked={selectedProducts.includes(product)}
+                    onChange={() => toggleProduct(product)}
+                    sx={{
+                      color: "#000",
+
+                      "&.Mui-checked": {
+                        color: "#000",
+                      },
+                    }}
+                  />
+                }
+                label={
+                  <Typography
+                    sx={{
+                      fontWeight: 500,
+                      color: "#000",
+                      textTransform: "capitalize",
+                    }}
+                  >
+                    {product}
+                  </Typography>
+                }
+              />
+            </Box>
+          ))}
+        </Box>
+
+        <Box
+          sx={{
+            display: "flex",
+            gap: 2,
+            mt: 4,
+          }}
+        >
+          <Button
+            fullWidth
+            variant="outlined"
+            onClick={handleClear}
+            sx={{
+              borderRadius: "14px",
+              borderColor: "#000",
+              color: "#000",
+              py: 1.2,
+
+              "&:hover": {
+                bgcolor: "#000",
+                color: "#fff",
+                borderColor: "#000",
+              },
+            }}
+          >
+            Clear
+          </Button>
+
+          <Button
+            fullWidth
+            variant="contained"
+            onClick={handleApply}
+            sx={{
+              bgcolor: "#000",
+              borderRadius: "14px",
+              py: 1.2,
+
+              "&:hover": {
+                bgcolor: "#111",
+              },
+            }}
+          >
+            Apply
+          </Button>
+        </Box>
+      </DialogContent>
+    </Dialog>
+  );
+}

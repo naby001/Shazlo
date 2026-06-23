@@ -8,14 +8,14 @@ import {
 import { motion } from "framer-motion";
 import BrandFilterDialog from "./BrandFilter";
 import PriceFilterDialog from "./PriceFilter";
+import ProductFilterDialog from "./ProductsFilter";
 
 const MotionAvatar = motion(Avatar);
 
 export default function FilterBar({ filters, setFilters }) {
-    const brands = [
-        'Zara', 'MnS', 'Bulbul Fashions', 'Bijoi', 'Bonkers Corner', 'Souled Store', 'Chimpanzee'
-    ];
-
+    const brands = filters.gender === 'women' ? ['Zara', 'MnS', 'Bulbul Fashions', 'Bijoi', 'Bonkers Corner', 'Souled Store', 'Chimpanzee']
+        : ['MnS', 'Bonkers Corner']
+    const productList = filters.gender === 'women' ? ['dresses', 'tops', 'shirts', 'jeans', 'co-ords', 'saree', 'others'] : ['t-shirts', 'shirts', 'jeans', 'hoodies']
     // const [gender, setGender] = useState("men");
     const [activeFilter, setActiveFilter] = useState("");
 
@@ -23,6 +23,7 @@ export default function FilterBar({ filters, setFilters }) {
         useState(false);
     const [priceOpen, setPriceOpen] =
         useState(false);
+    const [productOpen, setProductOpen] = useState(false)
     const filters_display = [
         "Brand",
         "Price",
@@ -36,6 +37,9 @@ export default function FilterBar({ filters, setFilters }) {
             setBrandOpen(true)
         if (filter === "Price")
             setPriceOpen(true)
+        if (filter === "Product")
+            setProductOpen(true)
+
 
 
         // Replace this later with opening dialogs
@@ -171,6 +175,17 @@ export default function FilterBar({ filters, setFilters }) {
                             ...prev,
                             minPrice,
                             maxPrice,
+                        }));
+                    }}
+                />
+                <ProductFilterDialog
+                    open={productOpen}
+                    onClose={() => setProductOpen(false)}
+                    productList={productList}
+                    onApply={(selectedProducts) => {
+                        setFilters(prev => ({
+                            ...prev,
+                            products: selectedProducts,
                         }));
                     }}
                 />
