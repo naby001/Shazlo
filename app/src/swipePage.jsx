@@ -9,6 +9,7 @@ import FeedQueue from "./FeedQueue";
 import FilterBar from "./components/FilterBar";
 import { sendSwipe } from "./api/swipes";
 import { recalculatePreferenceVector } from "./api/user_vector";
+import DownloadButton from "./components/DownloadApp";
 
 const MotionBox = motion(Box);
 const VISIBLE_CARDS = 5;
@@ -220,6 +221,24 @@ useEffect(() => {
         <FilterBar filters={filters}
     setFilters={setFilters}/>
       </Box>
+      <Box
+  sx={{
+    position: "fixed",
+    top: 24,
+    right: 10,
+    zIndex: 2000,
+  }}
+>
+    <DownloadButton
+  onClick={() =>
+    window.open(
+      "https://play.google.com/store/apps/details?id=com.shazlo.mobile&pcampaignid=web_share",
+      "_blank",
+      "noopener,noreferrer"
+    )
+  }
+/>
+</Box>
 
       {/* CARD STACK */}
       
@@ -306,7 +325,7 @@ useEffect(() => {
                 animate={{
                   x: 0,
                   y: index * 12,
-                  rotate: index * 4,
+                  rotate: index * 1.5,
                   scale: 1 - index * 0.04,
                   opacity: 1,
                 }}
