@@ -6,10 +6,14 @@ import { useRef } from "react";
 import SwipeCard from "./components/SwipeCard";
 import { getRecommendations } from "./api/recommendations";
 import FeedQueue from "./FeedQueue";
+import FilterBar from "./components/FilterBar";
+import { sendSwipe } from "./api/swipes";
+import { recalculatePreferenceVector } from "./api/user_vector";
 
 const MotionBox = motion(Box);
 const VISIBLE_CARDS = 5;
 export default function SwipePage() {
+  const firstLoad = useRef(true);
   const [cards, setCards] = useState([]);
   const [batchVersion, setBatchVersion] =
     useState(0);
@@ -22,77 +26,71 @@ export default function SwipePage() {
   const swipeCountRef = useRef(0);
   const servedIdsRef = useRef(new Set());
  const initializedRef = useRef(false);
- useEffect(() => {
-  if (initializedRef.current) return;
+ const [brands,setBrands]=useState([])
+ const [filters, setFilters] = useState({
+  brands: [],
+  products: [],
+  gender: "women",
+  minPrice: null,
+  maxPrice: null,
+});
 
-  initializedRef.current = true;
-
-  loadInitialCards();
-}, []);
-
-  const loadInitialCards = async () => {
-    console.log("loadInitialCards called");
+const loadInitialCards = async (
+    currentFilters = filters
+) => {
     try {
-      setLoading(true);
+        setLoading(true);
 
-      const items = await getRecommendations();
+        // Reset everything
+        servedIdsRef.current.clear();
+        swipeCountRef.current = 0;
+        
+        feedRef.current = new FeedQueue(5);
 
-      items.forEach((item) =>
-        servedIdsRef.current.add(item.item_id)
-      );
+        const items =
+            await getRecommendations({
+                ...currentFilters,
+            });
 
-      feedRef.current.addBatch(items);
+        items.forEach(item =>
+            servedIdsRef.current.add(item.item_id)
+        );
 
-setCards(
-  feedRef.current.getVisible()
-);
-// console.log("Visible card=", cards.length)
+        feedRef.current.addBatch(items);
 
-setBatchVersion(v => v + 1);
+        setCards(
+            feedRef.current.getVisible()
+        );
 
-      items.forEach(item => {
-        animatedIdsRef.current.add(item.item_id);
-      });
-      console.log(items);
-    } catch (err) {
-      console.error(err);
+        setBatchVersion(v => v + 1);
+
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
-  };
-
-  const fetchMoreCards = async () => {
-    try {
-      const excludeIds = Array.from(
+};
+const fetchMoreCards = async () => {
+  try {
+    const newCards = await getRecommendations({
+      excludeIds: Array.from(
         servedIdsRef.current
-      );
+      ),
 
-      const newCards =
-        await getRecommendations({
-          excludeIds,
-        });
-        console.log(newCards)
-      newCards.forEach((item) => {
-        servedIdsRef.current.add(
-          item.item_id
-        );
-      });
+      gender: filters.gender,
+      brands: filters.brands,
+      products: filters.products,
+      minPrice: filters.minPrice,
+      maxPrice: filters.maxPrice,
+    });
 
-      feedRef.current.addBatch(
-  newCards
-);
-      // mark only NEW batch as animatable
+    newCards.forEach(item => {
+      servedIdsRef.current.add(item.item_id);
+    });
 
-      newCards.forEach(item => {
-        animatedIdsRef.current.delete(
-          item.item_id
-        );
-      });
-
-    } catch (err) {
-      console.error(err);
-    }
-  };
+    feedRef.current.addBatch(newCards);
+  } catch (err) {
+    console.error(err);
+  }
+};
  const removeCard = (id) => {
   feedRef.current.swipe(id);
 
@@ -102,48 +100,66 @@ setBatchVersion(v => v + 1);
 
  
 };
-  const handleLike = async (item) => {
-    console.log("liked", item.item_id);
+const handleLike = async (item) => {
+  removeCard(item.item_id);
 
-    removeCard(item.item_id);
+  swipeCountRef.current++;
 
-    swipeCountRef.current += 1;
+  if (swipeCountRef.current % 6 === 0) {
+    fetchMoreCards();
+  }
 
-    if (swipeCountRef.current % 6 === 0) {
-      fetchMoreCards();
-    }
-
-    /*
-    later:
-
+  try {
     await sendSwipe({
-      item_id:item.item_id,
-      like_status:true
-    })
-    */
-  };
+      item,
+      likeStatus: true,
+    });
 
-  const handleDislike = async (item) => {
-    console.log("disliked", item.item_id);
-
-    removeCard(item.item_id);
-
-    swipeCountRef.current += 1;
-
-    if (swipeCountRef.current % 6 === 0) {
-      fetchMoreCards();
+    if (swipeCountRef.current % 8 === 0) {
+      await recalculatePreferenceVector();
     }
+  } catch (err) {
+    console.error(err);
+  }
+};
+const handleDislike = async (item) => {
+  removeCard(item.item_id);
 
-    /*
-    later:
+  swipeCountRef.current++;
 
+  if (swipeCountRef.current % 6 === 0) {
+    fetchMoreCards();
+  }
+
+  try {
     await sendSwipe({
-      item_id:item.item_id,
-      like_status:false
-    })
-    */
-  };
+      item,
+      likeStatus: false,
+    });
 
+    if (swipeCountRef.current % 8 === 0) {
+      await recalculatePreferenceVector();
+    }
+  } catch (err) {
+    console.error(err);
+  }
+};
+useEffect(() => {
+    // Remove cards from UI immediately
+    setCards([]);
+
+    // Clear queue completely
+    feedRef.current = new FeedQueue();
+
+    // Clear served ids
+    servedIdsRef.current.clear();
+
+    // Reset swipe count
+    swipeCountRef.current = 0;
+
+    loadInitialCards(filters);
+
+}, [filters]);
   // if (loading) {
   //   return (
   //     <Box
@@ -187,6 +203,7 @@ setBatchVersion(v => v + 1);
         sx={{
           p: 2,
           display: "flex",
+          flexDirection:'column'
         }}
       >
         <Box
@@ -197,12 +214,15 @@ setBatchVersion(v => v + 1);
             height: 50,
             width: "auto",
             objectFit: "contain",
+            alignSelf:'flex-start'
           }}
         />
+        <FilterBar filters={filters}
+    setFilters={setFilters}/>
       </Box>
 
       {/* CARD STACK */}
-
+      
       <Box
         sx={{
           width: "100%",

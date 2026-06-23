@@ -74,7 +74,7 @@ export default function SwipeCard({
       }}
       sx={{
         width: "100%",
-        height: "95%",
+        height: "85%",
         position: "absolute",
         borderRadius: "38px",
         overflow: "hidden",
@@ -265,7 +265,16 @@ export default function SwipeCard({
                 fontSize: "0.95rem",
               }}
             >
-              {item.subtitle}
+              {item.price}
+            </Typography>
+            <Typography
+              sx={{
+                color: "#666",
+                mt: 0.5,
+                fontSize: "0.95rem",
+              }}
+            >
+              {item.store}
             </Typography>
           </Box>
 
