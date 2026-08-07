@@ -28,6 +28,7 @@ import Alpha_Home from "./Home_afteralphalaunch";
 import AdminPortal from "./AdminPortal";
 import SwipePage from "./swipePage";
 import ShadowUserLoader from "./ShadowUserLoader";
+import Home_V2 from "./Home_v2";
 
 function App() {
   const subdomain = window.location.hostname.split(".")[0];
@@ -78,7 +79,8 @@ function App() {
               <Route
   path="/swipe"
   element={<ShadowUserLoader />}
-/>
+/>  
+              <Route path="/home_v2" element={< Home_V2 />} />
               <Route path="/alternate_home" element={< AnotherHomeOptimized />} />
               <Route path="/waitlist" element={<Waitlist />} />
               <Route path="/privacy" element={<Privacy />} />
