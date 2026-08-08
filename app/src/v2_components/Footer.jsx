@@ -8,40 +8,74 @@ import {
 import {
   Instagram,
   LinkedIn,
-  X,
   Email,
 } from "@mui/icons-material";
 
 export default function Footer() {
+  const navItems = [
+    { label: "About", id: "about" },
+    { label: "How It Works", id: "how" },
+    { label: "Features", id: "features" },
+    { label: "Team", id: "team" },
+    { label: "Partner", id: "partner" },
+    { label: "Investors", id: "investors" },
+  ];
+
   return (
     <Box
       component="footer"
+      id="footer"
       sx={{
-        bgcolor: "#0a0a0a",
-        color: "#fff",
-        pt: 8,
-        pb: 4,
-        px: { xs: 3, md: 8 },
+        bgcolor: "#fff",
+        color: "#111",
+
+        px: {
+          xs: 2,
+          md: 3,
+        },
+
+        pt: {
+          xs: 4,
+          md: 5,
+        },
+
+        pb: 2,
       }}
     >
+      {/* MAIN FOOTER */}
+
       <Box
         sx={{
-          maxWidth: "1250px",
+          maxWidth: 1400,
           mx: "auto",
 
+          border: "1px solid #e0e0e0",
+          borderRadius: "8px",
+
+          px: {
+            xs: 3,
+            md: 5,
+          },
+
+          py: {
+            xs: 4,
+            md: 3.5,
+          },
+
           display: "grid",
-          gap: 6,
 
           gridTemplateColumns: {
             xs: "1fr",
-            md: "1.6fr 1fr 1fr",
+            md: "1.5fr 1fr 1fr",
           },
 
-          pb: 6,
-          borderBottom: "1px solid rgba(255,255,255,.08)",
+          gap: {
+            xs: 4,
+            md: 6,
+          },
         }}
       >
-        {/* Logo + Description */}
+        {/* BRAND */}
 
         <Box>
           <Box
@@ -49,147 +83,206 @@ export default function Footer() {
             src="/main-logo.png"
             alt="Shazlo"
             sx={{
-              height: 42,
-              mb: 3,
+              height: {
+                xs: 34,
+                md: 38,
+              },
+
+              width: "auto",
+
+              display: "block",
+
+              mb: 1.5,
             }}
           />
 
           <Typography
             sx={{
-              color: "rgba(255,255,255,.65)",
-              lineHeight: 1.9,
-              maxWidth: 420,
-              mb: 4,
+              color: "#666",
+
+              fontSize: {
+                xs: 15,
+                md: 18,
+              },
+
+              lineHeight: 1.65,
+
+              maxWidth: 290,
             }}
           >
             Shazlo is reimagining fashion discovery with
-            swipe-based shopping, intelligent
-            recommendations, and a personalized style
-            experience.
+            intelligent swiping, personalization, and a
+            passion for style.
           </Typography>
 
-          <Stack direction="row" spacing={1}>
-  <IconButton
-    component="a"
-    href="https://www.instagram.com/shazlo.store/"
-    target="_blank"
-    rel="noopener noreferrer"
-    sx={{
-      color: "#fab62a",
-      border: "1px solid rgba(250,182,42,.25)",
-      "&:hover": {
-        bgcolor: "#fab62a",
-        color: "#000",
-      },
-    }}
-  >
-    <Instagram fontSize="small" />
-  </IconButton>
+          {/* SOCIALS */}
 
-  <IconButton
-    component="a"
-    href="https://www.linkedin.com/company/shazlo/?viewAsMember=true"
-    target="_blank"
-    rel="noopener noreferrer"
-    sx={{
-      color: "#fab62a",
-      border: "1px solid rgba(250,182,42,.25)",
-      "&:hover": {
-        bgcolor: "#fab62a",
-        color: "#000",
-      },
-    }}
-  >
-    <LinkedIn fontSize="small" />
-  </IconButton>
+          <Stack
+            direction="row"
+            spacing={1}
+            sx={{
+              mt: 2,
+            }}
+          >
+            <IconButton
+              component="a"
+              href="https://www.instagram.com/shazlo.store/"
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                width: 30,
+                height: 30,
 
-  <IconButton
-    component="a"
-    href="mailto:connect@shazlo.store"
-    sx={{
-      color: "#fab62a",
-      border: "1px solid rgba(250,182,42,.25)",
-      "&:hover": {
-        bgcolor: "#fab62a",
-        color: "#000",
-      },
-    }}
-  >
-    <Email fontSize="small" />
-  </IconButton>
-</Stack>
+                border: "1px solid #d8d8d8",
+
+                borderRadius: "6px",
+
+                color: "#444",
+
+                "&:hover": {
+                  color: "#fab62a",
+                  borderColor: "#fab62a",
+                  bgcolor: "transparent",
+                },
+              }}
+            >
+              <Instagram sx={{ fontSize: 16 }} />
+            </IconButton>
+
+            <IconButton
+              component="a"
+              href="https://www.linkedin.com/company/shazlo/?viewAsMember=true"
+              target="_blank"
+              rel="noopener noreferrer"
+              sx={{
+                width: 30,
+                height: 30,
+
+                border: "1px solid #d8d8d8",
+
+                borderRadius: "6px",
+
+                color: "#444",
+
+                "&:hover": {
+                  color: "#fab62a",
+                  borderColor: "#fab62a",
+                  bgcolor: "transparent",
+                },
+              }}
+            >
+              <LinkedIn sx={{ fontSize: 16 }} />
+            </IconButton>
+
+            <IconButton
+              component="a"
+              href="mailto:connect@shazlo.store"
+              sx={{
+                width: 30,
+                height: 30,
+
+                border: "1px solid #d8d8d8",
+
+                borderRadius: "6px",
+
+                color: "#444",
+
+                "&:hover": {
+                  color: "#fab62a",
+                  borderColor: "#fab62a",
+                  bgcolor: "transparent",
+                },
+              }}
+            >
+              <Email sx={{ fontSize: 16 }} />
+            </IconButton>
+          </Stack>
         </Box>
 
-        {/* Navigation */}
+        {/* NAVIGATION */}
 
         <Box>
           <Typography
             sx={{
+              color: "#fab62a",
+
               fontFamily: "Bodoni Moda",
-              fontSize: "1.3rem",
-              mb: 3,
+
+              fontWeight: 600,
+
+              fontSize: 18,
+
+              mb: 1.5,
             }}
           >
             Navigation
           </Typography>
 
-          <Stack spacing={1.5}>
-            {[
-              "About",
-              "How It Works",
-              "Features",
-              "Team",
-              "Partner",
-              "Investors",
-            ].map((item) => (
+          <Stack spacing={0.45}>
+            {navItems.map((item) => (
               <Typography
-                key={item}
+                key={item.id}
                 component="a"
-                href={`#${item
-                  .toLowerCase()
-                  .replace(/\s+/g, "")}`}
+                href={`#${item.id}`}
                 sx={{
-                  color: "rgba(255,255,255,.65)",
+                  color: "#555",
+
                   textDecoration: "none",
-                  transition: ".25s",
+
+                  fontSize: 13,
+
+                  lineHeight: 1.4,
+
+                  transition: ".2s",
 
                   "&:hover": {
                     color: "#fab62a",
                   },
                 }}
               >
-                {item}
+                {item.label}
               </Typography>
             ))}
           </Stack>
         </Box>
 
-        {/* Contact */}
+        {/* CONTACT */}
 
         <Box>
           <Typography
             sx={{
+              color: "#fab62a",
+
               fontFamily: "Bodoni Moda",
-              fontSize: "1.3rem",
-              mb: 3,
+
+              fontWeight: 600,
+
+              fontSize: 18,
+
+              mb: 1.5,
             }}
           >
             Contact
           </Typography>
-
-          
 
           <Typography
             component="a"
             href="mailto:connect@shazlo.store"
             sx={{
               display: "block",
-              mt: 1,
-              color: "#fab62a",
+
+              color: "#222",
+
+              fontSize: 15,
+
+              fontWeight: 600,
+
               textDecoration: "none",
 
+              mb: 1.5,
+
               "&:hover": {
-                textDecoration: "underline",
+                color: "#fab62a",
               },
             }}
           >
@@ -198,55 +291,90 @@ export default function Footer() {
 
           <Typography
             sx={{
-              color: "rgba(255,255,255,.5)",
-              mt: 4,
-              lineHeight: 1.8,
+              color: "#777",
+
+              fontSize: 15,
+
+              lineHeight: 1.6,
+
+              maxWidth: 180,
             }}
           >
-            Interested in partnering, investing, or
-            joining our team? We'd love to hear from
-            you.
+            We would love to hear from you.
+            <br />
+            Let's build the future of fashion together.
           </Typography>
         </Box>
       </Box>
 
-      {/* Bottom */}
+      {/* BOTTOM BAR */}
 
       <Box
         sx={{
-          mt: 4,
+          maxWidth: 1400,
+          mx: "auto",
 
           display: "flex",
+
           flexDirection: {
             xs: "column",
             md: "row",
           },
 
           justifyContent: "space-between",
-          alignItems: "center",
 
-          gap: 2,
+          alignItems: {
+            xs: "flex-start",
+            md: "center",
+          },
+
+          gap: 1,
+
+          px: {
+            xs: 1,
+            md: 1.5,
+          },
+
+          pt: 1.2,
         }}
       >
         <Typography
           sx={{
-            color: "rgba(255,255,255,.45)",
-            fontSize: 14,
+            color: "#888",
+
+            fontSize: 15,
+
+            letterSpacing: ".02em",
           }}
         >
-          © {new Date().getFullYear()} Shazlo Private
-          Limited. All rights reserved.
+          © 2025 Shazlo Inc. All rights reserved.
         </Typography>
 
         <Typography
           sx={{
-            color: "#fab62a",
-            letterSpacing: ".15em",
-            textTransform: "uppercase",
-            fontSize: 11,
+            color: "#888",
+
+            fontSize: 15,
+
+            display: "flex",
+
+            alignItems: "center",
+
+            gap: 0.5,
           }}
         >
-          Swipe to Style
+          Made with
+          <Box
+            component="span"
+            sx={{
+              color: "#fab62a",
+              fontSize: 13,
+              lineHeight: 1,
+            }}
+          >
+            ♥
+          </Box>
+          for style lovers.
         </Typography>
       </Box>
     </Box>

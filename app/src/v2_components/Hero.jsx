@@ -8,6 +8,8 @@ import {
 import AppleIcon from "@mui/icons-material/Apple";
 import AndroidIcon from "@mui/icons-material/Android";
 
+import heroImage from "../assets/v2_1.png";
+
 export default function Hero() {
   return (
     <Box
@@ -47,17 +49,6 @@ export default function Hero() {
           },
         }}
       >
-        {/* <Typography
-          sx={{
-            fontFamily: "Schoolbell",
-            color: "#7a451e",
-            mb: 2,
-            fontSize: 15,
-          }}
-        >
-          Shazlo Private Limited
-        </Typography> */}
-
         <Typography
           sx={{
             fontFamily: "Bodoni Moda",
@@ -114,6 +105,7 @@ export default function Hero() {
             startIcon={<AppleIcon />}
             href="https://apps.apple.com/in/app/shazlo/id6756888889"
             target="_blank"
+            rel="noopener noreferrer"
             sx={{
               borderColor: "#000",
               color: "#000",
@@ -138,6 +130,7 @@ export default function Hero() {
             startIcon={<AndroidIcon />}
             href="https://play.google.com/store/apps/details?id=com.shazlo.mobile"
             target="_blank"
+            rel="noopener noreferrer"
             sx={{
               borderColor: "#000",
               color: "#000",
@@ -172,66 +165,197 @@ export default function Hero() {
         </Typography>
       </Box>
 
-      {/* RIGHT */}
+     {/* RIGHT */}
 
-      <Box
-        sx={{
-          position: "relative",
-          overflow: "hidden",
+<Box
+  sx={{
+    position: "relative",
+    overflow: "hidden",
 
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
 
-          minHeight: {
-            xs: 260,
-            md: "auto",
-          },
+    minHeight: {
+      xs: 400,
+      md: "auto",
+    },
 
-          bgcolor: "#fafaf8",
-        }}
-      >
-        <Typography
-          sx={{
-            position: "absolute",
+    bgcolor: "#fafaf8",
+  }}
+>
+  {/* Golden fire / paint glow */}
 
-            fontFamily: "Bodoni Moda",
-            fontWeight: 700,
+  <Box
+    sx={{
+      position: "absolute",
 
-            fontSize: {
-              xs: "16rem",
-              md: "28rem",
-            },
+      width: {
+        xs: "80%",
+        md: "75%",
+      },
 
-            color: "#fab62a",
-            opacity: 0.05,
+      height: {
+        xs: "55%",
+        md: "65%",
+      },
 
-            userSelect: "none",
+      top: "18%",
+      left: "18%",
 
-            lineHeight: 1,
-          }}
-        >
-          S
-        </Typography>
+      background: `
+        radial-gradient(
+          ellipse at center,
+          rgba(250,182,42,.48) 0%,
+          rgba(250,182,42,.30) 30%,
+          rgba(250,182,42,.14) 55%,
+          rgba(250,182,42,0) 75%
+        )
+      `,
 
-        <Typography
-          sx={{
-            position: "relative",
+      filter: "blur(25px)",
 
-            fontFamily: "Bodoni Moda",
+      transform: "rotate(-12deg)",
 
-            letterSpacing: ".3em",
+      pointerEvents: "none",
 
-            textTransform: "uppercase",
+      zIndex: 0,
+    }}
+  />
 
-            color: "#fab62a",
+  {/* Secondary golden glow */}
 
-            fontSize: 12,
-          }}
-        >
-          Swipe to Style
-        </Typography>
-      </Box>
-    </Box>
+  <Box
+    sx={{
+      position: "absolute",
+
+      width: "45%",
+      height: "45%",
+
+      top: "35%",
+      left: "5%",
+
+      background:
+        "radial-gradient(circle, rgba(255,211,92,.25) 0%, rgba(255,211,92,0) 70%)",
+
+      filter: "blur(30px)",
+
+      pointerEvents: "none",
+
+      zIndex: 0,
+    }}
+  />
+
+  {/* Giant S */}
+
+  <Typography
+    sx={{
+      position: "absolute",
+
+      fontFamily: "Bodoni Moda",
+      fontWeight: 700,
+
+      fontSize: {
+        xs: "16rem",
+        md: "28rem",
+      },
+
+      color: "#fab62a",
+
+      /*
+       * More visible than before.
+       * The phone will cover the middle,
+       * while the edges of the S remain visible.
+       */
+      opacity: 0.30,
+
+      userSelect: "none",
+      pointerEvents: "none",
+
+      lineHeight: 1,
+
+      /*
+       * Push the S slightly left so it
+       * peeks around the phone.
+       */
+      left: {
+        xs: "35%",
+        md: "20%",
+      },
+
+      top: "50%",
+
+      transform: "translate(-50%, -50%)",
+
+      zIndex: 1,
+    }}
+  >
+    S
+  </Typography>
+
+  {/* Hero Image */}
+
+  <Box
+    component="img"
+    src={heroImage}
+    alt="Shazlo fashion"
+    sx={{
+      position: "relative",
+
+      width: {
+        xs: "85%",
+        sm: "70%",
+        md: "82%",
+      },
+
+      maxWidth: 600,
+
+      height: {
+        xs: 350,
+        md: 600,
+      },
+
+      objectFit: "contain",
+
+      zIndex: 2,
+
+      display: "block",
+
+      userSelect: "none",
+    }}
+  />
+
+  {/* Swipe to Style */}
+
+  <Typography
+    sx={{
+      position: "absolute",
+
+      bottom: {
+        xs: 25,
+        md: 40,
+      },
+
+      right: {
+        xs: 25,
+        md: 40,
+      },
+
+      fontFamily: "Bodoni Moda",
+
+      letterSpacing: ".3em",
+
+      textTransform: "uppercase",
+
+      color: "#fab62a",
+
+      fontSize: 12,
+
+      zIndex: 3,
+    }}
+  >
+    Swipe to Style
+  </Typography>
+</Box>   </Box>
   );
 }

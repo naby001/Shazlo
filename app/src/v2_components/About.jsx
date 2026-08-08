@@ -1,5 +1,33 @@
 import { Box, Typography } from "@mui/material";
 
+import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import PeopleOutlineIcon from "@mui/icons-material/PeopleOutline";
+import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import CardGiftcardOutlinedIcon from "@mui/icons-material/CardGiftcardOutlined";
+
+const stats = [
+  {
+    value: "2025",
+    label: "Founded",
+    icon: CalendarMonthOutlinedIcon,
+  },
+  {
+    value: "All",
+    label: "Genders welcome",
+    icon: PeopleOutlineIcon,
+  },
+  {
+    value: "India",
+    label: "Home market",
+    icon: LocationOnOutlinedIcon,
+  },
+  {
+    value: "Free",
+    label: "Always",
+    icon: CardGiftcardOutlinedIcon,
+  },
+];
+
 export default function About() {
   return (
     <>
@@ -138,69 +166,113 @@ export default function About() {
           display: "grid",
 
           gridTemplateColumns: {
-            xs: "repeat(2,1fr)",
-            md: "repeat(4,1fr)",
+            xs: "repeat(2, 1fr)",
+            md: "repeat(4, 1fr)",
           },
 
           borderBottom: "1px solid #e8e0d0",
+
+          bgcolor: "#fff",
         }}
       >
-        {[
-          ["2025", "Founded"],
-          ["All", "Genders welcome"],
-          ["India", "Home market"],
-          ["Free", "Always"],
-        ].map(([value, label], index) => (
-          <Box
-            key={label}
-            sx={{
-              py: 6,
+        {stats.map((stat, index) => {
+          const Icon = stat.icon;
 
-              textAlign: "center",
-
-              borderRight: {
-                md: index !== 3
-                  ? "1px solid #e8e0d0"
-                  : "none",
-              },
-
-              borderBottom: {
-                xs: index < 2
-                  ? "1px solid #e8e0d0"
-                  : "none",
-
-                md: "none",
-              },
-            }}
-          >
-            <Typography
+          return (
+            <Box
+              key={stat.label}
               sx={{
-                fontFamily: "Bodoni Moda",
-                color: "#fab62a",
-                fontWeight: 700,
-                fontSize: {
-                  xs: "2.2rem",
-                  md: "2.8rem",
+                py: { xs: 4, md: 5 },
+
+                textAlign: "center",
+
+                borderRight: {
+                  xs: index % 2 === 0
+                    ? "1px solid #e8e0d0"
+                    : "none",
+
+                  md:
+                    index !== 3
+                      ? "1px solid #e8e0d0"
+                      : "none",
                 },
-                lineHeight: 1,
-              }}
-            >
-              {value}
-            </Typography>
 
-            <Typography
-              sx={{
-                mt: 1,
-                color: "#999",
-                fontSize: 11,
-                letterSpacing: ".12em",
-                textTransform: "uppercase",
+                borderBottom: {
+                  xs:
+                    index < 2
+                      ? "1px solid #e8e0d0"
+                      : "none",
+
+                  md: "none",
+                },
+
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
               }}
             >
-              {label}
-            </Typography>
-          </Box>
-        ))}
+              {/* ICON */}
+
+              <Icon
+                sx={{
+                  color: "#fab62a",
+
+                  fontSize: {
+                    xs: 32,
+                    md: 38,
+                  },
+
+                  mb: 1.5,
+
+                  strokeWidth: 1,
+
+                  // keeps the icon visually light
+                  fontWeight: 300,
+                }}
+              />
+
+              {/* VALUE */}
+
+              <Typography
+                sx={{
+                  fontFamily: "Bodoni Moda",
+                  color: "#111",
+                  fontWeight: 700,
+
+                  fontSize: {
+                    xs: "2rem",
+                    md: "2.5rem",
+                  },
+
+                  lineHeight: 1,
+
+                  mb: 1,
+                }}
+              >
+                {stat.value}
+              </Typography>
+
+              {/* LABEL */}
+
+              <Typography
+                sx={{
+                  color: "#999",
+
+                  fontSize: {
+                    xs: 9,
+                    md: 10,
+                  },
+
+                  letterSpacing: ".14em",
+
+                  textTransform: "uppercase",
+                }}
+              >
+                {stat.label}
+              </Typography>
+            </Box>
+          );
+        })}
       </Box>
     </>
   );
