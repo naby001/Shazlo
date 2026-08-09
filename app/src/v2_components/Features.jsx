@@ -9,28 +9,31 @@ import StorefrontOutlinedIcon from "@mui/icons-material/StorefrontOutlined";
 import PaidOutlinedIcon from "@mui/icons-material/PaidOutlined";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import ShareOutlinedIcon from "@mui/icons-material/ShareOutlined";
-
+import featureFeed from "../assets/v2_3.jpeg"
+import featureCloset from "../assets/v2_4.jpeg";
+import featureCloset2 from "../assets/v2_5.jpeg";
+import featureCloset3 from "../assets/v2_6.jpg";
 const features = [
   {
     title: "Personalized feed",
     description:
       "Your feed evolves with every swipe. Within a handful of interactions, Shazlo already knows more about your taste than most shopping apps ever will.",
     icon: StarOutlineIcon,
-    image: "/feature-feed.jpg",
+    image: featureFeed,
   },
   {
     title: "Closets",
     description:
       "Create themed closets: formal wear, vacation looks, everyday fits. Add saved pieces, mix and match, and send items straight to cart when ready.",
     icon: CheckroomOutlinedIcon,
-    image: "/feature-closet.jpg",
+    image: featureCloset2,
   },
   {
     title: "Explore brands",
     description:
       "Use search to browse specific brands and explore their full collections in one clean, uncluttered place. No tabs. No noise.",
     icon: StorefrontOutlinedIcon,
-    image: "/feature-brands.jpg",
+    image: featureCloset,
   },
   {
     title: "Shazlo Coins",
@@ -39,19 +42,19 @@ const features = [
     icon: PaidOutlinedIcon,
     image: "/feature-coins.jpg",
   },
-  {
-    title: "Product details",
-    description:
-      "Tap the info icon on any card to see material details, care instructions, and return policy before you commit.",
-    icon: InfoOutlinedIcon,
-    image: "/feature-details.jpg",
-  },
+  // {
+  //   title: "Product details",
+  //   description:
+  //     "Tap the info icon on any card to see material details, care instructions, and return policy before you commit.",
+  //   icon: InfoOutlinedIcon,
+  //   image: "/feature-details.jpg",
+  // },
   {
     title: "Share with friends",
     description:
       "Found something great? Share any product directly from the card. Send looks to friends or ask for opinions.",
     icon: ShareOutlinedIcon,
-    image: "/feature-share.jpg",
+    image: featureCloset3,
   },
 ];
 
@@ -278,50 +281,63 @@ export default function Features() {
                 </Typography>
               </Box>
 
-              {/* IMAGE */}
+            {/* IMAGE */}
 
-              <Box
-                sx={{
-                  position: "absolute",
+<Box
+  sx={{
+    position: "absolute",
 
-                  right: 0,
-                  top: 0,
-                  bottom: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
 
-                  width: {
-                    xs: "42%",
-                    md: "43%",
-                  },
+    width: {
+      xs: "40%",
+      md: "42%",
+    },
 
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
+    display: "flex",
+    alignItems: "flex-end",
+    justifyContent: "center",
 
-                  overflow: "hidden",
+    overflow: "hidden",
 
-                  background:
-                    "linear-gradient(135deg,#fffdf5,#f8f5ec)",
-                }}
-              >
-                <Box
-                  component="img"
-                  className="feature-image"
-                  src={feature.image}
-                  alt={feature.title}
-                  sx={{
-                    width: "88%",
-                    height: "88%",
+    background:
+      "linear-gradient(135deg, #fffdf5 0%, #f8f5ec 100%)",
+  }}
+>
+  <Box
+    component="img"
+    className="feature-image"
+    src={feature.image}
+    alt={feature.title}
+    sx={{
+      width: {
+        xs: "92%",
+        md: "90%",
+      },
 
-                    objectFit: "contain",
+      height: "auto",
 
-                    transition:
-                      "transform .45s cubic-bezier(.22,1,.36,1)",
+      maxHeight: "115%",
 
-                    filter:
-                      "drop-shadow(0 12px 18px rgba(0,0,0,.08))",
-                  }}
-                />
-              </Box>
+      objectFit: "contain",
+
+      display: "block",
+
+      transform:
+        "translateY(50%)",
+
+      transformOrigin: "bottom center",
+
+      transition:
+        "transform .55s cubic-bezier(.22,1,.36,1)",
+
+      filter:
+        "drop-shadow(0 14px 22px rgba(0,0,0,.12))",
+    }}
+  />
+</Box>
             </Box>
           );
         })}
