@@ -75,7 +75,7 @@ function App() {
           ) : (
             <>
               {/* Default public routes */}
-              <Route path="/" element={<Alpha_Home />} />
+              <Route path="/" element={<Home_V2 />} />
               <Route
   path="/swipe"
   element={<ShadowUserLoader />}
