@@ -31,11 +31,13 @@ export default function Navbar() {
           px: { xs: 2, md: 7 },
         }}
       >
-        <img
-          src="/main-logo.png"
-          alt="Shazlo"
-          style={{ height: 32 }}
-        />
+        <a href="#hero" aria-label="Shazlo home">
+          <img
+            src="/main-logo.png"
+            alt="Shazlo"
+            style={{ height: 32 }}
+          />
+        </a>
 
         <Box
           sx={{
@@ -45,6 +47,7 @@ export default function Navbar() {
           }}
         >
         <Button
+  href="#about"
   sx={{
     color: "#0a0a0a",
     textTransform: "uppercase",
@@ -59,6 +62,7 @@ export default function Navbar() {
   About
 </Button>
        <Button
+  href="#how"
   sx={{
     color: "#0a0a0a",
     textTransform: "uppercase",
@@ -73,6 +77,7 @@ export default function Navbar() {
   How It Works
 </Button>
 <Button
+  href="#features"
   sx={{
     color: "#0a0a0a",
     textTransform: "uppercase",
@@ -87,6 +92,7 @@ export default function Navbar() {
   Features
 </Button>
 <Button
+  href="#team"
   sx={{
     color: "#0a0a0a",
     textTransform: "uppercase",
@@ -103,6 +109,7 @@ export default function Navbar() {
         </Box>
 
         <Button
+          href="#partner"
           variant="contained"
           sx={{
             display: { xs: "none", md: "block" },
