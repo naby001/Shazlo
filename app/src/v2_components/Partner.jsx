@@ -15,7 +15,7 @@ import {
   FavoriteBorderOutlined,
 } from "@mui/icons-material";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import partnerImage from "../assets/v2_2.png";
 
 const GOOGLE_FORM_URL =
@@ -24,6 +24,18 @@ const GOOGLE_FORM_URL =
 export default function Partner() {
   const [tab, setTab] = useState(0);
   const [showForm, setShowForm] = useState(false);
+  const partnershipPanelRef = useRef(null);
+
+  useEffect(() => {
+    if (tab !== 1 || !window.matchMedia("(max-width: 599.95px)").matches) {
+      return;
+    }
+
+    partnershipPanelRef.current?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }, [tab]);
 
   const benefits = [
     {
@@ -92,6 +104,7 @@ export default function Partner() {
       {/* MAIN PANEL */}
 
       <Box
+        ref={partnershipPanelRef}
         sx={{
           maxWidth: 1350,
           mx: "auto",
@@ -100,6 +113,7 @@ export default function Partner() {
           borderRadius: "8px",
 
           overflow: "hidden",
+          scrollMarginTop: { xs: "72px", md: 0 },
         }}
       >
         {/* TABS */}

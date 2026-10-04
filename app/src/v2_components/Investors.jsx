@@ -107,6 +107,23 @@ export default function Investors() {
           >
             Request Deck
           </Button>
+          <Typography
+            component="a"
+            href="mailto:connect@shazlo.store"
+            sx={{
+              display: "block",
+              mt: 2,
+              color: "#7a451e",
+              fontSize: 14,
+              textDecoration: "underline",
+              textUnderlineOffset: 3,
+              "&:hover": {
+                color: "#c88b00",
+              },
+            }}
+          >
+            Mail us for the pitch deck
+          </Typography>
         </Box>
 
         {/* Right */}

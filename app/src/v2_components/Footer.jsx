@@ -3,6 +3,7 @@ import {
   Typography,
   IconButton,
   Stack,
+  Tooltip,
 } from "@mui/material";
 
 import {
@@ -174,28 +175,31 @@ export default function Footer() {
               <LinkedIn sx={{ fontSize: 16 }} />
             </IconButton>
 
-            <IconButton
-              component="a"
-              href="mailto:connect@shazlo.store"
-              sx={{
-                width: 30,
-                height: 30,
+            <Tooltip title="connect@shazlo.store" arrow>
+              <IconButton
+                component="a"
+                href="mailto:connect@shazlo.store"
+                aria-label="Email connect@shazlo.store"
+                sx={{
+                  width: 30,
+                  height: 30,
 
-                border: "1px solid #d8d8d8",
+                  border: "1px solid #d8d8d8",
 
-                borderRadius: "6px",
+                  borderRadius: "6px",
 
-                color: "#444",
+                  color: "#444",
 
-                "&:hover": {
-                  color: "#fab62a",
-                  borderColor: "#fab62a",
-                  bgcolor: "transparent",
-                },
-              }}
-            >
-              <Email sx={{ fontSize: 16 }} />
-            </IconButton>
+                  "&:hover": {
+                    color: "#fab62a",
+                    borderColor: "#fab62a",
+                    bgcolor: "transparent",
+                  },
+                }}
+              >
+                <Email sx={{ fontSize: 16 }} />
+              </IconButton>
+            </Tooltip>
           </Stack>
         </Box>
 
@@ -347,7 +351,7 @@ export default function Footer() {
             letterSpacing: ".02em",
           }}
         >
-          © 2025 Shazlo Inc. All rights reserved.
+          © 2026 Shazlo Inc. All rights reserved.
         </Typography>
 
         <Typography

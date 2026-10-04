@@ -36,7 +36,8 @@ const teamMembers = [
     color: "#ffeda3",
     name: "We are hiring",
     role: "Open positions",
-    bio: "We are looking for people who care deeply about fashion, product, and craft. If that sounds like you, we would love to hear from you.",
+    bio: "We are looking for people who care deeply about fashion, product, and craft. Send us your resume at connect@shazlo.store.",
+    href: "mailto:connect@shazlo.store",
   },
 ];
 
@@ -115,11 +116,27 @@ export default function Team() {
           {teamMembers.map((member) => (
             <Card
               key={member.name}
+              component={member.href ? "a" : "div"}
+              href={member.href}
+              aria-label={
+                member.href
+                  ? `Email your resume to ${member.href.replace("mailto:", "")}`
+                  : undefined
+              }
               elevation={0}
               sx={{
                 border: "1px solid #e8e0d0",
                 borderRadius: 0,
                 transition: ".3s",
+                textDecoration: "none",
+                color: "inherit",
+                ...(member.href && {
+                  cursor: "pointer",
+                  "&:focus-visible": {
+                    outline: "2px solid #fab62a",
+                    outlineOffset: 2,
+                  },
+                }),
 
                 "&:hover": {
                   borderColor: "#fab62a",

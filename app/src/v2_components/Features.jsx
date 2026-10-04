@@ -13,6 +13,7 @@ import featureFeed from "../assets/v2_3.jpeg"
 import featureCloset from "../assets/v2_4.jpeg";
 import featureCloset2 from "../assets/v2_5.jpeg";
 import featureCloset3 from "../assets/v2_6.jpg";
+import featureCloset4 from "../assets/coin2.png";
 const features = [
   {
     title: "Personalized feed",
@@ -40,7 +41,7 @@ const features = [
     description:
       "Earn coins as you engage. Every swipe, every save, every interaction builds your Shazlo activity and rewards you for discovering more.",
     icon: PaidOutlinedIcon,
-    image: "/feature-coins.jpg",
+    image: featureCloset4,
   },
   // {
   //   title: "Product details",
@@ -303,7 +304,9 @@ export default function Features() {
     overflow: "hidden",
 
     background:
-      "linear-gradient(135deg, #fffdf5 0%, #f8f5ec 100%)",
+      feature.title === "Shazlo Coins"
+        ? "transparent"
+        : "linear-gradient(135deg, #fffdf5 0%, #f8f5ec 100%)",
   }}
 >
   <Box
